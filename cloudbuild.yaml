@@ -28,7 +28,7 @@ steps:
       - "--allow-unauthenticated"
       - "--service-account"
       - "dystomarket-cloud-run@$PROJECT_ID.iam.gserviceaccount.com" # Use your service account email
-      - "--set-env-vars=DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@/${DB_NAME}?host=${DB_HOST}" # Construct DATABASE_URL
+      - "--set-env-vars=DATABASE_URL=postgresql://$$DB_USER:$$DB_PASSWORD@/$$DB_NAME?host=$$DB_HOST" # Construct DATABASE_URL
       - "--set-env-vars"
       - "NEXT_PUBLIC_API_URL=/api"
     secretEnv: ["DB_USER", "DB_PASSWORD", "DB_NAME", "DB_HOST"]
