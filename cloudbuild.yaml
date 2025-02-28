@@ -1,0 +1,36 @@
+steps:
+  # Build the container image
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/$PROJECT_ID/dystomarket:$SHORT_SHA", "."]
+
+  # Push the container image to Container Registry (or Artifact Registry)
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/$PROJECT_ID/dystomarket:$SHORT_SHA"]
+
+  # Deploy to Cloud Run
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: gcloud
+    args:
+      - "run"
+      - "deploy"
+      - "dystomarket" # Service name (you can change this)
+      - "--image"
+      - "gcr.io/$PROJECT_ID/dystomarket:$SHORT_SHA"
+      - "--region"
+      - "europe-west10" # Change to your desired region
+      - "--platform"
+      - "managed"
+      - "--allow-unauthenticated" # Make it publicly accessible
+      - "--service-account"
+      - "dystomarket-cloud-run@$dystomarket-cloud-run@paulooze.iam.gserviceaccount.com" # Use your service account email
+      - "--set-env-vars"
+      - 'DATABASE_URL=postgresql://dystomarket:Or-3MX2"sf)E@BR.@/dystomarket?host=/cloudsql/paulooze:europe-west10:dystomarket-db'
+      - "--set-env-vars"
+      - "NEXT_PUBLIC_API_URL=/api"
+
+# Add other environment variables here, like this:
+#      - '--set-env-vars'
+#      - 'MY_OTHER_VAR=some_value'
+
+images:
+  - "gcr.io/$PROJECT_ID/dystomarket:$SHORT_SHA"

@@ -1,0 +1,205 @@
+datasource db {
+  provider = "postgresql" // Or "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// GICS Sectors (using an enum)
+enum Sector {
+  Energy
+  Materials
+  Industrials
+  ConsumerDiscretionary
+  ConsumerStaples
+  HealthCare
+  Financials
+  InformationTechnology
+  CommunicationServices
+  Utilities
+  RealEstate
+}
+
+// Simplified Sub-Industries (using an enum)
+// You can add more as needed
+enum SubIndustry {
+  // Energy
+  EnergyEquipmentServices
+  OilGasConsumableFuels
+
+  // Materials
+  Chemicals
+  MetalsMining
+
+  // Industrials
+  AerospaceDefense
+  Machinery
+  Transportation
+
+  // Consumer Discretionary
+  Automobiles
+  HotelsRestaurantsLeisure
+  Media
+
+  // Consumer Staples
+  FoodStaplesRetailing
+  FoodProducts
+  Beverages
+
+  // Health Care
+  Pharmaceuticals
+  Biotechnology
+  HealthCareEquipmentSupplies
+
+  // Financials
+  Banks
+  DiversifiedFinancials
+  Insurance
+
+  // Information Technology
+  SoftwareServices
+  TechnologyHardwareEquipment
+  Semiconductors
+
+  // Communication Services
+  TelecommunicationServices
+  MediaEntertainment
+
+  // Utilities
+  ElectricUtilities
+  GasUtilities
+  WaterUtilities
+
+  // Real Estate
+  RealEstateManagementDevelopment
+}
+
+model Company {
+  id             Int      @id @default(autoincrement())
+  name           String   @unique
+  tickerSymbol   String   @unique
+  description    String
+  logoUrl        String?
+  sector         Sector // Use the Sector enum
+  subIndustry    SubIndustry // Use the SubIndustry enum
+  latestPrice    Float?
+  sharesOutstanding Int   @default(1000000) // Add sharesOutstanding, with a default
+
+  stockPrices  StockPrice[]
+  newsArticles NewsArticle[]
+  indices      IndexCompany[] // Relationship to indices
+
+  @@index([tickerSymbol])
+  @@map("companies")
+}
+
+model StockPrice {
+  id        Int      @id @default(autoincrement())
+  companyId Int
+  timestamp DateTime @default(now())
+  price     Float
+
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, timestamp])
+  @@map("stock_prices")
+}
+
+model NewsArticle {
+  id        Int      @id @default(autoincrement())
+  companyId Int
+  timestamp DateTime @default(now())
+  headline  String
+  content   String
+  sentiment Float?
+  source    String?
+
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, timestamp])
+  @@map("news_articles")
+}
+
+model Index {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  tickerSymbol String        @unique
+  description  String
+  indexPrices  IndexPrice[]
+  companies    IndexCompany[]  // Relationship to companies
+
+  @@map("indices")
+}
+
+model IndexPrice {
+  id        Int      @id @default(autoincrement())
+  indexId   Int
+  timestamp DateTime @default(now())
+  price     Float
+
+  index     Index    @relation(fields: [indexId], references: [id], onDelete: Cascade)
+
+  @@index([indexId, timestamp])
+  @@map("index_prices")
+}
+
+model IndexCompany {
+  id        Int     @id @default(autoincrement())
+  indexId   Int
+  companyId Int
+  weight    Float // Weight of the company in the index (e.g., 0.1 for 10%)
+
+  index     Index   @relation(fields: [indexId], references: [id], onDelete: Cascade)
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([indexId, companyId]) // Ensure a company can't be in the same index twice
+  @@index([indexId])
+  @@index([companyId])
+  @@map("index_companies")
+}
+
+// --- Optional Models (for future expansion) ---
+
+// Example: User model for watchlists, portfolios, etc.
+// model User {
+//   id        Int      @id @default(autoincrement())
+//   email     String   @unique
+//   password  String
+//   // ... other user fields ...
+//   watchlists Watchlist[]
+//   @@map("users")
+// }
+
+// Example: Watchlist model
+// model Watchlist {
+//   id        Int      @id @default(autoincrement())
+//   userId    Int
+//   companyId Int
+//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+//   @@unique([userId, companyId]) // Prevent duplicate watchlist entries
+//   @@map("watchlists")
+// }
+
+// Example: Portfolio model (more complex - requires transactions)
+// model Portfolio {
+//   id      Int            @id @default(autoincrement())
+//   userId  Int
+//   user    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   holdings PortfolioHolding[]
+//  @@map("portfolios")
+// }
+
+// model PortfolioHolding {
+//  id       Int        @id @default(autoincrement())
+//  portfolioId Int
+//  companyId   Int
+//  quantity    Int
+//  purchasePrice Float
+//  purchaseDate DateTime
+//  portfolio     Portfolio @relation(fields: [portfolioId], references:[id], onDelete: Cascade)
+//  company      Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+//   @@map("portfolio_holdings")
+// }
