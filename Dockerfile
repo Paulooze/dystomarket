@@ -19,11 +19,11 @@ RUN npm install
 
 COPY . .
 
+RUN npx prisma generate
 # Build the Next.js application.
 RUN npm run build
 
 # Run Prisma generate.  Important to do this *after* building.
-RUN npx prisma generate
 
 # --- Runner Stage ---
 FROM base AS runner

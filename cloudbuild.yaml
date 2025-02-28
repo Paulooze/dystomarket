@@ -1,36 +1,51 @@
 steps:
-  # Build the container image
   - name: "gcr.io/cloud-builders/docker"
-    args: ["build", "-t", "gcr.io/$PROJECT_ID/dystomarket:$SHORT_SHA", "."]
-
-  # Push the container image to Container Registry (or Artifact Registry)
+    args:
+      [
+        "build",
+        "-t",
+        "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:edd5437",
+        ".",
+      ]
   - name: "gcr.io/cloud-builders/docker"
-    args: ["push", "gcr.io/$PROJECT_ID/dystomarket:$SHORT_SHA"]
-
-  # Deploy to Cloud Run
+    args:
+      [
+        "push",
+        "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:edd5437",
+      ]
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
     args:
       - "run"
       - "deploy"
-      - "dystomarket" # Service name (you can change this)
+      - "dystomarket"
       - "--image"
-      - "gcr.io/$PROJECT_ID/dystomarket:$SHORT_SHA"
+      - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:edd5437"
       - "--region"
-      - "europe-west10" # Change to your desired region
+      - "europe-west10"
       - "--platform"
       - "managed"
-      - "--allow-unauthenticated" # Make it publicly accessible
+      - "--allow-unauthenticated"
       - "--service-account"
-      - "dystomarket-cloud-run@$dystomarket-cloud-run@paulooze.iam.gserviceaccount.com" # Use your service account email
-      - "--set-env-vars"
-      - 'DATABASE_URL=postgresql://dystomarket:Or-3MX2"sf)E@BR.@/dystomarket?host=/cloudsql/paulooze:europe-west10:dystomarket-db'
+      - "dystomarket-cloud-run@$PROJECT_ID.iam.gserviceaccount.com" # Use your service account email
+      - "--set-env-vars=DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@/${DB_NAME}?host=${DB_HOST}" # Construct DATABASE_URL
       - "--set-env-vars"
       - "NEXT_PUBLIC_API_URL=/api"
-
-# Add other environment variables here, like this:
-#      - '--set-env-vars'
-#      - 'MY_OTHER_VAR=some_value'
-
+    secretEnv:
+      - "DB_USER=projects/$PROJECT_ID/secrets/db_user/versions/latest"
+      - "DB_PASSWORD=projects/$PROJECT_ID/secrets/db_password/versions/latest"
+      - "DB_NAME=projects/$PROJECT_ID/secrets/db_name/versions/latest"
+      - "DB_HOST=projects/$PROJECT_ID/secrets/db_host/versions/latest"
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: gcloud
+    args:
+      - "run"
+      - "services"
+      - "update"
+      - "dystomarket"
+      - "--region"
+      - "europe-west10"
+      - "--add-cloudsql-instances"
+      - "$PROJECT_ID:europe-west10:dystomarket-db" # Your instance connection name
 images:
-  - "gcr.io/$PROJECT_ID/dystomarket:$SHORT_SHA"
+  - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket:edd5437"
