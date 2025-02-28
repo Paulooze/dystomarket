@@ -1,5 +1,3 @@
-// app/page.tsx (Server Component)
-
 import CompaniesList from "@/components/companies-list";
 import IndexTrackersList from "@/components/index-tracker-list";
 

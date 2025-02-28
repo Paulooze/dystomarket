@@ -4,14 +4,14 @@ steps:
       [
         "build",
         "-t",
-        "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:edd5437",
+        "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
         ".",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:edd5437",
+        "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
       ]
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
@@ -20,7 +20,7 @@ steps:
       - "deploy"
       - "dystomarket"
       - "--image"
-      - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:edd5437"
+      - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA"
       - "--region"
       - "europe-west10"
       - "--platform"
@@ -32,10 +32,10 @@ steps:
       - "--set-env-vars"
       - "NEXT_PUBLIC_API_URL=/api"
     secretEnv:
-      - "DB_USER=projects/$PROJECT_ID/secrets/db_user/versions/latest"
-      - "DB_PASSWORD=projects/$PROJECT_ID/secrets/db_password/versions/latest"
-      - "DB_NAME=projects/$PROJECT_ID/secrets/db_name/versions/latest"
-      - "DB_HOST=projects/$PROJECT_ID/secrets/db_host/versions/latest"
+      - "DB_USER=projects/$PROJECT_NUMBER/secrets/db_user/versions/latest"
+      - "DB_PASSWORD=projects/$PROJECT_NUMBER/secrets/db_password/versions/latest"
+      - "DB_NAME=projects/$PROJECT_NUMBER/secrets/db_name/versions/latest"
+      - "DB_HOST=projects/$PROJECT_NUMBER/secrets/db_host/versions/latest"
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
     args:
@@ -48,6 +48,6 @@ steps:
       - "--add-cloudsql-instances"
       - "$PROJECT_ID:europe-west10:dystomarket-db" # Your instance connection name
 images:
-  - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket:edd5437"
+  - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket:$SHORT_SHA"
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
