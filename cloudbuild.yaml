@@ -32,10 +32,10 @@ steps:
       - "--set-env-vars"
       - "NEXT_PUBLIC_API_URL=/api"
     secretEnv:
-      - "DB_USER=projects/$PROJECT_NUMBER/secrets/db_user/versions/latest"
-      - "DB_PASSWORD=projects/$PROJECT_NUMBER/secrets/db_password/versions/latest"
-      - "DB_NAME=projects/$PROJECT_NUMBER/secrets/db_name/versions/latest"
-      - "DB_HOST=projects/$PROJECT_NUMBER/secrets/db_host/versions/latest"
+      - "DB_USER=projects/$PROJECT_NUMBER/secrets/db_user/versions/1"
+      - "DB_PASSWORD=projects/$PROJECT_NUMBER/secrets/db_password/versions/1"
+      - "DB_NAME=projects/$PROJECT_NUMBER/secrets/db_name/versions/1"
+      - "DB_HOST=projects/$PROJECT_NUMBER/secrets/db_host/versions/1"
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
     args:
