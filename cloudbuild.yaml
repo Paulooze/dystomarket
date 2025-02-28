@@ -45,3 +45,5 @@ steps:
       - "$PROJECT_ID:europe-west10:dystomarket-db"
 images:
   - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket:$SHORT_SHA"
+options:
+  logging: GCS_ONLY
