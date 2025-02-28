@@ -28,7 +28,7 @@ steps:
       - "--allow-unauthenticated"
       - "--service-account"
       - "dystomarket-cloud-run@$PROJECT_ID.iam.gserviceaccount.com"
-      - "--set-secrets=DB_USER=projects/$PROJECT_NUMBER/secrets/db_user/versions:latest,DB_PASSWORD=projects/$PROJECT_NUMBER/secrets/db_password/versions:latest,DB_NAME=projects/$PROJECT_NUMBER/secrets/db_name/versions:latest,DB_HOST=projects/$PROJECT_NUMBER/secrets/db_host/versions:latest"
+      - "--set-secrets=DB_USER=db_user:latest,DB_PASSWORD=db_password:latest,DB_NAME=db_name:latest,DB_HOST=db_host:latest"
       - "--set-env-vars=DATABASE_URL=postgresql://$$DB_USER:$$DB_PASSWORD@localhost/$$DB_NAME?host=$$DB_HOST"
       - "--set-env-vars"
       - "NEXT_PUBLIC_API_URL=https://dystomarket-936117578615.europe-west10.run.app"
