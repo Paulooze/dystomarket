@@ -49,3 +49,5 @@ steps:
       - "$PROJECT_ID:europe-west10:dystomarket-db" # Your instance connection name
 images:
   - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket:edd5437"
+options:
+  defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
