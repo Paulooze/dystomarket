@@ -29,7 +29,7 @@ steps:
       - "--service-account"
       - "dystomarket-cloud-run@$PROJECT_ID.iam.gserviceaccount.com"
       - "--set-secrets=DB_USER=projects/$PROJECT_NUMBER/secrets/db_user/versions/latest,DB_PASSWORD=projects/$PROJECT_NUMBER/secrets/db_password/versions/latest,DB_NAME=projects/$PROJECT_NUMBER/secrets/db_name/versions/latest,DB_HOST=projects/$PROJECT_NUMBER/secrets/db_host/versions/latest"
-      - "--set-env-vars=DATABASE_URL=postgresql://$DB_USER:$DB_PASSWORD@/$DB_NAME?host=$DB_HOST"
+      - "--set-env-vars=DATABASE_URL=postgresql://$$DB_USER:$$DB_PASSWORD@/$$DB_NAME?host=$$DB_HOST"
       - "--set-env-vars"
       - "NEXT_PUBLIC_API_URL=https://dystomarket-936117578615.europe-west10.run.app"
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
