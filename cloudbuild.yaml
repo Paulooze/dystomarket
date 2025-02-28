@@ -30,8 +30,12 @@ steps:
       - "dystomarket-cloud-run@$PROJECT_ID.iam.gserviceaccount.com" # Use your service account email
       - "--set-env-vars=DATABASE_URL=postgresql://$$DB_USER:$$DB_PASSWORD@/$$DB_NAME?host=$$DB_HOST" # Construct DATABASE_URL
       - "--set-env-vars"
-      - "NEXT_PUBLIC_API_URL=https://dystomarket-936117578615.europe-west10.run.app"
-    secretEnv: ["DB_USER", "DB_PASSWORD", "DB_NAME", "DB_HOST"]
+      - "NEXT_PUBLIC_API_URL=/api"
+    secretEnv:
+      - "DB_USER=projects/$PROJECT_NUMBER/secrets/db_user/versions/latest"
+      - "DB_PASSWORD=projects/$PROJECT_NUMBER/secrets/db_password/versions/latest"
+      - "DB_NAME=projects/$PROJECT_NUMBER/secrets/db_name/versions/latest"
+      - "DB_HOST=projects/$PROJECT_NUMBER/secrets/db_host/versions/latest"
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
     args:
@@ -47,13 +51,3 @@ images:
   - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket:$SHORT_SHA"
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
-availableSecrets:
-  secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/db_user/versions/latest
-      env: DB_USER
-    - versionName: projects/$PROJECT_ID/secrets/db_password/versions/latest
-      env: DB_PASSWORD
-    - versionName: projects/$PROJECT_NUMBER/secrets/db_name/versions/latest
-      env: DB_NAME
-    - versionName: projects/$PROJECT_NUMBER/secrets/db_host/versions/latest
-      env: DB_HOST
