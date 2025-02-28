@@ -4,14 +4,14 @@ steps:
       [
         "build",
         "-t",
-        "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
+        "$LOCATION-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
         ".",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
+        "$LOCATION-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
       ]
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
@@ -20,9 +20,9 @@ steps:
       - "deploy"
       - "dystomarket"
       - "--image"
-      - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA"
+      - "$LOCATION-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA"
       - "--region"
-      - "europe-west10"
+      - "$LOCATION"
       - "--platform"
       - "managed"
       - "--allow-unauthenticated"
@@ -30,7 +30,7 @@ steps:
       - "dystomarket-cloud-run@$PROJECT_ID.iam.gserviceaccount.com" # Use your service account email
       - "--set-env-vars=DATABASE_URL=postgresql://$$DB_USER:$$DB_PASSWORD@/$$DB_NAME?host=$$DB_HOST" # Construct DATABASE_URL
       - "--set-env-vars"
-      - "NEXT_PUBLIC_API_URL=/api"
+      - "NEXT_PUBLIC_API_URL=https://dystomarket-936117578615.europe-west10.run.app"
     secretEnv: ["DB_USER", "DB_PASSWORD", "DB_NAME", "DB_HOST"]
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
@@ -40,11 +40,11 @@ steps:
       - "update"
       - "dystomarket"
       - "--region"
-      - "europe-west10"
+      - "$LOCATION"
       - "--add-cloudsql-instances"
-      - "$PROJECT_ID:europe-west10:dystomarket-db" # Your instance connection name
+      - "$PROJECT_ID:$LOCATION:dystomarket-db" # Your instance connection name
 images:
-  - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket:$SHORT_SHA"
+  - "$LOCATION-docker.pkg.dev/$PROJECT_ID/dystomarket:$SHORT_SHA"
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
 availableSecrets:
