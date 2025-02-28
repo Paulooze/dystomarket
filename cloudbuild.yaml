@@ -4,14 +4,14 @@ steps:
       [
         "build",
         "-t",
-        "$LOCATION-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
+        "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
         ".",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "$LOCATION-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
+        "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
       ]
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
@@ -20,9 +20,9 @@ steps:
       - "deploy"
       - "dystomarket"
       - "--image"
-      - "$LOCATION-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA"
+      - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA"
       - "--region"
-      - "$LOCATION"
+      - "europe-west10"
       - "--platform"
       - "managed"
       - "--allow-unauthenticated"
@@ -40,11 +40,11 @@ steps:
       - "update"
       - "dystomarket"
       - "--region"
-      - "$LOCATION"
+      - "europe-west10"
       - "--add-cloudsql-instances"
-      - "$PROJECT_ID:$LOCATION:dystomarket-db" # Your instance connection name
+      - "$PROJECT_ID:europe-west10:dystomarket-db" # Your instance connection name
 images:
-  - "$LOCATION-docker.pkg.dev/$PROJECT_ID/dystomarket:$SHORT_SHA"
+  - "europe-west10-docker.pkg.dev/$PROJECT_ID/dystomarket:$SHORT_SHA"
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
 availableSecrets:
