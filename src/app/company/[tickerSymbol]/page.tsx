@@ -15,6 +15,12 @@ interface Company {
   sector: string;
   subIndustry: string;
   latestPrice: number | null; // Keep this
+  ceo: {
+    name: string;
+    imageUrl: string | null;
+    personality: string | null;
+    bio: string | null;
+  } | null;
 }
 
 interface StockPrice {
@@ -26,6 +32,7 @@ async function getCompany(tickerSymbol: string): Promise<Company | null> {
   try {
     const company = await prisma.company.findUnique({
       where: { tickerSymbol: tickerSymbol },
+      include: { ceo: true }, // Include CEO if it exists
     });
 
     if (!company) {
@@ -42,7 +49,16 @@ async function getCompany(tickerSymbol: string): Promise<Company | null> {
       logoUrl: company.logoUrl ?? "",
       sector: formatSector(company.sector),
       subIndustry: formatSubIndustry(company.subIndustry),
-      latestPrice: company.latestPrice, // Keep this
+      latestPrice: company.latestPrice,
+      ceo: company.ceo
+        ? {
+            // Handle null CEO
+            name: company.ceo.name,
+            imageUrl: company.ceo.imageUrl,
+            personality: company.ceo.personality,
+            bio: company.ceo.bio,
+          }
+        : null,
     };
   } catch (error) {
     console.error("Error fetching company:", error);
@@ -87,6 +103,7 @@ export default async function CompanyPage({
   const { tickerSymbol } = await params;
   const company = await getCompany(tickerSymbol);
   const prices = await getCompanyPrices(tickerSymbol);
+  console.log(company);
 
   if (!company) {
     notFound();
@@ -122,7 +139,29 @@ export default async function CompanyPage({
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
           Sector: {company.sector} / {company.subIndustry}
         </p>
-
+        {company.ceo && ( // Only display if a CEO exists
+          <div className="mb-4 flex items-center">
+            <Image
+              src={
+                company.ceo.imageUrl
+                  ? company.ceo.imageUrl
+                  : "/images/logos/default_ceo.webp"
+              }
+              alt={`CEO of ${company.name}`}
+              width={50}
+              height={50}
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,..."
+              className="rounded-full mr-4"
+            />
+            <div>
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                {company.ceo.name}
+              </h2>
+              <p className="text-gray-700 dark:text-gray-300 mb-4">CEO</p>
+            </div>
+          </div>
+        )}
         <StockChart prices={prices} company={company} />
       </div>
     </div>
