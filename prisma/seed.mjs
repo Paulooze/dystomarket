@@ -5,14 +5,16 @@ import { ceosData } from "./ceos.mjs";
 const prisma = new PrismaClient();
 
 async function main() {
+  const existingCeos = await prisma.cEO.findMany();
+
   const ceosTransations = ceosData.map((ceo) =>
-    prisma.cEO.create({
-      data: {
+    prisma.cEO.upsert({
+      where: {
         name: ceo.name,
-        bio: ceo.bio,
-        personality: ceo.personality,
-        imageUrl: ceo.imageUrl,
+        id: existingCeos.find((c) => c.name === ceo.name)?.id,
       },
+      update: ceo,
+      create: ceo,
     })
   );
 
@@ -23,21 +25,23 @@ async function main() {
   for (const ceo of ceos) {
     if (ceo) {
       //Check if not null
-      ceoMap.set(ceo.name, ceo.id);
+      ceoMap.set(ceo.name, ceo);
     }
   }
 
   const companiesData = makeCompaniesData(ceoMap);
 
   for (const companyData of companiesData) {
-    const { initialPrice, ...rest } = companyData;
+    const { initialPrice, ceo, ...rest } = companyData;
     try {
       // Use upsert to handle potential conflicts (if you re-run the seed)
       const company = await prisma.company.upsert({
         where: { tickerSymbol: companyData.tickerSymbol },
-        update: { ...rest },
+        update: { ...rest, ceoId: ceo.id, ceo },
         create: {
           ...rest,
+          ceoId: ceo.id,
+          ceo,
           stockPrices: {
             create: {
               price: initialPrice,

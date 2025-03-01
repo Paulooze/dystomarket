@@ -4,14 +4,14 @@ steps:
       [
         "build",
         "-t",
-        "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:6da85e7",
+        "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:6257571",
         ".",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:6da85e7",
+        "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:6257571",
       ]
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
@@ -20,7 +20,7 @@ steps:
       - "deploy"
       - "dystomarket"
       - "--image"
-      - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:6da85e7"
+      - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:6257571"
       - "--region"
       - "europe-west1"
       - "--platform"
@@ -28,22 +28,12 @@ steps:
       - "--allow-unauthenticated"
       - "--service-account"
       - "dystomarket-cloud-run@$PROJECT_ID.iam.gserviceaccount.com"
-      - "--set-secrets=DB_USER=db_user:latest,DB_PASSWORD=db_password:latest,DB_NAME=db_name:latest,DB_HOST=db_host:latest"
-      - "--set-env-vars=DATABASE_URL=postgresql://$$DB_USER:$$DB_PASSWORD@localhost/$$DB_NAME?host=$$DB_HOST"
-      - "--set-env-vars"
-      - "NEXT_PUBLIC_API_URL=https://dystomarket-936117578615.europe-west1.run.app"
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    entrypoint: gcloud
-    args:
-      - "run"
-      - "services"
-      - "update"
-      - "dystomarket"
-      - "--region"
-      - "europe-west1"
       - "--add-cloudsql-instances"
       - "$PROJECT_ID:europe-west1:dystomarket"
+      - "--set-secrets=DB_USER=db_user:latest,DB_PASSWORD=db_password:latest,DB_NAME=db_name:latest,DB_HOST=db_host:latest"
+      - "--set-env-vars"
+      - "NEXT_PUBLIC_API_URL=https://dystomarket-936117578615.europe-west1.run.app"
 images:
-  - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket:6da85e7"
+  - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket:6257571"
 options:
   logging: CLOUD_LOGGING_ONLY

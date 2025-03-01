@@ -156,4 +156,24 @@ export const ceosData = [
       "Cheerful, corporate-friendly, deeply irresponsible, the definition of 'profit over people.'",
     imageUrl: "/images/ceos/Shelby_Forthright.webp",
   },
+  {
+    name: "Saburo Arasaka",
+    bio: "The iron-fisted ruler of Arasaka Corporation, Saburo Arasaka built his empire through sheer discipline, strategic brilliance, and an unwavering belief in corporate supremacy. Under his leadership, Arasaka became the most powerful megacorporation in the world, with influence stretching across politics, security, and military technology. He views corporate warfare as just another battlefield—one where only the most ruthless survive. Despite his advanced age, Saburo remains a force to be reckoned with, his mind as sharp as ever.",
+    personality:
+      "Calculating, ruthless, authoritarian, traditionalist, power-obsessed.",
+    imageUrl: "/images/ceos/Saburo_Arasaka.webp",
+  },
+  {
+    name: "Donald Lundee",
+    bio: "A former military strategist turned CEO, Donald Lundee transformed Militech into one of the largest weapons manufacturers and private security forces in the world. A firm believer in strength through superior firepower, Lundee runs Militech like a well-oiled war machine, ensuring his company stays ahead in every arms race. While he presents himself as a charismatic leader, his true passion lies in designing the next generation of weapons and maintaining global military dominance.",
+    personality: "Disciplined, strategic, patriotic, aggressive, confident.",
+    imageUrl: "/images/ceos/Donald_Lundee.webp",
+  },
+  {
+    name: "Tomo Kiroshi",
+    bio: "The enigmatic founder and CEO of Kiroshi Optics, Tomo Kiroshi is a visionary in cybernetic enhancements and neurotech. A perfectionist and futurist, he sees his work as the key to human evolution. While he markets Kiroshi as a company dedicated to improving lives, many suspect his true motivations lie in pushing the boundaries of human augmentation—regardless of the ethical consequences. His calm, measured demeanor hides a mind constantly at work, reshaping the future of human-machine integration.",
+    personality:
+      "Visionary, composed, perfectionist, enigmatic, ethically flexible.",
+    imageUrl: "/images/ceos/Tomo_Kiroshi.webp",
+  },
 ];

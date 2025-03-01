@@ -42,6 +42,7 @@ enum SubIndustry {
   Automobiles
   HotelsRestaurantsLeisure
   Media
+  HouseholdProducts
 
   // Consumer Staples
   FoodStaplesRetailing
