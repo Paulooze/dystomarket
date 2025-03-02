@@ -33,8 +33,6 @@ steps:
       - "--set-secrets=DB_USER=db_user:latest,DB_PASSWORD=db_password:latest,DB_NAME=db_name:latest,DB_HOST=db_host:latest"
       - "--set-env-vars"
       - "NEXT_PUBLIC_API_URL=https://dystomarket-936117578615.europe-west1.run.app"
-      - '--startup-http-get-path=/api/health'
-      - '--startup-http-get-port=8080'
 images:
   - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA"
 options:
