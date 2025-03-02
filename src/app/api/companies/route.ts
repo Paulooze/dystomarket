@@ -1,4 +1,4 @@
-import { formatSector, formatSubIndustry } from "@/lib/formatters";
+import { formatSubIndustry } from "@/lib/formatters";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
