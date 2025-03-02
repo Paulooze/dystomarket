@@ -1,4 +1,4 @@
-import { FaMinus, FaChevronUp, FaChevronDown } from "react-icons/fa"; // Import icons
+import { Dot, MoveDownRight, MoveUpRight } from "lucide-react";
 
 interface UpDownIconProps {
   direction: "up" | "down" | "neutral";
@@ -6,11 +6,11 @@ interface UpDownIconProps {
 
 const UpDownIcon: React.FC<UpDownIconProps> = ({ direction }) => {
   if (direction === "up") {
-    return <FaChevronUp className="w-3 h-3" color="currentColor" />; // Adjust size as needed
+    return <MoveUpRight className="w-3 h-3" color="currentColor" />;
   } else if (direction === "down") {
-    return <FaChevronDown className="w-3 h-3" />;
+    return <MoveDownRight className="w-3 h-3" color="currentColor" />;
   } else {
-    return <FaMinus className="w-3 h-3" />; // Neutral
+    return <Dot className="w-3 h-3" color="currentColor" />;
   }
 };
 

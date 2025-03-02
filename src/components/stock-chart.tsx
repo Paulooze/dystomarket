@@ -1,17 +1,17 @@
 "use client";
+import { formatCurrency } from "@/lib/formatters";
+import { Sector, SubIndustry } from "@prisma/client";
 import { useState } from "react";
 import {
-  LineChart,
-  Line,
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
 } from "recharts";
-import { formatCurrency } from "@/lib/formatters";
 import PriceDisplay from "./price-display";
-import { Sector, SubIndustry } from "@prisma/client";
+import { ChartContainer, ChartTooltip } from "./ui/chart";
 
 interface StockPrice {
   timestamp: string;
@@ -38,7 +38,7 @@ const CustomTooltip = ({ active, payload }: any) => {
     const dataPoint = payload[0].payload;
     const formattedDate = new Date(dataPoint.timestamp).toLocaleString();
     return (
-      <div className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 p-2 rounded-md shadow-md border border-gray-200 dark:border-gray-700">
+      <div className="bg-white dark:bg-gray-950 p-2 text-gray-900 dark:text-gray-100 rounded-md shadow-md border border-gray-200 dark:border-gray-700">
         <p className="text-sm">{formattedDate}</p>
         <p className="text-sm font-bold">{formatCurrency(dataPoint.price)}</p>
       </div>
@@ -131,60 +131,73 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
         percentageChange={percentageChange}
         direction={direction}
       />
-      <ResponsiveContainer width="100%" height={300}>
-        <LineChart
-          data={prices}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
+      <ResponsiveContainer aspect={1}>
+        <ChartContainer
+          config={{
+            stock: {
+              label: "Price",
+              color: "var(--color-blue-500)",
+            },
           }}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#ccc" vertical={false} />
-          <XAxis
-            dataKey="timestamp"
-            tickFormatter={(tick) => new Date(tick).toLocaleDateString()}
-            tick={{ fill: "#666", fontSize: 12, textAnchor: "end" }}
-            interval={prices.length > 30 ? "preserveStartEnd" : 0}
-            minTickGap={10}
-            tickMargin={10}
-          />
-          <YAxis
-            domain={[minPrice - yAxisPadding, maxPrice + yAxisPadding]}
-            tickFormatter={(tick) =>
-              formatCurrency(tick, { maximumFractionDigits: 2 })
-            }
-            tick={{ fill: "#666", fontSize: 12 }}
-            tickLine={false}
-            axisLine={false}
-          />
-          <Tooltip content={<CustomTooltip />} />
-          <Line
-            type="monotone"
-            dataKey="price"
-            stroke="url(#colorUv)"
-            strokeWidth={2}
-            activeDot={{ r: 6 }}
-            dot={false}
-          />
-          <defs>
-            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop
-                offset="5%"
-                stopColor="oklch(0.845 0.143 164.978)"
-                stopOpacity={1}
-              />
-              <stop
-                offset="95%"
-                stopColor="oklch(0.765 0.177 163.223)"
-                stopOpacity={1}
-              />
-            </linearGradient>
-          </defs>
-        </LineChart>
+          <AreaChart
+            data={prices}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            margin={{
+              left: 6,
+              right: 6,
+            }}
+          >
+            <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="#ccc"
+              vertical={false}
+            />
+            <XAxis
+              dataKey="timestamp"
+              tickFormatter={(tick) => new Date(tick).toLocaleDateString()}
+              tick={{ fill: "#666", fontSize: 12, textAnchor: "end" }}
+              interval={prices.length > 30 ? "preserveStartEnd" : 0}
+              minTickGap={10}
+              tickMargin={10}
+            />
+            <YAxis
+              domain={[minPrice - yAxisPadding, maxPrice + yAxisPadding]}
+              tickFormatter={(tick) =>
+                formatCurrency(tick, { maximumFractionDigits: 2 })
+              }
+              tick={{ fill: "#666", fontSize: 12 }}
+              tickLine={false}
+              axisLine={false}
+            />
+            {/* <Tooltip content={<CustomTooltip />} /> */}
+            <ChartTooltip cursor={false} content={<CustomTooltip />} />
+            <Area
+              type="monotone"
+              dataKey="price"
+              stroke="url(#colorUv)"
+              fill="url(#colorUv)"
+              strokeWidth={2}
+              activeDot={{ r: 6 }}
+              dot={false}
+            />
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop
+                  offset="5%"
+                  stopColor="var(--color-blue-500)"
+                  stopOpacity={0.8}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--color-blue-300)"
+                  stopOpacity={0.4}
+                />
+              </linearGradient>
+            </defs>
+          </AreaChart>
+        </ChartContainer>
       </ResponsiveContainer>
     </>
   );

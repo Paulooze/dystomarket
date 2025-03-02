@@ -21,7 +21,7 @@ const IndexTracker: React.FC<IndexTrackerProps> = ({ index }) => {
   if (index.previousPrice !== null && index.latestPrice !== null) {
     priceChange = index.latestPrice - index.previousPrice;
     percentageChange =
-      ((index.latestPrice - index.previousPrice) / index.previousPrice) * 100;
+      (index.latestPrice - index.previousPrice) / index.previousPrice;
 
     if (priceChange > 0) {
       direction = "up";

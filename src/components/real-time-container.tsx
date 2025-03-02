@@ -33,7 +33,8 @@ type Props = {
 
 type UpdatedData = {
   ticker: string;
-  price: number;
+  latestPrice: number;
+  previousPrice: number | null;
 };
 type StreamData = {
   companies: UpdatedData[];
@@ -65,15 +66,15 @@ export default function RealtimeContainer({
   const updatedCompaniesMap = useMemo(
     () =>
       updatedCompanies.reduce((acc, curr) => {
-        return { ...acc, [curr.ticker]: curr.price };
-      }, {} as Record<string, number>),
+        return { ...acc, [curr.ticker]: curr };
+      }, {} as Record<string, { latestPrice: number; previousPrice: number | null }>),
     [updatedCompanies]
   );
   const updatedIndicesMap = useMemo(
     () =>
       updatedIndices.reduce((acc, curr) => {
-        return { ...acc, [curr.ticker]: curr.price };
-      }, {} as Record<string, number>),
+        return { ...acc, [curr.ticker]: curr };
+      }, {} as Record<string, { latestPrice: number; previousPrice: number | null }>),
     [updatedIndices]
   );
 
@@ -85,8 +86,9 @@ export default function RealtimeContainer({
         return {
           ...rest,
           previousPrice:
-            updatedPrice !== latestPrice ? latestPrice : previousPrice,
-          latestPrice: updatedPrice != null ? updatedPrice : latestPrice,
+            updatedPrice != null ? updatedPrice.previousPrice : previousPrice,
+          latestPrice:
+            updatedPrice != null ? updatedPrice.latestPrice : latestPrice,
         };
       }),
     [companies, updatedCompaniesMap]
@@ -99,8 +101,9 @@ export default function RealtimeContainer({
         return {
           ...rest,
           previousPrice:
-            updatedPrice !== latestPrice ? latestPrice : previousPrice,
-          latestPrice: updatedPrice != null ? updatedPrice : latestPrice,
+            updatedPrice != null ? updatedPrice.previousPrice : previousPrice,
+          latestPrice:
+            updatedPrice != null ? updatedPrice.latestPrice : latestPrice,
         };
       }),
     [indices, updatedIndicesMap]

@@ -29,8 +29,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
   if (company.previousPrice !== null && company.latestPrice !== null) {
     priceChange = company.latestPrice - company.previousPrice;
     percentageChange =
-      ((company.latestPrice - company.previousPrice) / company.previousPrice) *
-      100;
+      (company.latestPrice - company.previousPrice) / company.previousPrice;
 
     if (priceChange > 0) {
       direction = "up";
