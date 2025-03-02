@@ -4,14 +4,14 @@ steps:
       [
         "build",
         "-t",
-        "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:6257571",
+        "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
         ".",
       ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
         "push",
-        "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:6257571",
+        "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA",
       ]
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
     entrypoint: gcloud
@@ -20,7 +20,7 @@ steps:
       - "deploy"
       - "dystomarket"
       - "--image"
-      - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:6257571"
+      - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA"
       - "--region"
       - "europe-west1"
       - "--platform"
@@ -34,6 +34,6 @@ steps:
       - "--set-env-vars"
       - "NEXT_PUBLIC_API_URL=https://dystomarket-936117578615.europe-west1.run.app"
 images:
-  - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket:6257571"
+  - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket:$SHORT_SHA"
 options:
   logging: CLOUD_LOGGING_ONLY

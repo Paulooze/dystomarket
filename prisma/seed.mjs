@@ -5,8 +5,6 @@ import { ceosData } from "./ceos.mjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  const existingCeos = await prisma.cEO.findMany();
-
   const ceosTransations = ceosData.map((ceo) =>
     prisma.cEO.upsert({
       where: {
@@ -36,10 +34,37 @@ async function main() {
       // Use upsert to handle potential conflicts (if you re-run the seed)
       const company = await prisma.company.upsert({
         where: { tickerSymbol: companyData.tickerSymbol },
-        update: { ...rest, ceoId: ceo?.id ?? null },
+        update: {
+          ...rest,
+          ceoId: ceo?.id ?? null,
+          ceo: ceo
+            ? {
+                connectOrCreate: {
+                  where: { id: ceo.id },
+                  create: {
+                    name: ceo.name,
+                    bio: ceo.bio,
+                    imageUrl: ceo.imageUrl,
+                  },
+                },
+              }
+            : undefined,
+        },
         create: {
           ...rest,
           ceoId: ceo?.id ?? null,
+          ceo: ceo
+            ? {
+                connectOrCreate: {
+                  where: { id: ceo.id },
+                  create: {
+                    name: ceo.name,
+                    bio: ceo.bio,
+                    imageUrl: ceo.imageUrl,
+                  },
+                },
+              }
+            : undefined,
           stockPrices: {
             create: {
               price: initialPrice,
