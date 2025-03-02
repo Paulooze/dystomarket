@@ -1,5 +1,4 @@
-import CompaniesList from "@/components/companies-list";
-import IndexTrackersList from "@/components/index-tracker-list";
+import RealtimeContainer from "@/components/real-time-container";
 import { Sector, SubIndustry } from "@prisma/client";
 
 interface Company {
@@ -19,7 +18,7 @@ interface Index {
   name: string;
   tickerSymbol: string;
   description: string;
-  latestPrice: number | null;
+  latestPrice: number;
   previousPrice: number | null;
 }
 
@@ -72,8 +71,11 @@ export default async function Home() {
 
   return (
     <div className="container mx-auto p-4 min-h-screen">
-      <IndexTrackersList indices={indices} />
-      <CompaniesList companies={companies} sectors={sectors} />
+      <RealtimeContainer
+        companies={companies}
+        sectors={sectors}
+        indices={indices}
+      />
     </div>
   );
 }

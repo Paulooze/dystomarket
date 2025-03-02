@@ -7,7 +7,7 @@ interface Index {
   name: string;
   tickerSymbol: string;
   description: string;
-  latestPrice: number | null;
+  latestPrice: number;
   previousPrice: number | null;
 }
 

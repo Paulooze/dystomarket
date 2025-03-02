@@ -1,10 +1,11 @@
-import { formatCurrency, getSectorColor, shortenLabel } from "@/lib/formatters";
+import { getSectorColor, shortenLabel } from "@/lib/formatters";
 import { Sector, SubIndustry } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
 import UpDownIcon from "./up-down-icon";
+import NumberFlow from "@number-flow/react";
 
 interface CompanyCardProps {
   company: {
@@ -81,13 +82,19 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
                 <UpDownIcon direction={direction} />
                 <p className={`text-sm font-mono font-bold ml-1`}>
                   {" "}
-                  {company.latestPrice !== null
-                    ? `${formatCurrency(company.latestPrice)}`
-                    : "N/A"}
+                  {company.latestPrice !== null ? (
+                    <NumberFlow isolate value={company.latestPrice} />
+                  ) : (
+                    "N/A"
+                  )}
                 </p>
                 {percentageChange !== 0 && (
                   <span className={`${priceChangeClass} text-xs ml-2`}>
-                    ({percentageChange.toFixed(2)}%)
+                    <NumberFlow
+                      format={{ style: "percent", maximumFractionDigits: 2 }}
+                      isolate
+                      value={percentageChange}
+                    />
                   </span>
                 )}
               </div>

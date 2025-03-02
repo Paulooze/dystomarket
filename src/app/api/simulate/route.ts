@@ -71,7 +71,7 @@ export async function POST() {
         if (totalWeight < 0.99 || totalWeight > 1.01) {
           // Allow for minor floating-point errors
           console.warn(
-            `Index ${index.name} has invalid total weight: ${totalWeight}`,
+            `Index ${index.name} has invalid total weight: ${totalWeight}`
           );
           // In a production system, you might throw an error or take other corrective action.
           // For this example, we'll just log a warning and continue.
@@ -94,7 +94,7 @@ export async function POST() {
     console.error("Error simulating prices:", error);
     return NextResponse.json(
       { error: "Failed to simulate prices" },
-      { status: 500 },
+      { status: 500 }
     );
   } finally {
     await prisma.$disconnect();

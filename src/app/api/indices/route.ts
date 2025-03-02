@@ -10,6 +10,9 @@ export async function GET() {
           orderBy: { timestamp: "desc" },
           take: 2, // Get the two most recent prices
         },
+        companies: {
+          select: { id: true },
+        },
       },
       orderBy: { name: "asc" },
     });
@@ -34,7 +37,7 @@ export async function GET() {
     console.error("Error fetching indices:", error);
     return NextResponse.json(
       { error: "Failed to fetch indices" },
-      { status: 500 },
+      { status: 500 }
     );
   } finally {
     await prisma.$disconnect();

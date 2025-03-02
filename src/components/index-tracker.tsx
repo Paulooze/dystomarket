@@ -1,6 +1,6 @@
-import { formatCurrency } from "@/lib/formatters";
-import UpDownIcon from "./up-down-icon";
+import NumberFlow from "@number-flow/react";
 import { Card, CardContent, CardDescription, CardTitle } from "./ui/card";
+import UpDownIcon from "./up-down-icon";
 
 interface IndexTrackerProps {
   index: {
@@ -8,7 +8,7 @@ interface IndexTrackerProps {
     name: string;
     tickerSymbol: string;
     description: string;
-    latestPrice: number | null;
+    latestPrice: number;
     previousPrice: number | null;
   };
 }
@@ -52,13 +52,15 @@ const IndexTracker: React.FC<IndexTrackerProps> = ({ index }) => {
       >
         <UpDownIcon direction={direction} />
         <p className="font-bold ml-1">
-          {formatCurrency(index.latestPrice, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })}
+          <NumberFlow value={index.latestPrice} />
         </p>
         {percentageChange !== 0 && (
-          <span className="text-sm ml-2">({percentageChange.toFixed(2)}%)</span>
+          <span className="text-sm ml-2">
+            <NumberFlow
+              value={percentageChange}
+              format={{ style: "percent", maximumFractionDigits: 2 }}
+            />
+          </span>
         )}
       </CardContent>
     </Card>

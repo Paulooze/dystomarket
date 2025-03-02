@@ -1,4 +1,15 @@
 steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '--no-cache'
+      - '-t'
+      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/stock-simulator:$SHORT_SHA'
+      - '-f'  # Specify the Dockerfile
+      - 'Dockerfile.simulate'
+      - '.'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/stock-simulator:$SHORT_SHA']
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
