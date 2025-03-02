@@ -11,7 +11,6 @@ async function main() {
     prisma.cEO.upsert({
       where: {
         name: ceo.name,
-        id: existingCeos.find((c) => c.name === ceo.name)?.id,
       },
       update: ceo,
       create: ceo,
@@ -37,11 +36,10 @@ async function main() {
       // Use upsert to handle potential conflicts (if you re-run the seed)
       const company = await prisma.company.upsert({
         where: { tickerSymbol: companyData.tickerSymbol },
-        update: { ...rest, ceoId: ceo.id, ceo },
+        update: { ...rest, ceoId: ceo?.id ?? null },
         create: {
           ...rest,
-          ceoId: ceo.id,
-          ceo,
+          ceoId: ceo?.id ?? null,
           stockPrices: {
             create: {
               price: initialPrice,

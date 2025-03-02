@@ -166,7 +166,7 @@ model IndexCompany {
 
 model CEO {
   id          Int      @id @default(autoincrement())
-  name        String
+  name        String   @unique
   imageUrl    String?
   personality String?
   bio         String?

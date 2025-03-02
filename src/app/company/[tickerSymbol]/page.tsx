@@ -32,7 +32,13 @@ async function getCompany(tickerSymbol: string): Promise<Company | null> {
   try {
     const company = await prisma.company.findUnique({
       where: { tickerSymbol: tickerSymbol },
-      include: { ceo: true }, // Include CEO if it exists
+      include: {
+        ceo: true,
+        stockPrices: {
+          orderBy: { timestamp: "desc" },
+          take: 2,
+        },
+      }, // Include CEO if it exists
     });
 
     if (!company) {
