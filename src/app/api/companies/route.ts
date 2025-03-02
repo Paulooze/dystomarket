@@ -38,7 +38,7 @@ export async function GET() {
         logoUrl: company.logoUrl,
         latestPrice: latestPrice,
         previousPrice: previousPrice, // Include previousPrice
-        sector: formatSector(company.sector),
+        sector: company.sector,
         subIndustry: formatSubIndustry(company.subIndustry),
       };
     });
@@ -47,7 +47,7 @@ export async function GET() {
     console.error("Error fetching companies:", error);
     return NextResponse.json(
       { error: "Failed to fetch companies" },
-      { status: 500 },
+      { status: 500 }
     );
   } finally {
     await prisma.$disconnect();

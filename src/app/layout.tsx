@@ -3,6 +3,7 @@ import { Inter, Roboto_Mono } from "next/font/google"; // Import Roboto_Mono
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,10 +30,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${robotoMono.variable}`}>
-      <body className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-grow pt-10">{children}</main>
-        <Footer />
+      <body className="flex flex-col min-h-screen">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Header />
+          <main className="flex-grow pt-10">{children}</main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

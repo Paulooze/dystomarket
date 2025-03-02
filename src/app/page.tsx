@@ -1,5 +1,7 @@
 import CompaniesList from "@/components/companies-list";
 import IndexTrackersList from "@/components/index-tracker-list";
+import { subIndustryMapping } from "@/lib/formatters";
+import { Sector } from "@prisma/client";
 
 interface Company {
   id: number;
@@ -9,8 +11,8 @@ interface Company {
   logoUrl: string;
   latestPrice: number | null;
   previousPrice: number | null;
-  sector: string;
-  subIndustry: string;
+  sector: Sector;
+  subIndustry: keyof typeof subIndustryMapping;
 }
 
 interface Index {
@@ -54,25 +56,10 @@ export default async function Home() {
     return <div className="text-center p-4">Failed to load data.</div>;
   }
 
-  // Group companies by sector and sub-industry (This logic remains the same)
-  const companiesBySector: {
-    [sector: string]: { [subIndustry: string]: Company[] };
-  } = {};
-  for (const company of companies) {
-    const { sector, subIndustry } = company;
-    if (!companiesBySector[sector]) {
-      companiesBySector[sector] = {};
-    }
-    if (!companiesBySector[sector][subIndustry]) {
-      companiesBySector[sector][subIndustry] = [];
-    }
-    companiesBySector[sector][subIndustry].push(company);
-  }
-
   return (
     <div className="container mx-auto p-4 min-h-screen">
       <IndexTrackersList indices={indices} />
-      <CompaniesList companiesBySector={companiesBySector} />
+      <CompaniesList companies={companies} />
     </div>
   );
 }

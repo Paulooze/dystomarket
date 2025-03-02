@@ -1,7 +1,15 @@
-import { formatCurrency } from "@/lib/formatters";
+import {
+  formatCurrency,
+  formatSector,
+  getSectorColor,
+  shortenLabel,
+  subIndustryMapping,
+} from "@/lib/formatters";
 import Image from "next/image";
 import Link from "next/link";
 import UpDownIcon from "./up-down-icon";
+import { Card } from "./ui/card";
+import { Sector } from "@prisma/client";
 
 interface CompanyCardProps {
   company: {
@@ -12,8 +20,8 @@ interface CompanyCardProps {
     logoUrl: string;
     latestPrice: number | null;
     previousPrice: number | null; // Add previousPrice
-    sector: string;
-    subIndustry: string;
+    sector: Sector;
+    subIndustry: keyof typeof subIndustryMapping;
   };
 }
 
@@ -39,14 +47,17 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
     priceChange > 0
       ? "text-green-400"
       : priceChange < 0
-        ? "text-red-400"
-        : "text-gray-700 dark:text-gray-200";
+      ? "text-red-400"
+      : "text-gray-700 dark:text-gray-200";
+  const { background, text } = getSectorColor(company.sector);
+
+  console.log(company.sector);
 
   return (
     <Link href={`/company/${company.tickerSymbol}`} className="h-full">
       {" "}
       {/* h-full on the Link */}
-      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden hover:shadow-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 p-4 flex flex-col h-full">
+      <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 p-4 flex flex-col h-full hover:bg-dysto-dark">
         <div className="flex items-start">
           <div className="w-12 h-12 rounded-full mr-4 flex items-center justify-center overflow-hidden">
             <Image
@@ -63,11 +74,10 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
             <div className="flex">
               <div className="flex flex-col mb-2">
                 {" "}
-                {/* Stack name and ticker */}
                 <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 line-clamp-1">
                   {company.name}
                 </h2>
-                <p className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">
                   {company.tickerSymbol}
                 </p>
               </div>
@@ -78,7 +88,6 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
                 <UpDownIcon direction={direction} />
                 <p className={`text-sm font-mono font-bold ml-1`}>
                   {" "}
-                  {/* Added mt-auto */}
                   {company.latestPrice !== null
                     ? `${formatCurrency(company.latestPrice)}`
                     : "N/A"}
@@ -90,13 +99,14 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
                 )}
               </div>
             </div>{" "}
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              {company.sector} / {company.subIndustry}
-            </p>
+            <span
+              className={`inline-flex rounded-sm px-2 text-sm ${background} ${text} line-clamp-1 overflow-hidden`}
+            >
+              {shortenLabel(formatSector(company.sector), company.subIndustry)}
+            </span>
           </div>
         </div>
-        {/* Display Sector and Sub-Industry */}
-      </div>
+      </Card>
     </Link>
   );
 };

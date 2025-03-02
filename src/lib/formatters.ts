@@ -88,7 +88,7 @@ export function formatSubIndustry(subIndustry: SubIndustry): string {
 // Similar function for Sector (if you want to format those too)
 import { Sector } from "@prisma/client";
 
-export function formatSector(sector: Sector): string {
+export function formatSector(sector: Sector): keyof typeof sectorMapping {
   switch (sector) {
     case Sector.Energy:
       return "Energy";
@@ -112,8 +112,6 @@ export function formatSector(sector: Sector): string {
       return "Utilities";
     case Sector.RealEstate:
       return "Real Estate";
-    default:
-      return "Unknown Sector";
   }
 }
 
@@ -125,7 +123,7 @@ interface FormatCurrencyOptions {
 
 export function formatCurrency(
   value: number | null | undefined,
-  options: FormatCurrencyOptions = {},
+  options: FormatCurrencyOptions = {}
 ): string {
   const {
     currency = "USD",
@@ -151,4 +149,111 @@ export function formatCurrency(
     console.error("Error formatting currency:", error);
     return "N/A"; // Fallback in case of error
   }
+}
+
+export const sectorColors: Record<
+  string,
+  { background: string; text: string }
+> = {
+  Energy: {
+    background: "bg-yellow-600",
+    text: "text-black",
+  },
+  Materials: {
+    background: "bg-amber-700",
+    text: "text-white",
+  },
+  Industrials: {
+    background: "bg-gray-700",
+    text: "text-white",
+  },
+  ConsumerDiscretionary: {
+    background: "bg-pink-700",
+    text: "text-white",
+  },
+  ConsumerStaples: {
+    background: "bg-orange-600",
+    text: "text-black",
+  },
+  HealthCare: {
+    background: "bg-red-600",
+    text: "text-white",
+  },
+  Financials: {
+    background: "bg-green-600",
+    text: "text-black",
+  },
+  InformationTechnology: {
+    background: "bg-blue-700",
+    text: "text-white",
+  },
+  CommunicationServices: {
+    background: "bg-indigo-700",
+    text: "text-white",
+  },
+  Utilities: {
+    background: "bg-cyan-600",
+    text: "text-black",
+  },
+  RealEstate: {
+    background: "bg-purple-700",
+    text: "text-white",
+  },
+  UnknownSector: {
+    background: "bg-gray-500",
+    text: "bg-gray-500",
+  },
+};
+
+export function getSectorColor(sector: Sector): {
+  background: string;
+  text: string;
+} {
+  return sectorColors[sector] ?? sectorColors.UnknownSector;
+}
+
+const sectorMapping = {
+  "Consumer Discretionary": "Cons. Disc.",
+  "Consumer Staples": "Cons. Staples",
+  "Information Technology": "InfoTech",
+  "Health Care": "Health",
+  Financials: "Finance",
+  Industrials: "Indust.",
+  "Communication Services": "Comm. Services",
+  Materials: "Materials",
+  Utilities: "Utilities",
+  "Real Estate": "Real Est.",
+  Energy: "Energy",
+};
+
+export const subIndustryMapping = {
+  "Hotels, Restaurants & Leisure": "Hotels & Leisure",
+  "Food & Staples Retailing": "Food Retail",
+  "Food Products": "Food",
+  Beverages: "Drinks",
+  Biotechnology: "Biotech",
+  Pharmaceuticals: "Pharma",
+  "Health Care Equipment & Supplies": "Equip. & Supplies",
+  "Software & Services": "Software",
+  "Technology Hardware & Equipment": "Tech Hardware",
+  Semiconductors: "Chips",
+  "Diversified Financials": "Diversified",
+  "Aerospace & Defense": "Aero & Def.",
+  Machinery: "Machines",
+  Transportation: "Transport",
+  "Electric Utilities": "Electric",
+  "Gas Utilities": "Gas",
+  "Water Utilities": "Water",
+  "Media & Entertainment": "Media",
+  "Real Estate Management & Development": "Real Est. Dev.",
+};
+
+export function shortenLabel(
+  sector: keyof typeof sectorMapping,
+  subIndustry: keyof typeof subIndustryMapping
+) {
+  const shortSector = sectorMapping[sector] ?? sector; // Default to original if no match
+  const shortSubIndustry = subIndustryMapping[subIndustry] ?? subIndustry; // Default to original
+
+  return `${shortSector} / ${shortSubIndustry}`;
 }
