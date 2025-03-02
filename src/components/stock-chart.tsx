@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { formatCurrency } from "@/lib/formatters";
 import PriceDisplay from "./price-display";
+import { Sector, SubIndustry } from "@prisma/client";
 
 interface StockPrice {
   timestamp: string;
@@ -26,8 +27,8 @@ interface StockChartProps {
     description: string;
     logoUrl: string;
     latestPrice: number | null;
-    sector: string;
-    subIndustry: string;
+    sector: Sector;
+    subIndustry: SubIndustry;
   };
 }
 
@@ -49,7 +50,7 @@ const CustomTooltip = ({ active, payload }: any) => {
 const calculatePriceChanges = (
   hoveredPriceObject: StockPrice | null,
   prices: StockPrice[],
-  latestPrice: number | null,
+  latestPrice: number | null
 ) => {
   let priceChange = 0;
   let percentageChange = 0;
@@ -61,8 +62,7 @@ const calculatePriceChanges = (
   // Find the index of the hovered price *object* by timestamp
   const hoveredPriceIndex = prices.findIndex(
     (p) =>
-      p.timestamp ===
-      (hoveredPriceObject ? hoveredPriceObject.timestamp : null),
+      p.timestamp === (hoveredPriceObject ? hoveredPriceObject.timestamp : null)
   );
 
   if (hoveredPriceIndex > 0) {
@@ -85,7 +85,7 @@ const calculatePriceChanges = (
 const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
   const [hoveredPriceObject, setHoveredPriceObject] =
     useState<StockPrice | null>(
-      prices.length > 0 ? prices[prices.length - 1] : null,
+      prices.length > 0 ? prices[prices.length - 1] : null
     );
 
   // eslint-disable-next-line
@@ -108,7 +108,7 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
   const { priceChange, percentageChange, direction } = calculatePriceChanges(
     hoveredPriceObject,
     prices,
-    company.latestPrice,
+    company.latestPrice
   );
   const currentPrice =
     hoveredPriceObject !== null

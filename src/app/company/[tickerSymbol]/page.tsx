@@ -6,8 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatSector, formatSubIndustry } from "@/lib/formatters";
 import { prisma } from "@/lib/prisma";
+import { Sector, SubIndustry } from "@prisma/client";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 // No useState or useEffect here!
@@ -18,8 +18,8 @@ interface Company {
   tickerSymbol: string;
   description: string;
   logoUrl: string;
-  sector: string;
-  subIndustry: string;
+  sector: Sector;
+  subIndustry: SubIndustry;
   latestPrice: number | null; // Keep this
   ceo: {
     name: string;
@@ -44,6 +44,8 @@ async function getCompany(tickerSymbol: string): Promise<Company | null> {
           orderBy: { timestamp: "desc" },
           take: 2,
         },
+        sector: true,
+        subIndustry: true,
       }, // Include CEO if it exists
     });
 
@@ -59,8 +61,8 @@ async function getCompany(tickerSymbol: string): Promise<Company | null> {
       tickerSymbol: company.tickerSymbol,
       description: company.description,
       logoUrl: company.logoUrl ?? "",
-      sector: formatSector(company.sector),
-      subIndustry: formatSubIndustry(company.subIndustry),
+      sector: company.sector,
+      subIndustry: company.subIndustry,
       latestPrice: company.latestPrice,
       ceo: company.ceo
         ? {

@@ -1,4 +1,3 @@
-import { formatSubIndustry } from "@/lib/formatters";
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
@@ -10,23 +9,14 @@ export async function GET() {
           orderBy: { timestamp: "desc" },
           take: 2,
         },
+        sector: true,
+        subIndustry: true,
       },
-      orderBy: [
-        {
-          sector: "asc", // Order by sector first
-        },
-        {
-          subIndustry: "asc", // Then by sub-industry
-        },
-        {
-          name: "asc", // Finally by company name
-        },
-      ],
+      orderBy: [{ latestPrice: "desc" }],
     });
 
     // Transform the data (optional, but good for consistency)
     const formattedCompanies = companies.map((company) => {
-      console.log(company.stockPrices);
       const latestPrice = company.stockPrices[0]?.price || null;
       const previousPrice = company.stockPrices[1]?.price || null; // Get previous price
 
@@ -39,7 +29,7 @@ export async function GET() {
         latestPrice: latestPrice,
         previousPrice: previousPrice, // Include previousPrice
         sector: company.sector,
-        subIndustry: formatSubIndustry(company.subIndustry),
+        subIndustry: company.subIndustry,
       };
     });
     return NextResponse.json(formattedCompanies);

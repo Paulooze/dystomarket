@@ -7,74 +7,25 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// GICS Sectors (using an enum)
-enum Sector {
-  Energy
-  Materials
-  Industrials
-  ConsumerDiscretionary
-  ConsumerStaples
-  HealthCare
-  Financials
-  InformationTechnology
-  CommunicationServices
-  Utilities
-  RealEstate
+model Sector {
+  id            Int           @id @default(autoincrement())
+  name          String        @unique
+  companies     Company[] // Companies in this sector
+  subIndustries SubIndustry[] // Sub-industries belonging to this sector
+
+  @@map("sectors")
 }
 
-// Simplified Sub-Industries (using an enum)
-// You can add more as needed
-enum SubIndustry {
-  // Energy
-  EnergyEquipmentServices
-  OilGasConsumableFuels
+// --- SubIndustry Model ---
+model SubIndustry {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  sectorId  Int //Foreign key
+  sector    Sector    @relation(fields: [sectorId], references: [id], onDelete: Cascade)
+  companies Company[] // Companies in this sub-industry
 
-  // Materials
-  Chemicals
-  MetalsMining
-
-  // Industrials
-  AerospaceDefense
-  Machinery
-  Transportation
-
-  // Consumer Discretionary
-  Automobiles
-  HotelsRestaurantsLeisure
-  Media
-  HouseholdProducts
-
-  // Consumer Staples
-  FoodStaplesRetailing
-  FoodProducts
-  Beverages
-
-  // Health Care
-  Pharmaceuticals
-  Biotechnology
-  HealthCareEquipmentSupplies
-
-  // Financials
-  Banks
-  DiversifiedFinancials
-  Insurance
-
-  // Information Technology
-  SoftwareServices
-  TechnologyHardwareEquipment
-  Semiconductors
-
-  // Communication Services
-  TelecommunicationServices
-  MediaEntertainment
-
-  // Utilities
-  ElectricUtilities
-  GasUtilities
-  WaterUtilities
-
-  // Real Estate
-  RealEstateManagementDevelopment
+  @@index([sectorId]) // Add index for performance
+  @@map("sub_industries")
 }
 
 model Company {
@@ -83,8 +34,10 @@ model Company {
   tickerSymbol      String      @unique
   description       String
   logoUrl           String?
-  sector            Sector // Use the Sector enum
-  subIndustry       SubIndustry // Use the SubIndustry enum
+  sectorId          Int // Foreign key to Sector
+  sector            Sector      @relation(fields: [sectorId], references: [id]) // Relationship
+  subIndustryId     Int // Foreign key to SubIndustry
+  subIndustry       SubIndustry @relation(fields: [subIndustryId], references: [id]) // Relationship
   latestPrice       Float?
   sharesOutstanding Int         @default(1000000) // Add sharesOutstanding, with a default
   valuation         Float?

@@ -1,7 +1,6 @@
 import CompaniesList from "@/components/companies-list";
 import IndexTrackersList from "@/components/index-tracker-list";
-import { subIndustryMapping } from "@/lib/formatters";
-import { Sector } from "@prisma/client";
+import { Sector, SubIndustry } from "@prisma/client";
 
 interface Company {
   id: number;
@@ -12,7 +11,7 @@ interface Company {
   latestPrice: number | null;
   previousPrice: number | null;
   sector: Sector;
-  subIndustry: keyof typeof subIndustryMapping;
+  subIndustry: SubIndustry;
 }
 
 interface Index {
@@ -22,6 +21,20 @@ interface Index {
   description: string;
   latestPrice: number | null;
   previousPrice: number | null;
+}
+
+async function getSectors(): Promise<
+  (Sector & { subIndustries: SubIndustry[] })[]
+> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/sectors`, {
+    cache: "default",
+  });
+
+  if (!res.ok) {
+    return [];
+  }
+
+  return res.json();
 }
 
 async function getCompanies(): Promise<Company[]> {
@@ -51,6 +64,7 @@ async function getIndices(): Promise<Index[]> {
 export default async function Home() {
   const companies = await getCompanies();
   const indices = await getIndices();
+  const sectors = await getSectors();
 
   if (!companies || !indices) {
     return <div className="text-center p-4">Failed to load data.</div>;
@@ -59,7 +73,7 @@ export default async function Home() {
   return (
     <div className="container mx-auto p-4 min-h-screen">
       <IndexTrackersList indices={indices} />
-      <CompaniesList companies={companies} />
+      <CompaniesList companies={companies} sectors={sectors} />
     </div>
   );
 }

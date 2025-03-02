@@ -1,15 +1,10 @@
-import {
-  formatCurrency,
-  formatSector,
-  getSectorColor,
-  shortenLabel,
-  subIndustryMapping,
-} from "@/lib/formatters";
+import { formatCurrency, getSectorColor, shortenLabel } from "@/lib/formatters";
+import { Sector, SubIndustry } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import UpDownIcon from "./up-down-icon";
+import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
-import { Sector } from "@prisma/client";
+import UpDownIcon from "./up-down-icon";
 
 interface CompanyCardProps {
   company: {
@@ -21,7 +16,7 @@ interface CompanyCardProps {
     latestPrice: number | null;
     previousPrice: number | null; // Add previousPrice
     sector: Sector;
-    subIndustry: keyof typeof subIndustryMapping;
+    subIndustry: SubIndustry;
   };
 }
 
@@ -49,9 +44,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
       : priceChange < 0
       ? "text-red-400"
       : "text-gray-700 dark:text-gray-200";
-  const { background, text } = getSectorColor(company.sector);
-
-  console.log(company.sector);
+  const { background, text } = getSectorColor(company.sector.name);
 
   return (
     <Link href={`/company/${company.tickerSymbol}`} className="h-full">
@@ -99,11 +92,9 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
                 )}
               </div>
             </div>{" "}
-            <span
-              className={`inline-flex rounded-sm px-2 text-sm ${background} ${text} line-clamp-1 overflow-hidden`}
-            >
-              {shortenLabel(formatSector(company.sector), company.subIndustry)}
-            </span>
+            <Badge className={`${background} ${text}`}>
+              {shortenLabel(company.sector.name, company.subIndustry.name)}
+            </Badge>
           </div>
         </div>
       </Card>

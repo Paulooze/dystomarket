@@ -1,5 +1,5 @@
 "use client";
-
+import { LayoutGroup, motion } from "motion/react";
 import IndexTracker from "./index-tracker";
 
 interface Index {
@@ -22,9 +22,23 @@ const IndexTrackersList: React.FC<IndexTrackersListProps> = ({ indices }) => {
         Market Indices
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {indices.map((index) => (
-          <IndexTracker key={index.id} index={index} />
-        ))}
+        <LayoutGroup>
+          {indices.map((index, i) => (
+            <motion.div
+              key={index.id}
+              transition={{
+                delay: i * 0.05,
+                duration: 0.2,
+                ease: "easeOut",
+              }}
+              initial={{ translateX: -10, opacity: 0, scale: 0.95 }}
+              animate={{ translateX: 0, opacity: 1, scale: 1 }}
+              exit={{ translateX: -10, opacity: 0, scale: 0.95 }}
+            >
+              <IndexTracker key={index.id} index={index} />
+            </motion.div>
+          ))}
+        </LayoutGroup>
       </div>
     </div>
   );
