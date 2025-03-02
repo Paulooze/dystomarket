@@ -7,6 +7,83 @@
 @theme {
   --font-sans: var(--font-inter);
   --font-mono: var(--font-roboto-mono);
+  /* ⚫ Deep Blacks & Dark Grays (Backgrounds, Cards, Borders) */
+  --color-gray-50: #f6f6f6;
+  --color-gray-100: #e0e0e0;
+  --color-gray-200: #c2c2c2;
+  --color-gray-300: #a4a4a4;
+  --color-gray-400: #868686;
+  --color-gray-500: #696969;
+  --color-gray-600: #4f4f4f;
+  --color-gray-700: #383838;
+  --color-gray-800: #222222;
+  --color-gray-900: #121212;
+  --color-gray-950: #0a0a0a;
+
+  /* 🔴 Red Accents (Warnings, Losses, Negative Changes) */
+  --color-red-50: #fdecec;
+  --color-red-100: #fcd9d9;
+  --color-red-200: #f9b4b4;
+  --color-red-300: #f58e8e;
+  --color-red-400: #f26969;
+  --color-red-500: #ef4444;
+  --color-red-600: #e11313;
+  --color-red-700: #a90f0f;
+  --color-red-800: #710a0a;
+  --color-red-900: #380505;
+  --color-red-950: #1c0202;
+
+  /* 🟢 Green Accents (Profits, Growth, Positive Changes) */
+  --color-green-50: #eafbef;
+  --color-green-100: #d2f6dd;
+  --color-green-200: #a6ecba;
+  --color-green-300: #7ae297;
+  --color-green-400: #4ed874;
+  --color-green-500: #22ce51;
+  --color-green-600: #1aa23f;
+  --color-green-700: #12762d;
+  --color-green-800: #0b491b;
+  --color-green-900: #052d10;
+  --color-green-950: #021507;
+
+  /* 🔵 Corporate Blues (Tech, InfoTech, Futuristic UI) */
+  --color-blue-50: #ebf3fe;
+  --color-blue-100: #d8e8fd;
+  --color-blue-200: #b2d2fb;
+  --color-blue-300: #8cbbf9;
+  --color-blue-400: #66a5f7;
+  --color-blue-500: #408ef5;
+  --color-blue-600: #326fc2;
+  --color-blue-700: #254f8f;
+  --color-blue-800: #18305c;
+  --color-blue-900: #0c182e;
+  --color-blue-950: #060c17;
+
+  /* 🟠 Cyberpunk Oranges (Energy, Industrial Sectors) */
+  --color-orange-50: #fff3e6;
+  --color-orange-100: #ffe6cc;
+  --color-orange-200: #ffcc99;
+  --color-orange-300: #ffb366;
+  --color-orange-400: #ff9933;
+  --color-orange-500: #ff8000;
+  --color-orange-600: #cc6600;
+  --color-orange-700: #994d00;
+  --color-orange-800: #663300;
+  --color-orange-900: #331900;
+  --color-orange-950: #190c00;
+
+  /* 🟣 Corporate Purples (Luxury, Elite Corps, Shadowy Conglomerates) */
+  --color-purple-50: #f6ebfa;
+  --color-purple-100: #ecd7f5;
+  --color-purple-200: #d9b0eb;
+  --color-purple-300: #c689e1;
+  --color-purple-400: #b362d7;
+  --color-purple-500: #a03bcd;
+  --color-purple-600: #7f2f9f;
+  --color-purple-700: #5e2374;
+  --color-purple-800: #3e174a;
+  --color-purple-900: #1f0c25;
+  --color-purple-950: #0f0612;
 }
 
 :root {
@@ -149,6 +226,6 @@
     @apply font-sans font-semibold;
   }
   body {
-    @apply font-sans bg-dysto-dark text-dysto-white;
+    @apply font-sans bg-gray-900 text-dysto-white;
   }
 }
