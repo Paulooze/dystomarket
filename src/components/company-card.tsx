@@ -1,11 +1,10 @@
 import { getSectorColor, shortenLabel } from "@/lib/formatters";
+import NumberFlow from "@number-flow/react";
 import { Sector, SubIndustry } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
 import UpDownIcon from "./up-down-icon";
-import NumberFlow from "@number-flow/react";
 
 interface CompanyCardProps {
   company: {
@@ -44,13 +43,13 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
       : priceChange < 0
       ? "text-red-400"
       : "text-gray-700 dark:text-gray-200";
-  const { background, text } = getSectorColor(company.sector.name);
+  const { text } = getSectorColor(company.sector.name);
 
   return (
     <Link href={`/company/${company.tickerSymbol}`} className="h-full">
       {" "}
       {/* h-full on the Link */}
-      <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 p-4 flex flex-col h-full hover:bg-dysto-dark">
+      <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 p-4 flex flex-col h-full hover:bg-gray-700">
         <div className="flex items-start">
           <div className="w-12 h-12 rounded-full mr-4 flex items-center justify-center overflow-hidden">
             <Image
@@ -67,10 +66,10 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
             <div className="flex">
               <div className="flex flex-col mb-2">
                 {" "}
-                <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100 line-clamp-1">
+                <h2 className="text-lg font-bold text-gray-800 dark:text-dysto-white line-clamp-1">
                   {company.name}
                 </h2>
-                <p className="text-sm font-semibold text-gray-500 dark:text-gray-400">
+                <p className="text-sm font-semibold text-gray-500 dark:text-gray-50">
                   {company.tickerSymbol}
                 </p>
               </div>
@@ -98,9 +97,9 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
                 )}
               </div>
             </div>{" "}
-            <Badge className={`${background} ${text}`}>
+            <span className={`${text} text-sm`}>
               {shortenLabel(company.sector.name, company.subIndustry.name)}
-            </Badge>
+            </span>
           </div>
         </div>
       </Card>

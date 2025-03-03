@@ -18,7 +18,7 @@ interface IndexTrackersListProps {
 const IndexTrackersList: React.FC<IndexTrackersListProps> = ({ indices }) => {
   return (
     <div className="mb-8">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-dystro-white">
         Market Indices
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

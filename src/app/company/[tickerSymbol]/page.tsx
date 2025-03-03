@@ -1,3 +1,4 @@
+import ChangeChart from "@/components/change-chart";
 import StockChart from "@/components/stock-chart";
 import {
   Card,
@@ -7,12 +8,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import { Sector, SubIndustry } from "@prisma/client";
+import { FinancialData, Sector, SubIndustry } from "@prisma/client";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 // No useState or useEffect here!
 
-interface Company {
+type Company = {
   id: number;
   name: string;
   tickerSymbol: string;
@@ -27,7 +28,8 @@ interface Company {
     personality: string | null;
     bio: string | null;
   } | null;
-}
+  financialData: FinancialData[] | null;
+};
 
 interface StockPrice {
   timestamp: string;
@@ -46,6 +48,7 @@ async function getCompany(tickerSymbol: string): Promise<Company | null> {
         },
         sector: true,
         subIndustry: true,
+        financialData: true,
       }, // Include CEO if it exists
     });
 
@@ -73,6 +76,7 @@ async function getCompany(tickerSymbol: string): Promise<Company | null> {
             bio: company.ceo.bio,
           }
         : null,
+      financialData: company.financialData ? company.financialData : null,
     };
   } catch (error) {
     console.error("Error fetching company:", error);
@@ -137,12 +141,19 @@ export default async function CompanyPage({
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                 className="rounded-full mr-6"
               />
-              <h1>
-                {company.name} <span>{company.tickerSymbol}</span>
+              <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 flex flex-col">
+                <span className="mb-2">{company.name}</span>
+                <span className="text-lg text-gray-500 dark:text-gray-400">
+                  {company.tickerSymbol}
+                </span>
               </h1>
             </div>
           </CardTitle>
-          <CardDescription></CardDescription>
+          <CardDescription>
+            <p className="text-lg text-gray-700 dark:text-gray-300">
+              {company.description}
+            </p>
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {company.ceo && ( // Only display if a CEO exists
@@ -168,7 +179,15 @@ export default async function CompanyPage({
               </div>
             </div>
           )}
-          <StockChart prices={prices} company={company} />
+          <div className="mb-8">
+            <StockChart prices={prices} company={company} />
+          </div>
+          <h2 className="text-xl font-semibold text-gray-800 dark:text-dystro-white mb-4">
+            Financials
+          </h2>
+          {company.financialData && (
+            <ChangeChart data={company.financialData} />
+          )}
         </CardContent>
       </Card>
     </div>

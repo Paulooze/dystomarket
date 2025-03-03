@@ -28,6 +28,23 @@ model SubIndustry {
   @@map("sub_industries")
 }
 
+model FinancialData {
+  id                Int    @id @default(autoincrement())
+  companyId         Int
+  year              Int
+  revenue           Float?
+  netIncome         Float?
+  grossProfit       Float?
+  operatingProfit   Float?
+  operatingExpenses Float?
+  costOfSales       Float?
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId, year])
+  @@map("financial_data")
+}
+
 model Company {
   id                Int         @id @default(autoincrement())
   name              String      @unique
@@ -44,9 +61,10 @@ model Company {
   ceoId             Int? // Foreign key to CEO (optional)
   ceo               CEO?
 
-  stockPrices  StockPrice[]
-  newsArticles NewsArticle[]
-  indices      IndexCompany[] // Relationship to indices
+  stockPrices   StockPrice[]
+  newsArticles  NewsArticle[]
+  indices       IndexCompany[] // Relationship to indices
+  financialData FinancialData[]
 
   @@index([tickerSymbol])
   @@map("companies")

@@ -25,6 +25,8 @@ export function formatCurrency(
       currency: currency,
       minimumFractionDigits: minimumFractionDigits,
       maximumFractionDigits: maximumFractionDigits,
+      compactDisplay: "short",
+      notation: "compact",
     });
 
     return formatter.format(value);
@@ -34,130 +36,143 @@ export function formatCurrency(
   }
 }
 type Colors = {
-  background: string;
-  border: string;
   text: string;
+  border: string;
+  background?: string;
   hover: { background: string; text: string; border: string };
 };
 export const sectorColors: Record<string, Colors> = {
   Energy: {
-    background: "bg-yellow-600",
+    text: "text-yellow-600",
     border: "border-bg-yellow-600",
-    text: "text-black",
+    // text: "text-black",
     hover: {
+      // text: "hover:text-yellow-500",
       background: "hover:bg-yellow-500",
       border: "border-hover:bg-yellow-500",
       text: "hover:text-black",
     },
   },
   Materials: {
-    background: "bg-amber-700",
-    border: "border-bg-amber-700",
-    text: "text-white",
+    text: "text-amber-600",
+    border: "border-bg-amber-600",
+    // text: "text-white",
     hover: {
+      // text: "hover:text-amber-600",
       background: "hover:bg-amber-600",
       border: "border-hover:bg-amber-600",
       text: "hover:text-white",
     },
   },
   Industrials: {
-    background: "bg-gray-700",
-    border: "border-bg-gray-700",
-    text: "text-white",
+    text: "text-gray-200",
+    border: "border-bg-gray-600",
+    // text: "text-white",
     hover: {
-      background: "hover:bg-gray-600",
+      // text: "hover:text-gray-300",
+      background: "hover:bg-gray-100",
       border: "border-hover:bg-gray-600",
       text: "hover:text-white",
     },
   },
   "Consumer Discretionary": {
-    background: "bg-pink-700",
-    border: "border-bg-pink-700",
-    text: "text-white",
+    text: "text-pink-500",
+    border: "border-bg-pink-600",
+    // text: "text-dysto-dark",
     hover: {
+      // text: "hover:text-pink-600",
       background: "hover:bg-pink-600",
       border: "border-hover:bg-pink-600",
       text: "hover:text-white",
     },
   },
   "Consumer Staples": {
-    background: "bg-orange-600",
+    text: "text-orange-600",
     border: "border-bg-orange-600",
-    text: "text-black",
+    // text: "text-black",
     hover: {
+      // text: "hover:text-orange-500",
       background: "hover:bg-orange-500",
       border: "border-hover:bg-orange-500",
       text: "hover:text-black",
     },
   },
   "Health Care": {
-    background: "bg-red-600",
+    text: "text-red-600",
     border: "border-bg-red-600",
-    text: "text-white",
+    // text: "text-white",
     hover: {
+      // text: "hover:text-red-500",
       background: "hover:bg-red-500",
       border: "border-hover:bg-red-500",
       text: "hover:text-white",
     },
   },
   Financials: {
-    background: "bg-green-600",
+    text: "text-green-600",
     border: "border-bg-green-600",
-    text: "text-black",
+    // text: "text-black",
     hover: {
+      // text: "hover:text-green-500",
       background: "hover:bg-green-500",
       border: "border-hover:bg-green-500",
       text: "hover:text-black",
     },
   },
   "Information Technology": {
-    background: "bg-blue-700",
-    border: "border-bg-blue-700",
-    text: "text-white",
+    text: "text-blue-600",
+    border: "border-bg-blue-600",
+    // text: "text-white",
     hover: {
+      // text: "hover:text-blue-600",
       background: "hover:bg-blue-600",
       border: "border-hover:bg-blue-600",
       text: "hover:text-white",
     },
   },
   "Communication Services": {
-    background: "bg-indigo-700",
-    border: "border-bg-indigo-700",
-    text: "text-white",
+    text: "text-indigo-600",
+    border: "border-bg-indigo-600",
+    // text: "text-white",
     hover: {
+      // text: "hover:text-indigo-600",
       background: "hover:bg-indigo-600",
       border: "border-hover:bg-indigo-600",
       text: "hover:text-white",
     },
   },
   Utilities: {
-    background: "bg-cyan-600",
+    text: "text-cyan-600",
     border: "border-bg-cyan-600",
-    text: "text-black",
+    // text: "text-black",
     hover: {
+      // text: "hover:text-cyan-500",
       background: "hover:bg-cyan-500",
       border: "border-hover:bg-cyan-500",
       text: "hover:text-black",
     },
   },
   "Real Estate": {
-    background: "bg-purple-700",
-    border: "border-bg-purple-700",
-    text: "text-white",
+    text: "text-purple-600",
+    border: "border-bg-purple-600",
+    // text: "text-white",
     hover: {
+      // text: "hover:text-purple-600",
       background: "hover:bg-purple-600",
       border: "border-hover:bg-purple-600",
       text: "hover:text-white",
     },
   },
   UnknownSector: {
-    background: "bg-gray-500",
+    text: "text-gray-500",
     border: "border-bg-gray-500",
-    text: "bg-gray-500",
+    // text: "text-gray-500",
     hover: {
+      // text: "hover:text-gray-400",
       background: "hover:bg-gray-400",
       border: "border-hover:bg-gray-400",
-      text: "hover:bg-gray-500",
+      text: "hover:text-gray-500",
+      // background: "hover:bg-gray-500",
     },
   },
 };
@@ -207,6 +222,14 @@ function ensureSectorKey(value: string): keyof typeof sectorMapping {
 }
 function ensureSubIndustryKey(value: string): keyof typeof subIndustryMapping {
   return value as keyof typeof subIndustryMapping;
+}
+
+export function shortenSectorName(sector: string): string {
+  return sectorMapping[ensureSectorKey(sector)] ?? sector;
+}
+
+export function shortenSubIndustryName(subIndustry: string): string {
+  return subIndustryMapping[ensureSubIndustryKey(subIndustry)] ?? subIndustry;
 }
 
 export function shortenLabel(sector: string, subIndustry: string) {

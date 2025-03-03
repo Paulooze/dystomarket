@@ -14,15 +14,51 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "dysto-dark": "#121212", // Very dark gray (almost black) - Main background
-        "dysto-dark-2": "#1f2937", // Slightly lighter dark gray - for cards, panels
-        "dysto-gray": "#4b5563", // Medium gray - for secondary text, borders
-        "dysto-light-gray": "#d1d5db", // Light gray - for less prominent text
-        "dysto-white": "#ffffff", // Pure white - for main text
-        "dysto-green": "#16a34a", // Green - for positive price changes, buttons
-        "dysto-red": "#dc2626", // Red - for negative price changes
-        "dysto-accent": "#06b6d4", // Cyan/Blue - for accents, links (from Moana image)
-        // Add more shades as needed (e.g., dysto-green-dark, dysto-red-light)
+        "dysto-dark": "#0d0208", // Primary Background
+        "dysto-dark-2": "#110f15", // Secondary Background
+        "dysto-light": "#f0f4f8", // Primary Text
+        "dysto-gray": "#a7b4c5", // Secondary Text
+        "dysto-accent": "#00ffff", // Electric Blue
+        "dysto-pink": "#ff0099", // Hot Pink/Magenta
+        "dysto-green": "#66ff00", // Neon Green
+        "dysto-purple": "#9900ff", // Deep Purple
+        "dysto-neutral": "#2a2a2a", // Neutral Gray
+        "dysto-red": "#ff3333",
+        "dysto-yellow": "#facc15",
+
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       },
     },
   },

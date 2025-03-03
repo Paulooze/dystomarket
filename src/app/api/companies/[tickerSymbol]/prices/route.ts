@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 
 export async function GET(
   _: NextRequest,
-  { params }: { params: Promise<{ tickerSymbol: string }> },
+  { params }: { params: Promise<{ tickerSymbol: string }> }
 ) {
   const { tickerSymbol } = await params;
 
@@ -33,7 +33,7 @@ export async function GET(
     console.error("Error fetching stock prices:", error);
     return NextResponse.json(
       { error: "Failed to fetch stock prices" },
-      { status: 500 },
+      { status: 500 }
     );
   } finally {
     await prisma.$disconnect();

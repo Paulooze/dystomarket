@@ -4,6 +4,7 @@ import { LayoutGroup, motion } from "motion/react";
 import { useMemo, useState } from "react";
 import CompaniesFilter from "./companies-filter";
 import CompanyCard from "./company-card";
+import EmptyState from "./empty-state";
 
 interface Company {
   id: number;
@@ -79,6 +80,7 @@ const CompaniesList: React.FC<CompaniesListProps> = ({
         selectedSector={selectedSector}
         selectedSubIndustry={selectedSubIndustry}
       />
+      {filteredCompanies.length === 0 && <EmptyState />}
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <LayoutGroup>
           {filteredCompanies.map((company, index) => (

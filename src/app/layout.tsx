@@ -1,26 +1,41 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono } from "next/font/google"; // Import Roboto_Mono
+import { Oxanium, IBM_Plex_Mono, VT323 } from "next/font/google"; // Import ibm-plex_Mono
 import "./globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
 
-const inter = Inter({
+const inter = Oxanium({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-oxanium",
   display: "swap",
 });
 
-const robotoMono = Roboto_Mono({
+const imbPlex = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-roboto-mono",
+  variable: "--font-ibm-plex-mono",
+  display: "swap",
+  weight: ["400"],
+});
+
+const vt323 = VT323({
+  subsets: ["latin"],
+  variable: "--font-vt323",
   display: "swap",
   weight: ["400"],
 });
 export const metadata: Metadata = {
-  title: "Dystomarket - Fictional Stock Dashboard",
+  title: "Dystomarket – The Ultimate Fictional Stock Trading Platform",
   description:
-    "Track the performance of fictional companies from dystopian worlds.",
+    "Step into the dystopian stock market of tomorrow. Trade shares of fictional corporations from movies, games, and TV—complete with real-time price updates, financial reports, and market chaos. Will your portfolio survive the corporate wars?",
+  openGraph: {
+    title: "Dystomarket – Trade Fictional Stocks in a Cyberpunk Economy",
+    description:
+      "A high-stakes trading simulation where legendary corporations from pop culture clash in an unpredictable stock market. Track trends, analyze financials, and survive the capitalist wasteland.",
+    url: "https://dystomarket.paulooze.com/",
+  },
+  keywords:
+    "fictional stock market, cyberpunk stocks, stock market simulator, trade fictional companies, dystopian finance, corporate wars, stock trading game, parody stock market, sci-fi economy, stock exchange simulator",
 };
 
 export default function RootLayout({
@@ -29,7 +44,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${robotoMono.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${imbPlex.variable} ${vt323.variable}`}
+    >
       <body className="flex flex-col min-h-screen">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Header />
