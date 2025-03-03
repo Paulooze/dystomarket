@@ -9,8 +9,8 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 850000000000,
     sharesOutstanding: 500000000,
     initialPrice: 1700,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Aerospace & Defense"),
+    sectorId: sectorMap.get("Industrials").id,
+    subIndustryId: subIndustryMap.get("Aerospace & Defense").id,
     ceo: ceoMap.get("Bruce Wayne"),
   },
   {
@@ -22,8 +22,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 600000000000,
     sharesOutstanding: 300000000,
     initialPrice: 2000,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Aerospace & Defense"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Aerospace & Defense").id,
+    // subIndustry: subIndustryMap.get("Aerospace & Defense"),
     ceo: ceoMap.get("Tony Stark"),
   },
   {
@@ -35,8 +42,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 25000000000,
     sharesOutstanding: 100000000,
     initialPrice: 250,
-    sectorId: sectorMap.get("Information Technology"),
-    subIndustryId: subIndustryMap.get("Technology Hardware & Equipment"),
+    sectorId: sectorMap.get("Information Technology").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Information Technology").id },
+        // create: sectorMap.get("Information Technology"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Technology Hardware & Equipment").id,
+    // subIndustry: subIndustryMap.get("Technology Hardware & Equipment"),
     ceo: ceoMap.get("Miles Dyson"),
   },
   {
@@ -48,8 +62,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 80000000000,
     sharesOutstanding: 200000000,
     initialPrice: 400,
-    sectorId: sectorMap.get("Health Care"),
-    subIndustryId: subIndustryMap.get("Biotechnology"),
+    sectorId: sectorMap.get("Health Care").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Health Care").id },
+        // create: sectorMap.get("Health Care"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Biotechnology").id,
+    // subIndustry: subIndustryMap.get("Biotechnology"),
     ceo: ceoMap.get("Eldon Tyrell"),
   },
   {
@@ -61,8 +82,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 40000000000,
     sharesOutstanding: 150000000,
     initialPrice: 266.67,
-    sectorId: sectorMap.get("Health Care"),
-    subIndustryId: subIndustryMap.get("Pharmaceuticals"),
+    sectorId: sectorMap.get("Health Care").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Health Care").id },
+        // create: sectorMap.get("Health Care"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Pharmaceuticals").id,
+    // subIndustry: subIndustryMap.get("Pharmaceuticals"),
     ceo: ceoMap.get("Norman Osborn"),
   },
   {
@@ -74,8 +102,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 120000000000,
     sharesOutstanding: 400000000,
     initialPrice: 300,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Aerospace & Defense"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Aerospace & Defense").id,
+    // subIndustry: subIndustryMap.get("Aerospace & Defense"),
     ceo: ceoMap.get("Peter Weyland"),
   },
   {
@@ -87,8 +122,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 60000000000,
     sharesOutstanding: 100000000,
     initialPrice: 600,
-    sectorId: sectorMap.get("Information Technology"),
-    subIndustryId: subIndustryMap.get("Software & Services"),
+    sectorId: sectorMap.get("Information Technology").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Information Technology").id },
+        // create: sectorMap.get("Information Technology"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Software & Services").id,
+    // subIndustry: subIndustryMap.get("Software & Services"),
     ceo: ceoMap.get("Nina Sharp"),
   },
   {
@@ -100,8 +142,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 35000000000,
     sharesOutstanding: 175000000,
     initialPrice: 200,
-    sectorId: sectorMap.get("Health Care"),
-    subIndustryId: subIndustryMap.get("Pharmaceuticals"),
+    sectorId: sectorMap.get("Health Care").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Health Care").id },
+        // create: sectorMap.get("Health Care"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Pharmaceuticals").id,
+    // subIndustry: subIndustryMap.get("Pharmaceuticals"),
     ceo: ceoMap.get("Oswell E. Spencer"),
   },
   {
@@ -113,8 +162,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 900000000000,
     sharesOutstanding: 600000000,
     initialPrice: 1500,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Transportation"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Transportation").id,
+    // subIndustry: subIndustryMap.get("Transportation"),
     ceo: ceoMap.get("Shaddam Corrino IV"),
   },
   {
@@ -126,8 +182,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 1000000000,
     sharesOutstanding: 50000000,
     initialPrice: 20,
-    sectorId: sectorMap.get("Information Technology"),
-    subIndustryId: subIndustryMap.get("Technology Hardware & Equipment"),
+    sectorId: sectorMap.get("Information Technology").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Information Technology").id },
+        // create: sectorMap.get("Information Technology"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Technology Hardware & Equipment").id,
+    // subIndustry: subIndustryMap.get("Technology Hardware & Equipment"),
   },
   {
     name: "MomCorp",
@@ -138,8 +201,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 150000000000,
     sharesOutstanding: 300000000,
     initialPrice: 500,
-    sectorId: sectorMap.get("Health Care"),
-    subIndustryId: subIndustryMap.get("Biotechnology"),
+    sectorId: sectorMap.get("Health Care").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Health Care").id },
+        // create: sectorMap.get("Health Care"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Biotechnology").id,
+    // subIndustry: subIndustryMap.get("Biotechnology"),
     ceo: ceoMap.get("Mom (Carol Miller)"),
   },
   {
@@ -151,8 +221,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 75000000000,
     sharesOutstanding: 250000000,
     initialPrice: 300,
-    sectorId: sectorMap.get("Financials"),
-    subIndustryId: subIndustryMap.get("Diversified Financials"),
+    sectorId: sectorMap.get("Financials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Financials").id },
+        // create: sectorMap.get("Financials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Diversified Financials").id,
+    // subIndustry: subIndustryMap.get("Diversified Financials"),
   },
 
   // Food & Restaurants
@@ -165,8 +242,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 2000000000,
     sharesOutstanding: 20000000,
     initialPrice: 100,
-    sectorId: sectorMap.get("Consumer Discretionary"),
-    subIndustryId: subIndustryMap.get("Hotels, Restaurants & Leisure"),
+    sectorId: sectorMap.get("Consumer Discretionary").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Consumer Discretionary").id },
+        // create: sectorMap.get("Consumer Discretionary"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Hotels, Restaurants & Leisure").id,
+    // subIndustry: subIndustryMap.get("Hotels, Restaurants & Leisure"),
     ceo: ceoMap.get("Gustavo Fring"),
   },
   {
@@ -178,8 +262,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 500000000,
     sharesOutstanding: 10000000,
     initialPrice: 50,
-    sectorId: sectorMap.get("Materials"),
-    subIndustryId: subIndustryMap.get("Metals & Mining"),
+    sectorId: sectorMap.get("Materials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Materials").id },
+        // create: sectorMap.get("Materials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Metals & Mining").id,
+    // subIndustry: subIndustryMap.get("Metals & Mining"),
     ceo: ceoMap.get("Bill Lumbergh"),
   },
   {
@@ -191,8 +282,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 100000000,
     sharesOutstanding: 1000000,
     initialPrice: 100,
-    sectorId: sectorMap.get("Consumer Discretionary"),
-    subIndustryId: subIndustryMap.get("Hotels, Restaurants & Leisure"),
+    sectorId: sectorMap.get("Consumer Discretionary").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Consumer Discretionary").id },
+        // create: sectorMap.get("Consumer Discretionary"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Hotels, Restaurants & Leisure").id,
+    // subIndustry: subIndustryMap.get("Hotels, Restaurants & Leisure"),
     ceo: ceoMap.get("Eugene Krabs"),
   },
   {
@@ -204,8 +302,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 500000000,
     sharesOutstanding: 5000000,
     initialPrice: 100,
-    sectorId: sectorMap.get("Consumer Discretionary"),
-    subIndustryId: subIndustryMap.get("Hotels, Restaurants & Leisure"),
+    sectorId: sectorMap.get("Consumer Discretionary").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Consumer Discretionary").id },
+        // create: sectorMap.get("Consumer Discretionary"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Hotels, Restaurants & Leisure").id,
+    // subIndustry: subIndustryMap.get("Hotels, Restaurants & Leisure"),
   },
   {
     name: "Mooby Corp",
@@ -216,8 +321,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 5000000000,
     sharesOutstanding: 100000000,
     initialPrice: 50,
-    sectorId: sectorMap.get("Consumer Staples"),
-    subIndustryId: subIndustryMap.get("Food & Staples Retailing"),
+    sectorId: sectorMap.get("Consumer Staples").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Consumer Staples").id },
+        // create: sectorMap.get("Consumer Staples"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Food & Staples Retailing").id,
+    // subIndustry: subIndustryMap.get("Food & Staples Retailing"),
     ceo: ceoMap.get("Mooby the Golden Calf"),
   },
   {
@@ -229,8 +341,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 750000000,
     sharesOutstanding: 7500000,
     initialPrice: 100,
-    sectorId: sectorMap.get("Consumer Discretionary"),
-    subIndustryId: subIndustryMap.get("Hotels, Restaurants & Leisure"),
+    sectorId: sectorMap.get("Consumer Discretionary").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Consumer Discretionary").id },
+        // create: sectorMap.get("Consumer Discretionary"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Hotels, Restaurants & Leisure").id,
+    // subIndustry: subIndustryMap.get("Hotels, Restaurants & Leisure"),
   },
 
   // Media & Entertainment
@@ -243,8 +362,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 1000000000,
     sharesOutstanding: 20000000,
     initialPrice: 50,
-    sectorId: sectorMap.get("Communication Services"),
-    subIndustryId: subIndustryMap.get("Media & Entertainment"),
+    sectorId: sectorMap.get("Communication Services").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Communication Services").id },
+        // create: sectorMap.get("Communication Services"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Media & Entertainment").id,
+    // subIndustry: subIndustryMap.get("Media & Entertainment"),
     ceo: ceoMap.get("Perry White"),
   },
   {
@@ -256,8 +382,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 800000000,
     sharesOutstanding: 16000000,
     initialPrice: 50,
-    sectorId: sectorMap.get("Communication Services"),
-    subIndustryId: subIndustryMap.get("Media & Entertainment"),
+    sectorId: sectorMap.get("Communication Services").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Communication Services").id },
+        // create: sectorMap.get("Communication Services"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Media & Entertainment").id,
+    // subIndustry: subIndustryMap.get("Media & Entertainment"),
     ceo: ceoMap.get("J. Jonah Jameson"),
   },
   {
@@ -269,8 +402,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 2500000000,
     sharesOutstanding: 50000000,
     initialPrice: 50,
-    sectorId: sectorMap.get("Communication Services"),
-    subIndustryId: subIndustryMap.get("Media & Entertainment"),
+    sectorId: sectorMap.get("Communication Services").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Communication Services").id },
+        // create: sectorMap.get("Communication Services"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Media & Entertainment").id,
+    // subIndustry: subIndustryMap.get("Media & Entertainment"),
     ceo: ceoMap.get("Max Headroom"),
   },
 
@@ -284,8 +424,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 1500000000,
     sharesOutstanding: 30000000,
     initialPrice: 50,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Machinery"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Machinery").id,
+    // subIndustry: subIndustryMap.get("Machinery"),
     ceo: ceoMap.get("Wile E. Coyote"),
   },
   {
@@ -297,8 +444,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 3000000000,
     sharesOutstanding: 60000000,
     initialPrice: 50,
-    sectorId: sectorMap.get("Materials"),
-    subIndustryId: subIndustryMap.get("Chemicals"),
+    sectorId: sectorMap.get("Materials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Materials").id },
+        // create: sectorMap.get("Materials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Chemicals").id,
+    // subIndustry: subIndustryMap.get("Chemicals"),
   },
   {
     name: "Duff Beer",
@@ -309,8 +463,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 2000000000,
     sharesOutstanding: 40000000,
     initialPrice: 50,
-    sectorId: sectorMap.get("Consumer Discretionary"),
-    subIndustryId: subIndustryMap.get("Beverages"),
+    sectorId: sectorMap.get("Consumer Discretionary").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Consumer Discretionary").id },
+        // create: sectorMap.get("Consumer Discretionary"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Beverages").id,
+    // subIndustry: subIndustryMap.get("Beverages"),
     ceo: ceoMap.get("Howard K. Duff VIII"),
   },
   {
@@ -322,8 +483,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 1000000000,
     sharesOutstanding: 20000000,
     initialPrice: 50,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Machinery"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Machinery").id,
+    // subIndustry: subIndustryMap.get("Machinery"),
     ceo: ceoMap.get("Cosmo Spacely"),
   },
   {
@@ -335,8 +503,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 4000000000,
     sharesOutstanding: 40000000,
     initialPrice: 100,
-    sectorId: sectorMap.get("Consumer Discretionary"),
-    subIndustryId: subIndustryMap.get("Food Products"),
+    sectorId: sectorMap.get("Consumer Discretionary").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Consumer Discretionary").id },
+        // create: sectorMap.get("Consumer Discretionary"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Food Products").id,
+    // subIndustry: subIndustryMap.get("Food Products"),
     ceo: ceoMap.get("Willy Wonka"),
   },
   {
@@ -348,8 +523,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 100000000,
     sharesOutstanding: 1000000,
     initialPrice: 100,
-    sectorId: sectorMap.get("Consumer Staples"),
-    subIndustryId: subIndustryMap.get("Household Products"),
+    sectorId: sectorMap.get("Consumer Staples").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Consumer Staples").id },
+        // create: sectorMap.get("Consumer Staples"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Household Products").id,
+    // subIndustry: subIndustryMap.get("Household Products"),
     ceo: ceoMap.get("Tyler Durden"),
   },
   {
@@ -361,8 +543,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 500000000,
     sharesOutstanding: 10000000,
     initialPrice: 50,
-    sectorId: sectorMap.get("Consumer Staples"),
-    subIndustryId: subIndustryMap.get("Beverages"),
+    sectorId: sectorMap.get("Consumer Staples").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Consumer Staples").id },
+        // create: sectorMap.get("Consumer Staples"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Beverages").id,
+    // subIndustry: subIndustryMap.get("Beverages"),
   },
   {
     name: "Rekall",
@@ -373,9 +562,16 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 1500000000,
     sharesOutstanding: 30000000,
     initialPrice: 50,
-    sectorId: sectorMap.get("Communication Services"),
+    sectorId: sectorMap.get("Communication Services").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Communication Services").id },
+        // create: sectorMap.get("Communication Services"),
+      },
+    },
     ceo: ceoMap.get("Doug Quaid"),
-    subIndustryId: subIndustryMap.get("Media & Entertainment"),
+    subIndustryId: subIndustryMap.get("Media & Entertainment").id,
+    // subIndustry: subIndustryMap.get("Media & Entertainment"),
   },
   {
     name: "Buy n Large",
@@ -386,8 +582,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 1000000000000,
     sharesOutstanding: 1000000000,
     initialPrice: 1000,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Transportation"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Transportation").id,
+    // subIndustry: subIndustryMap.get("Transportation"),
     ceo: ceoMap.get("Shelby Forthright"),
   },
   {
@@ -399,8 +602,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 5000000000,
     sharesOutstanding: 50000000,
     initialPrice: 100,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Machinery"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Machinery").id,
+    // subIndustry: subIndustryMap.get("Machinery"),
     ceo: ceoMap.get("Dr. Evil"),
   },
 
@@ -414,8 +624,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 75000000000,
     sharesOutstanding: 250000000,
     initialPrice: 300,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Aerospace & Defense"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Aerospace & Defense").id,
+    // subIndustry: subIndustryMap.get("Aerospace & Defense"),
   },
   {
     name: "TaggeCo",
@@ -426,8 +643,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 40000000000,
     sharesOutstanding: 200000000,
     initialPrice: 200,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Machinery"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Machinery").id,
+    // subIndustry: subIndustryMap.get("Machinery"),
   },
   {
     name: "Kuat Drive Yards",
@@ -438,8 +662,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 150000000000,
     sharesOutstanding: 500000000,
     initialPrice: 300,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Aerospace & Defense"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Aerospace & Defense").id,
+    // subIndustry: subIndustryMap.get("Aerospace & Defense"),
   },
   {
     name: "Incom Corporation",
@@ -450,8 +681,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     valuation: 30000000000,
     sharesOutstanding: 100000000,
     initialPrice: 300.0,
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Machinery"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Machinery").id,
+    // subIndustry: subIndustryMap.get("Machinery"),
   },
   {
     name: "Militech",
@@ -463,8 +701,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     sharesOutstanding: 550000000,
     initialPrice: 1420,
     logoUrl: "/images/logos/MLTCH.webp",
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Aerospace & Defense"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Aerospace & Defense").id,
+    // subIndustry: subIndustryMap.get("Aerospace & Defense"),
     ceo: ceoMap.get("Donald Lundee"),
   },
   {
@@ -477,8 +722,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     sharesOutstanding: 600000000,
     initialPrice: 1580,
     logoUrl: "/images/logos/ARSK.webp",
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Aerospace & Defense"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Aerospace & Defense").id,
+    // subIndustry: subIndustryMap.get("Aerospace & Defense"),
     ceo: ceoMap.get("Saburo Arasaka"),
   },
   {
@@ -491,8 +743,15 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     sharesOutstanding: 400000000,
     initialPrice: 750,
     logoUrl: "/images/logos/KIRO.webp",
-    sectorId: sectorMap.get("Health Care"),
-    subIndustryId: subIndustryMap.get("Health Care Equipment & Supplies"),
+    sectorId: sectorMap.get("Health Care").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Health Care").id },
+        // create: sectorMap.get("Health Care"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Health Care Equipment & Supplies").id,
+    // subIndustry: subIndustryMap.get("Health Care Equipment & Supplies"),
     ceo: ceoMap.get("Tomo Kiroshi"),
   },
   {
@@ -505,8 +764,134 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
     sharesOutstanding: 550000000,
     initialPrice: 1590,
     logoUrl: "/images/logos/LEX.webp",
-    sectorId: sectorMap.get("Industrials"),
-    subIndustryId: subIndustryMap.get("Aerospace & Defense"),
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Aerospace & Defense").id,
+    // subIndustry: subIndustryMap.get("Aerospace & Defense"),
     ceo: ceoMap.get("Lex Luthor"),
+  },
+  {
+    name: "LexCorp",
+    tickerSymbol: "LEX",
+    logoUrl: "/images/logos/LEX.webp",
+    description:
+      "Founded by Lex Luthor, LexCorp is a global technology and defense empire specializing in advanced robotics, energy solutions, and corporate acquisitions. With cutting-edge AI, space exploration projects, and a military division rivaling national armies, LexCorp sees no ethical dilemma too large nor regulation too restrictive to stand in its way. Whether it’s innovation or world domination, you can bet Lex Luthor is two steps ahead.",
+    valuation: 875000000000,
+    sharesOutstanding: 550000000,
+    initialPrice: 1590,
+    logoUrl: "/images/logos/LEX.webp",
+    sectorId: sectorMap.get("Industrials").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Industrials").id },
+        // create: sectorMap.get("Industrials"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Aerospace & Defense").id,
+    // subIndustry: subIndustryMap.get("Aerospace & Defense"),
+    ceo: ceoMap.get("Lex Luthor"),
+  },
+  {
+    name: "Vault-Tec Corporation",
+    tickerSymbol: "VTEC",
+    logoUrl: "/images/logos/VTEC.webp",
+    description:
+      "Vault-Tec specializes in cutting-edge subterranean housing solutions designed to ensure survival in the inevitable corporate-induced apocalypse. With a keen focus on 'social experiments' and population control, Vault-Tec promises safety—whether you like it or not.",
+    valuation: 245000000000,
+    sharesOutstanding: 2000000000,
+    initialPrice: 122.5,
+    sectorId: sectorMap.get("Utilities").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Utilities").id },
+        // create: sectorMap.get("Utilities"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Multi-Utilities").id,
+    // subIndustry: subIndustryMap.get("Multi-Utilities"),
+  },
+  {
+    name: "Blue Sun Energy",
+    tickerSymbol: "BSUN",
+    logoUrl: "/images/logos/BSUN.webp",
+    description:
+      "Blue Sun Energy dominates the interstellar energy sector, supplying planets and mega-cities with everything from solar grids to highly volatile fuel cores. Officially, they are a beacon of progress. Unofficially, they own everything, and their reach is as vast as the black.",
+    valuation: 138000000000,
+    sharesOutstanding: 1500000000,
+    initialPrice: 92,
+    sectorId: sectorMap.get("Utilities").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Utilities").id },
+        // create: sectorMap.get("Utilities"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Electric Utilities").id,
+    // subIndustry: subIndustryMap.get("Electric Utilities"),
+  },
+  {
+    name: "Nuka-Cola Power",
+    tickerSymbol: "NUKP",
+    logoUrl: "/images/logos/NUKP.webp",
+    description:
+      "After realizing its soft drinks contained enough radiation to power small cities, Nuka-Cola pivoted into the energy market. Now a major supplier of nuclear fusion, they provide affordable, deliciously unstable power to the masses.",
+    valuation: 95000000000,
+    sharesOutstanding: 1000000000,
+    initialPrice: 95,
+    sectorId: sectorMap.get("Utilities").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Utilities").id },
+        // create: sectorMap.get("Utilities"),
+      },
+    },
+    subIndustryId: subIndustryMap.get("Electric Utilities").id,
+    // subIndustry: subIndustryMap.get("Electric Utilities"),
+  },
+  {
+    name: "Nakatomi Corporation",
+    tickerSymbol: "NAKT",
+    logoUrl: "/images/logos/NAKT.webp",
+    description:
+      "Nakatomi builds towering monuments to corporate dominance. Specializing in high-security skyscrapers, cybernetic business hubs, and impenetrable vaults, they ensure the 1% always have a penthouse to hide in.",
+    valuation: 300000000000,
+    sharesOutstanding: 1500000000,
+    initialPrice: 128,
+    sectorId: sectorMap.get("Real Estate").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Real Estate").id },
+        // create: sectorMap.get("Real Estate"),
+      },
+    },
+    subIndustryId:
+      // subIndustry: subIndustryMap.get("Real Estate Management & Developme,
+      subIndustryMap.get("Real Estate Management & Development").id,
+  },
+  {
+    name: "Lumon Industries",
+    tickerSymbol: "LUMN",
+    logoUrl: "/images/logos/LUMN.webp",
+    description:
+      "A corporate entity shrouded in secrecy, Lumon Industries pioneers in biotechnology, cognitive engineering, and behavioral restructuring. Its Severance Program has turned employees into perfect workers—splitting their consciousness between corporate servitude and an existence they’ll never remember. Those who question the system disappear into its labyrinthine corridors, their fates as unknown as Lumon's true purpose. In this world, loyalty isn’t earned—it’s implanted.",
+    valuation: 75000000000,
+    sharesOutstanding: 1000000000,
+    initialPrice: 75.0,
+    sectorId: sectorMap.get("Health Care").id,
+    sector: {
+      connect: {
+        where: { sectorId: sectorMap.get("Health Care").id },
+        // create: sectorMap.get("Real Estate"),
+      },
+    },
+    subIndustryId:
+      // subIndustry: subIndustryMap.get("Real Estate Management & Developme,
+      subIndustryMap.get("Biotechnology").id,
+    ceo: ceoMap.get("Jame Eagan"),
   },
 ];

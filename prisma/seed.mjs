@@ -193,7 +193,7 @@ async function main() {
 
   // Create a map for easy sector lookup
   const sectorMap = new Map();
-  sectors.forEach((sector) => sector && sectorMap.set(sector.name, sector.id));
+  sectors.forEach((sector) => sector && sectorMap.set(sector.name, sector));
 
   // --- 2. Create Sub-Industries ---
   const subIndustries = await prisma.$transaction([
@@ -203,7 +203,7 @@ async function main() {
       update: {},
       create: {
         name: "Energy Equipment & Services",
-        sectorId: sectorMap.get("Energy"),
+        sectorId: sectorMap.get("Energy").id,
       },
     }),
     prisma.subIndustry.upsert({
@@ -211,7 +211,7 @@ async function main() {
       update: {},
       create: {
         name: "Oil, Gas & Consumable Fuels",
-        sectorId: sectorMap.get("Energy"),
+        sectorId: sectorMap.get("Energy").id,
       },
     }),
 
@@ -219,12 +219,15 @@ async function main() {
     prisma.subIndustry.upsert({
       where: { name: "Chemicals" },
       update: {},
-      create: { name: "Chemicals", sectorId: sectorMap.get("Materials") },
+      create: { name: "Chemicals", sectorId: sectorMap.get("Materials").id },
     }),
     prisma.subIndustry.upsert({
       where: { name: "Metals & Mining" },
       update: {},
-      create: { name: "Metals & Mining", sectorId: sectorMap.get("Materials") },
+      create: {
+        name: "Metals & Mining",
+        sectorId: sectorMap.get("Materials").id,
+      },
     }),
 
     // Industrials
@@ -233,20 +236,20 @@ async function main() {
       update: {},
       create: {
         name: "Aerospace & Defense",
-        sectorId: sectorMap.get("Industrials"),
+        sectorId: sectorMap.get("Industrials").id,
       },
     }),
     prisma.subIndustry.upsert({
       where: { name: "Machinery" },
       update: {},
-      create: { name: "Machinery", sectorId: sectorMap.get("Industrials") },
+      create: { name: "Machinery", sectorId: sectorMap.get("Industrials").id },
     }),
     prisma.subIndustry.upsert({
       where: { name: "Transportation" },
       update: {},
       create: {
         name: "Transportation",
-        sectorId: sectorMap.get("Industrials"),
+        sectorId: sectorMap.get("Industrials").id,
       },
     }),
 
@@ -256,7 +259,7 @@ async function main() {
       update: {},
       create: {
         name: "Automobiles",
-        sectorId: sectorMap.get("Consumer Discretionary"),
+        sectorId: sectorMap.get("Consumer Discretionary").id,
       },
     }),
     prisma.subIndustry.upsert({
@@ -264,7 +267,7 @@ async function main() {
       update: {},
       create: {
         name: "Hotels, Restaurants & Leisure",
-        sectorId: sectorMap.get("Consumer Discretionary"),
+        sectorId: sectorMap.get("Consumer Discretionary").id,
       },
     }),
     prisma.subIndustry.upsert({
@@ -272,7 +275,7 @@ async function main() {
       update: {},
       create: {
         name: "Media",
-        sectorId: sectorMap.get("Consumer Discretionary"),
+        sectorId: sectorMap.get("Consumer Discretionary").id,
       },
     }),
 
@@ -282,7 +285,7 @@ async function main() {
       update: {},
       create: {
         name: "Food & Staples Retailing",
-        sectorId: sectorMap.get("Consumer Staples"),
+        sectorId: sectorMap.get("Consumer Staples").id,
       },
     }),
     prisma.subIndustry.upsert({
@@ -290,7 +293,7 @@ async function main() {
       update: {},
       create: {
         name: "Food Products",
-        sectorId: sectorMap.get("Consumer Staples"),
+        sectorId: sectorMap.get("Consumer Staples").id,
       },
     }),
     prisma.subIndustry.upsert({
@@ -298,7 +301,7 @@ async function main() {
       update: {},
       create: {
         name: "Beverages",
-        sectorId: sectorMap.get("Consumer Staples"),
+        sectorId: sectorMap.get("Consumer Staples").id,
       },
     }),
     prisma.subIndustry.upsert({
@@ -306,7 +309,7 @@ async function main() {
       update: {},
       create: {
         name: "Household Products",
-        sectorId: sectorMap.get("Consumer Staples"),
+        sectorId: sectorMap.get("Consumer Staples").id,
       },
     }),
 
@@ -316,20 +319,23 @@ async function main() {
       update: {},
       create: {
         name: "Pharmaceuticals",
-        sectorId: sectorMap.get("Health Care"),
+        sectorId: sectorMap.get("Health Care").id,
       },
     }),
     prisma.subIndustry.upsert({
       where: { name: "Biotechnology" },
       update: {},
-      create: { name: "Biotechnology", sectorId: sectorMap.get("Health Care") },
+      create: {
+        name: "Biotechnology",
+        sectorId: sectorMap.get("Health Care").id,
+      },
     }),
     prisma.subIndustry.upsert({
       where: { name: "Health Care Equipment & Supplies" },
       update: {},
       create: {
         name: "Health Care Equipment & Supplies",
-        sectorId: sectorMap.get("Health Care"),
+        sectorId: sectorMap.get("Health Care").id,
       },
     }),
 
@@ -337,20 +343,20 @@ async function main() {
     prisma.subIndustry.upsert({
       where: { name: "Banks" },
       update: {},
-      create: { name: "Banks", sectorId: sectorMap.get("Financials") },
+      create: { name: "Banks", sectorId: sectorMap.get("Financials").id },
     }),
     prisma.subIndustry.upsert({
       where: { name: "Diversified Financials" },
       update: {},
       create: {
         name: "Diversified Financials",
-        sectorId: sectorMap.get("Financials"),
+        sectorId: sectorMap.get("Financials").id,
       },
     }),
     prisma.subIndustry.upsert({
       where: { name: "Insurance" },
       update: {},
-      create: { name: "Insurance", sectorId: sectorMap.get("Financials") },
+      create: { name: "Insurance", sectorId: sectorMap.get("Financials").id },
     }),
 
     // Information Technology
@@ -359,7 +365,7 @@ async function main() {
       update: {},
       create: {
         name: "Software & Services",
-        sectorId: sectorMap.get("Information Technology"),
+        sectorId: sectorMap.get("Information Technology").id,
       },
     }),
     prisma.subIndustry.upsert({
@@ -367,7 +373,7 @@ async function main() {
       update: {},
       create: {
         name: "Technology Hardware & Equipment",
-        sectorId: sectorMap.get("Information Technology"),
+        sectorId: sectorMap.get("Information Technology").id,
       },
     }),
     prisma.subIndustry.upsert({
@@ -375,7 +381,7 @@ async function main() {
       update: {},
       create: {
         name: "Semiconductors",
-        sectorId: sectorMap.get("Information Technology"),
+        sectorId: sectorMap.get("Information Technology").id,
       },
     }),
 
@@ -385,7 +391,7 @@ async function main() {
       update: {},
       create: {
         name: "Telecommunication Services",
-        sectorId: sectorMap.get("Communication Services"),
+        sectorId: sectorMap.get("Communication Services").id,
       },
     }),
     prisma.subIndustry.upsert({
@@ -393,7 +399,7 @@ async function main() {
       update: {},
       create: {
         name: "Media & Entertainment",
-        sectorId: sectorMap.get("Communication Services"),
+        sectorId: sectorMap.get("Communication Services").id,
       },
     }),
 
@@ -403,18 +409,32 @@ async function main() {
       update: {},
       create: {
         name: "Electric Utilities",
-        sectorId: sectorMap.get("Utilities"),
+        sectorId: sectorMap.get("Utilities").id,
       },
     }),
     prisma.subIndustry.upsert({
       where: { name: "Gas Utilities" },
       update: {},
-      create: { name: "Gas Utilities", sectorId: sectorMap.get("Utilities") },
+      create: {
+        name: "Gas Utilities",
+        sectorId: sectorMap.get("Utilities").id,
+      },
     }),
     prisma.subIndustry.upsert({
       where: { name: "Water Utilities" },
       update: {},
-      create: { name: "Water Utilities", sectorId: sectorMap.get("Utilities") },
+      create: {
+        name: "Water Utilities",
+        sectorId: sectorMap.get("Utilities").id,
+      },
+    }),
+    prisma.subIndustry.upsert({
+      where: { name: "Multi-Utilities" },
+      update: {},
+      create: {
+        name: "Multi-Utilities",
+        sectorId: sectorMap.get("Utilities").id,
+      },
     }),
 
     // Real Estate
@@ -423,7 +443,7 @@ async function main() {
       update: {},
       create: {
         name: "Real Estate Management & Development",
-        sectorId: sectorMap.get("Real Estate"),
+        sectorId: sectorMap.get("Real Estate").id,
       },
     }),
   ]);
@@ -431,7 +451,7 @@ async function main() {
   const subIndustryMap = new Map();
   subIndustries.forEach(
     (subIndustry) =>
-      subIndustry && subIndustryMap.set(subIndustry.name, subIndustry.id)
+      subIndustry && subIndustryMap.set(subIndustry.name, subIndustry)
   );
 
   const ceosTransations = ceosData.map((ceo) =>
@@ -455,10 +475,12 @@ async function main() {
     }
   }
 
+  console.log(sectorMap);
+  // return;
   const companiesData = makeCompaniesData(ceoMap, sectorMap, subIndustryMap);
 
   for (const companyData of companiesData) {
-    const { initialPrice, ceo, ...rest } = companyData;
+    const { initialPrice, ceo, sectorId, subIndustryId, ...rest } = companyData;
     try {
       // Use upsert to handle potential conflicts (if you re-run the seed)
       const company = await prisma.company.upsert({
@@ -466,15 +488,25 @@ async function main() {
         update: {
           ...rest,
           ceoId: ceo?.id ?? null,
-          financialData: {
-            connectOrCreate: {
-              where: {
-                companyId: financialMap.get(companyData.id).id,
-                year: financialMap.get(companyData.id).year,
-              },
-              create: financialMap.get(companyData.id),
+          sector: {
+            connect: {
+              id: sectorId,
             },
           },
+          subIndustry: {
+            connect: { id: subIndustryId },
+          },
+          financialData: financialMap.get(companyData.id)?.id
+            ? {
+                connectOrCreate: {
+                  where: {
+                    companyId: financialMap.get(companyData.id).id,
+                    year: financialMap.get(companyData.id).year,
+                  },
+                  create: financialMap.get(companyData.id),
+                },
+              }
+            : undefined,
           ceo: ceo
             ? {
                 connectOrCreate: {
@@ -491,6 +523,14 @@ async function main() {
         create: {
           ...rest,
           ceoId: ceo?.id ?? null,
+          sector: {
+            connect: {
+              id: sectorId,
+            },
+          },
+          subIndustry: {
+            connect: { id: subIndustryId },
+          },
           ceo: ceo
             ? {
                 connectOrCreate: {
@@ -503,15 +543,17 @@ async function main() {
                 },
               }
             : undefined,
-          financialData: {
-            connectOrCreate: {
-              where: {
-                companyId: financialMap.get(companyData.id).id,
-                year: financialMap.get(companyData.id).year,
-              },
-              create: financialMap.get(companyData.id),
-            },
-          },
+          financialData: financialMap.get(companyData.id)?.id
+            ? {
+                connectOrCreate: {
+                  where: {
+                    companyId: financialMap.get(companyData.id).id,
+                    year: financialMap.get(companyData.id).year,
+                  },
+                  create: financialMap.get(companyData.id),
+                },
+              }
+            : undefined,
           stockPrices: {
             create: {
               price: initialPrice,
@@ -613,10 +655,18 @@ async function main() {
   // Tech 100 (only tech companies)
   await calculateAndSeedIndexWeights("TECH100", {
     OR: [
-      { sectorId: sectorMap.get("Information Technology") },
-      { sectorId: sectorMap.get("Communication Services") },
-      { subIndustryId: subIndustryMap.get("Areospace & Defense") },
-      { subIndustryId: subIndustryMap.get("Machinery") },
+      {
+        sector: { id: { equals: sectorMap.get("Information Technology").id } },
+      },
+      {
+        sector: { id: { equals: sectorMap.get("Communication Services").id } },
+      },
+      {
+        subIndustry: {
+          id: { equals: subIndustryMap.get("Aerospace & Defense").id },
+        },
+      },
+      { subIndustry: { id: { equals: subIndustryMap.get("Machinery").id } } },
     ],
   });
 

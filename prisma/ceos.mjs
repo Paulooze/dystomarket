@@ -176,4 +176,10 @@ export const ceosData = [
       "Visionary, composed, perfectionist, enigmatic, ethically flexible.",
     imageUrl: "/images/ceos/Tomo_Kiroshi.webp",
   },
+  {
+    name: "Jame Eagan",
+    bio: "As the longstanding head of Lumon Industries, Jame Eagan oversees a company whose influence extends far beyond office walls. With an unwavering belief in corporate loyalty, productivity, and the power of 'Severance', he has created a workplace where employees are truly dedicated—whether they know it or not.",
+    personality: "Calm, authoritative, deeply enigmatic",
+    imageUrl: "/images/ceos/Jame_Eagan.webp",
+  },
 ];

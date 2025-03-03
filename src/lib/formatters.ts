@@ -107,8 +107,8 @@ export const sectorColors: Record<string, Colors> = {
     // text: "text-white",
     hover: {
       // text: "hover:text-red-500",
-      background: "hover:bg-red-400",
-      border: "border-hover:bg-red-400",
+      background: "hover:bg-red-500",
+      border: "border-hover:bg-red-500",
       text: "hover:text-white",
     },
   },

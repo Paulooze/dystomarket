@@ -1,7 +1,7 @@
 "use client";
 import { Sector, SubIndustry } from "@prisma/client";
 import { LayoutGroup, motion } from "motion/react";
-import { useMemo, useState } from "react";
+import { use, useMemo, useState } from "react";
 import CompaniesFilter from "./companies-filter";
 import CompanyCard from "./company-card";
 import EmptyState from "./empty-state";
@@ -17,21 +17,53 @@ interface Company {
   sector: Sector;
   subIndustry: SubIndustry;
 }
+type UpdatedData = {
+  ticker: string;
+  latestPrice: number;
+  previousPrice: number | null;
+};
+type Props = {
+  companiesPromise: Promise<Company[]>;
+  sectorsPromise: Promise<(Sector & { subIndustries: SubIndustry[] })[]>;
+  updatedCompanyData: UpdatedData[];
+};
 
-interface CompaniesListProps {
-  companies: Company[];
-  sectors: (Sector & { subIndustries: SubIndustry[] })[];
-}
-
-const CompaniesList: React.FC<CompaniesListProps> = ({
-  companies,
-  sectors,
-}) => {
+export default function CompaniesList({
+  companiesPromise,
+  sectorsPromise,
+  updatedCompanyData,
+}: Props) {
+  const companies = use(companiesPromise);
+  const sectors = use(sectorsPromise);
   const [selectedSector, setSelectedSector] = useState<
     (Sector & { subIndustries: SubIndustry[] }) | null
   >(null);
   const [selectedSubIndustry, setSelectedSubIndustry] =
     useState<SubIndustry | null>(null);
+
+  const updatedCompaniesMap = useMemo(
+    () =>
+      updatedCompanyData.reduce((acc, curr) => {
+        return { ...acc, [curr.ticker]: curr };
+      }, {} as Record<string, { latestPrice: number; previousPrice: number | null }>),
+    [updatedCompanyData]
+  );
+
+  const companiesList = useMemo(
+    () =>
+      companies.map((company) => {
+        const updatedPrice = updatedCompaniesMap[company.tickerSymbol];
+        const { previousPrice, latestPrice, ...rest } = company;
+        return {
+          ...rest,
+          previousPrice:
+            updatedPrice != null ? updatedPrice.previousPrice : previousPrice,
+          latestPrice:
+            updatedPrice != null ? updatedPrice.latestPrice : latestPrice,
+        };
+      }),
+    [companies, updatedCompaniesMap]
+  );
 
   const handleSelectSector = (
     sector: (Sector & { subIndustries: SubIndustry[] }) | null
@@ -72,7 +104,7 @@ const CompaniesList: React.FC<CompaniesListProps> = ({
   );
 
   return (
-    <div>
+    <>
       <CompaniesFilter
         onSelectSector={handleSelectSector}
         onSelectSubIndustry={handleSelectSubIndustry}
@@ -100,8 +132,6 @@ const CompaniesList: React.FC<CompaniesListProps> = ({
           ))}
         </LayoutGroup>
       </div>
-    </div>
+    </>
   );
-};
-
-export default CompaniesList;
+}

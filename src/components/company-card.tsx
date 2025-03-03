@@ -42,10 +42,9 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
           <div className="flex-1 flex-col ">
             <div className="flex">
               <div className="flex flex-col mb-2">
-                {" "}
-                <h2 className="text-lg font-bold text-gray-800 dark:text-dysto-white line-clamp-1">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-dysto-white line-clamp-1">
                   {company.name}
-                </h2>
+                </h3>
                 <p className="text-sm font-semibold text-gray-500 dark:text-gray-50">
                   {company.tickerSymbol}
                 </p>

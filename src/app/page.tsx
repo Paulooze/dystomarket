@@ -1,5 +1,6 @@
 import RealtimeContainer from "@/components/real-time-container";
 import { Sector, SubIndustry } from "@prisma/client";
+import { Suspense } from "react";
 
 interface Company {
   id: number;
@@ -60,21 +61,21 @@ async function getIndices(): Promise<Index[]> {
   return res.json();
 }
 
-export default async function Home() {
-  const companies = await getCompanies();
-  const indices = await getIndices();
-  const sectors = await getSectors();
+export default function Home() {
+  const companiesPromise = getCompanies();
+  const indicesPromise = getIndices();
+  const sectorsPromise = getSectors();
 
-  if (!companies || !indices) {
+  if (!companiesPromise || !indicesPromise || !sectorsPromise) {
     return <div className="text-center p-4">Failed to load data.</div>;
   }
 
   return (
     <div className="container mx-auto p-4 min-h-screen">
       <RealtimeContainer
-        companies={companies}
-        sectors={sectors}
-        indices={indices}
+        companiesPromise={companiesPromise}
+        sectorsPromise={sectorsPromise}
+        indicesPromise={indicesPromise}
       />
     </div>
   );

@@ -2,7 +2,8 @@
 import CompaniesList from "@/components/companies-list";
 import IndexTrackersList from "@/components/index-tracker-list";
 import { Sector, SubIndustry } from "@prisma/client";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import IndicesLoadingState from "./indices-loading-state";
 
 interface Company {
   id: number;
@@ -26,9 +27,9 @@ interface Index {
 }
 
 type Props = {
-  companies: Company[];
-  sectors: (Sector & { subIndustries: SubIndustry[] })[];
-  indices: Index[];
+  companiesPromise: Promise<Company[]>;
+  sectorsPromise: Promise<(Sector & { subIndustries: SubIndustry[] })[]>;
+  indicesPromise: Promise<Index[]>;
 };
 
 type UpdatedData = {
@@ -42,20 +43,22 @@ type StreamData = {
 };
 
 export default function RealtimeContainer({
-  companies,
-  sectors,
-  indices,
+  companiesPromise,
+  sectorsPromise,
+  indicesPromise,
 }: Props) {
-  const [updatedCompanies, setUpdatedCompanies] = useState<UpdatedData[]>([]);
-  const [updatedIndices, setUpdatedIndices] = useState<UpdatedData[]>([]);
+  const [updatedCompanyData, setUpdatedCompanyData] = useState<UpdatedData[]>(
+    []
+  );
+  const [updatedIndexData, setUpdatedIndexData] = useState<UpdatedData[]>([]);
 
   useEffect(() => {
     const eventSource = new EventSource("/api/stream");
 
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data) as StreamData;
-      setUpdatedCompanies(data.companies);
-      setUpdatedIndices(data.indices);
+      setUpdatedCompanyData(data.companies);
+      setUpdatedIndexData(data.indices);
     };
 
     return () => {
@@ -63,56 +66,28 @@ export default function RealtimeContainer({
     };
   }, []);
 
-  const updatedCompaniesMap = useMemo(
-    () =>
-      updatedCompanies.reduce((acc, curr) => {
-        return { ...acc, [curr.ticker]: curr };
-      }, {} as Record<string, { latestPrice: number; previousPrice: number | null }>),
-    [updatedCompanies]
-  );
-  const updatedIndicesMap = useMemo(
-    () =>
-      updatedIndices.reduce((acc, curr) => {
-        return { ...acc, [curr.ticker]: curr };
-      }, {} as Record<string, { latestPrice: number; previousPrice: number | null }>),
-    [updatedIndices]
-  );
-
-  const companiesList = useMemo(
-    () =>
-      companies.map((company) => {
-        const updatedPrice = updatedCompaniesMap[company.tickerSymbol];
-        const { previousPrice, latestPrice, ...rest } = company;
-        return {
-          ...rest,
-          previousPrice:
-            updatedPrice != null ? updatedPrice.previousPrice : previousPrice,
-          latestPrice:
-            updatedPrice != null ? updatedPrice.latestPrice : latestPrice,
-        };
-      }),
-    [companies, updatedCompaniesMap]
-  );
-  const indicesList = useMemo(
-    () =>
-      indices.map((index) => {
-        const updatedPrice = updatedIndicesMap[index.tickerSymbol];
-        const { previousPrice, latestPrice, ...rest } = index;
-        return {
-          ...rest,
-          previousPrice:
-            updatedPrice != null ? updatedPrice.previousPrice : previousPrice,
-          latestPrice:
-            updatedPrice != null ? updatedPrice.latestPrice : latestPrice,
-        };
-      }),
-    [indices, updatedIndicesMap]
-  );
-
   return (
     <>
-      <IndexTrackersList indices={indicesList} />
-      <CompaniesList companies={companiesList} sectors={sectors} />
+      <div className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-dysto-white">
+          Market Indices
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <Suspense fallback={<IndicesLoadingState />}>
+            <IndexTrackersList
+              indicesPromise={indicesPromise}
+              updatedIndexData={updatedIndexData}
+            />
+          </Suspense>
+        </div>
+      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <CompaniesList
+          companiesPromise={companiesPromise}
+          sectorsPromise={sectorsPromise}
+          updatedCompanyData={updatedCompanyData}
+        />
+      </Suspense>
     </>
   );
 }
