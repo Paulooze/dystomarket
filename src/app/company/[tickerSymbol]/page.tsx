@@ -121,7 +121,6 @@ export default async function CompanyPage({
   const { tickerSymbol } = await params;
   const company = await getCompany(tickerSymbol);
   const prices = await getCompanyPrices(tickerSymbol);
-  console.log(company);
 
   if (!company) {
     notFound();
@@ -130,63 +129,67 @@ export default async function CompanyPage({
     <div className="container mx-auto p-4">
       <Card>
         <CardHeader>
-          <CardTitle>
-            <div className="flex items-center mb-4">
-              <Image
-                src={company.logoUrl}
-                alt={`${company.name} Logo`}
-                width={100}
-                height={100}
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
-                className="rounded-full mr-6"
-              />
-              <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-100 flex flex-col">
-                <span className="mb-2">{company.name}</span>
-                <span className="text-lg text-gray-500 dark:text-gray-400">
-                  {company.tickerSymbol}
-                </span>
-              </h1>
-            </div>
-          </CardTitle>
+          <div className="flex items-start">
+            <CardTitle>
+              <div className="flex items-center mb-4">
+                <Image
+                  src={company.logoUrl}
+                  alt={`${company.name} Logo`}
+                  width={100}
+                  height={100}
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+                  className="rounded-full mr-6"
+                />
+                <h1 className="text-3xl font-semibold text-gray-800 dark:text-dysto-white flex flex-col">
+                  <span className="mb-2">{company.name}</span>
+                  <span className="text-lg text-gray-500 dark:text-gray-400">
+                    {company.tickerSymbol}
+                  </span>
+                </h1>
+              </div>
+            </CardTitle>
+            {company.ceo && ( // Only display if a CEO exists
+              <div className="mb-4 flex items-start ml-auto">
+                <Image
+                  src={
+                    company.ceo.imageUrl
+                      ? company.ceo.imageUrl
+                      : "/images/logos/default_ceo.webp"
+                  }
+                  alt={`CEO of ${company.name}`}
+                  width={50}
+                  height={50}
+                  placeholder="blur"
+                  blurDataURL="data:image/png;base64,..."
+                  className="rounded-full mr-4"
+                />
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                    {company.ceo.name}
+                  </h2>
+                  <p className="text-gray-700 dark:text-gray-300 mb-4">CEO</p>
+                </div>
+              </div>
+            )}
+          </div>
           <CardDescription>
-            <p className="text-lg text-gray-700 dark:text-gray-300">
+            <p className="text-lg text-gray-700 dark:text-dysto-white">
               {company.description}
             </p>
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {company.ceo && ( // Only display if a CEO exists
-            <div className="mb-4 flex items-center">
-              <Image
-                src={
-                  company.ceo.imageUrl
-                    ? company.ceo.imageUrl
-                    : "/images/logos/default_ceo.webp"
-                }
-                alt={`CEO of ${company.name}`}
-                width={50}
-                height={50}
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,..."
-                className="rounded-full mr-4"
-              />
-              <div>
-                <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
-                  {company.ceo.name}
-                </h2>
-                <p className="text-gray-700 dark:text-gray-300 mb-4">CEO</p>
-              </div>
-            </div>
-          )}
           <div className="mb-8">
             <StockChart prices={prices} company={company} />
           </div>
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-dystro-white mb-4">
-            Financials
-          </h2>
           {company.financialData && (
-            <ChangeChart data={company.financialData} />
+            <>
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-dysto-white mb-6">
+                Financials
+              </h2>
+              <ChangeChart data={company.financialData} />
+            </>
           )}
         </CardContent>
       </Card>

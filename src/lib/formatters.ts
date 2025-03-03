@@ -2,6 +2,8 @@ interface FormatCurrencyOptions {
   currency?: string; // e.g., 'USD', 'EUR', 'JPY'
   minimumFractionDigits?: number;
   maximumFractionDigits?: number;
+  compactDisplay?: Intl.NumberFormatOptions["compactDisplay"];
+  notation?: Intl.NumberFormatOptions["notation"];
 }
 
 export function formatCurrency(
@@ -12,6 +14,8 @@ export function formatCurrency(
     currency = "USD",
     minimumFractionDigits = 2,
     maximumFractionDigits = 2,
+    compactDisplay = "short",
+    notation = "compact",
   } = options;
 
   if (value === null || value === undefined) {
@@ -22,11 +26,11 @@ export function formatCurrency(
     const formatter = new Intl.NumberFormat("en-US", {
       // Or your preferred locale
       style: "currency",
-      currency: currency,
+      currency,
       minimumFractionDigits: minimumFractionDigits,
       maximumFractionDigits: maximumFractionDigits,
-      compactDisplay: "short",
-      notation: "compact",
+      compactDisplay,
+      notation,
     });
 
     return formatter.format(value);

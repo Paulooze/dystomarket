@@ -1,9 +1,28 @@
 // app/api/simulate/route.ts
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { format, fromZonedTime, toZonedTime } from "date-fns-tz";
+
+const TIME_ZONE = "Europe/Bratislava";
 
 export async function POST() {
   try {
+    const now = new Date();
+    const nowUTC = fromZonedTime(
+      now,
+      Intl.DateTimeFormat().resolvedOptions().timeZone
+    );
+    const nowInNY = toZonedTime(nowUTC, TIME_ZONE);
+    const currentDay = format(nowInNY, "EEEE", { timeZone: TIME_ZONE });
+    const currentHour = nowInNY.getHours();
+
+    const isTradingDay = !["Saturday", "Sunday"].includes(currentDay);
+    const isTradingHour = currentHour >= 9 && currentHour <= 17;
+
+    if (!isTradingDay || !isTradingHour) {
+      return NextResponse.json({ message: "Market is closed" });
+    }
+
     await prisma.$transaction(async (tx) => {
       // Use a transaction for atomicity
 

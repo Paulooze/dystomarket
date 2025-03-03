@@ -1,16 +1,17 @@
 "use client";
 import { formatCurrency } from "@/lib/formatters";
 import { Sector, SubIndustry } from "@prisma/client";
-import { useState } from "react";
+import { parseISO, subDays, subWeeks } from "date-fns";
+import { useMemo, useState } from "react";
 import {
   Area,
   AreaChart,
   CartesianGrid,
   ResponsiveContainer,
-  XAxis,
   YAxis,
 } from "recharts";
 import PriceDisplay from "./price-display";
+import StockPrice from "./stock-price";
 import { ChartContainer, ChartTooltip } from "./ui/chart";
 
 interface StockPrice {
@@ -40,7 +41,12 @@ const CustomTooltip = ({ active, payload }: any) => {
     return (
       <div className="bg-white dark:bg-gray-950 p-2 text-gray-900 dark:text-gray-100 rounded-md shadow-md border border-gray-200 dark:border-gray-700">
         <p className="text-sm">{formattedDate}</p>
-        <p className="text-sm font-bold">{formatCurrency(dataPoint.price)}</p>
+        <p className="text-sm font-bold">
+          {formatCurrency(dataPoint.price, {
+            notation: "standard",
+            compactDisplay: "long",
+          })}
+        </p>
       </div>
     );
   }
@@ -87,6 +93,28 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
     useState<StockPrice | null>(
       prices.length > 0 ? prices[prices.length - 1] : null
     );
+  const [filter, setFilter] = useState<"1d" | "1w">("1d"); // '1d' or '1w'
+
+  const filteredPrices = useMemo(() => {
+    if (!prices) {
+      return []; // Return empty array if prices is undefined
+    }
+
+    const now = new Date();
+    let startDate: Date;
+
+    if (filter === "1d") {
+      startDate = subDays(now, 1);
+    } else if (filter === "1w") {
+      startDate = subWeeks(now, 1);
+    } else {
+      startDate = subDays(now, 1); //default
+    }
+
+    return prices.filter((priceData) => {
+      return parseISO(priceData.timestamp) >= startDate;
+    });
+  }, [prices, filter]);
 
   // eslint-disable-next-line
   const handleMouseMove = (activePayload: any) => {
@@ -125,12 +153,37 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
 
   return (
     <>
-      <PriceDisplay
-        price={currentPrice}
-        priceChange={priceChange}
-        percentageChange={percentageChange}
-        direction={direction}
-      />
+      <div className="mb-4 flex items-cente flex-wrap">
+        <PriceDisplay
+          price={currentPrice}
+          priceChange={priceChange}
+          percentageChange={percentageChange}
+          direction={direction}
+          size="large"
+        />
+        <div className="flex space-x-2 lg:ml-auto mt-4">
+          <button
+            className={`cursor-pointer px-4 py-2 rounded ${
+              filter === "1d"
+                ? "bg-dysto-green text-dysto-dark"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+            }`}
+            onClick={() => setFilter("1d")}
+          >
+            1 Day
+          </button>
+          <button
+            className={`cursor-pointer px-4 py-2 rounded ${
+              filter === "1w"
+                ? "bg-dysto-green text-dysto-dark"
+                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+            }`}
+            onClick={() => setFilter("1w")}
+          >
+            1 Week
+          </button>
+        </div>
+      </div>
       <ResponsiveContainer aspect={1}>
         <ChartContainer
           config={{
@@ -139,14 +192,15 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
               color: "var(--color-blue-500)",
             },
           }}
+          className="aspect-auto h-[350px] w-full"
         >
           <AreaChart
-            data={prices}
+            data={filteredPrices}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             margin={{
-              left: 6,
-              right: 6,
+              left: 2,
+              right: 2,
             }}
           >
             <CartesianGrid
@@ -154,20 +208,28 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
               stroke="#ccc"
               vertical={false}
             />
-            <XAxis
+            {/* <XAxis
               dataKey="timestamp"
-              tickFormatter={(tick) => new Date(tick).toLocaleDateString()}
-              tick={{ fill: "#666", fontSize: 12, textAnchor: "end" }}
-              interval={prices.length > 30 ? "preserveStartEnd" : 0}
+              tickFormatter={(tick) =>
+                new Date(tick).toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "numeric",
+                })
+              }
+              tick={{
+                fontSize: 12,
+                textAnchor: "end",
+              }}
+              interval="preserveStartEnd"
               minTickGap={10}
               tickMargin={10}
-            />
+            /> */}
             <YAxis
               domain={[minPrice - yAxisPadding, maxPrice + yAxisPadding]}
               tickFormatter={(tick) =>
                 formatCurrency(tick, { maximumFractionDigits: 2 })
               }
-              tick={{ fill: "#666", fontSize: 12 }}
+              tick={{ fontSize: 12 }}
               tickLine={false}
               axisLine={false}
             />
@@ -176,7 +238,7 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
             <Area
               type="monotone"
               dataKey="price"
-              stroke="url(#colorUv)"
+              stroke="var(--color-dysto-green)"
               fill="url(#colorUv)"
               strokeWidth={2}
               activeDot={{ r: 6 }}
@@ -186,13 +248,13 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
               <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-blue-500)"
-                  stopOpacity={0.8}
+                  stopColor="var(--color-dysto-green)"
+                  stopOpacity={0.3}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-blue-300)"
-                  stopOpacity={0.4}
+                  stopColor="var(--color-dysto-green)"
+                  stopOpacity={0.1}
                 />
               </linearGradient>
             </defs>

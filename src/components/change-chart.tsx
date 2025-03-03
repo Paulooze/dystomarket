@@ -32,7 +32,7 @@ export default function ChangeChart({ data }: Props): JSX.Element {
     totalRevenue: (d.grossProfit ?? 0) + (d.costOfSales ?? 0),
   }));
   return (
-    <ResponsiveContainer width="50%">
+    <ResponsiveContainer>
       <ChartContainer
         config={{
           history: {
@@ -40,6 +40,7 @@ export default function ChangeChart({ data }: Props): JSX.Element {
             color: "var(--color-blue-500)",
           },
         }}
+        className="aspect-auto h-[350px] w-full lg:w-1/2"
       >
         <BarChart data={formattedData}>
           <CartesianGrid strokeDasharray="3 3" />
