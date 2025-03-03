@@ -10,11 +10,11 @@ const DB_HOST = process.env.DB_HOST;
 export const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({
-    // datasources: {
-    //   db: {
-    //     url: `postgresql://${DB_USER}:${DB_PASSWORD}@localhost/${DB_NAME}?host=${DB_HOST}`,
-    //   },
-    // },
+    datasources: {
+      db: {
+        url: `postgresql://${DB_USER}:${DB_PASSWORD}@localhost/${DB_NAME}?host=${DB_HOST}`,
+      },
+    },
   });
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
