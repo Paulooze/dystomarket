@@ -1,32 +1,27 @@
 export default function About() {
   return (
     <div className="container mx-auto p-4 min-h-screen">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">
+      <h2 className="text-4xl font-semibold mb-4 font-display text-gray-800 dark:text-dysto-white">
         About Dystomarket
       </h2>
       <p className="my-4">
-        Welcome to Dystomarket, the premier fictional stock exchange where the
-        biggest megacorporations from pop culture battle for dominance.
+        In a world where megacorporations rule the economy and market
+        manipulation is just another Tuesday, Dystomarket is your ultimate
+        window into the corporate dystopia of tomorrow.
       </p>
       <p className="my-4">
-        📈 Track stock prices of legendary companies like Wayne Enterprises,
-        Stark Industries, LexCorp, and more.
+        Here, stock prices shift on whispers, hostile takeovers are the norm,
+        and the line between innovation and exploitation blurs into neon-lit
+        oblivion. Track the rise and fall of fictional giants, from shadowy
+        defense contractors to soulless tech conglomerates, all vying for
+        dominance in an economy where ethics are just a rounding error.
       </p>
-      <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">
-        Can I Buy/Sell Stocks?
-      </h3>
       <p className="my-4">
-        Not yet, but stay tuned—soon you might be able to build your own
-        dystopian portfolio. For now, sit back, watch the chaos, and enjoy the
-        downfall of corporate empires.
+        Whether you&apos;re a high-frequency trader playing the system or just
+        another cyber-street speculator watching the world burn, Dystomarket
+        gives you the real-time pulse of capitalism’s final form.
       </p>
-      <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">
-        Disclaimer:
-      </h3>
-      <p className="my-4">
-        Dystomarket is purely fictional. If you’re here expecting actual
-        financial advice, you should probably stop investing.
-      </p>
+      <p className="my-4">Stay informed. Stay ahead. Or get left behind.</p>
     </div>
   );
 }

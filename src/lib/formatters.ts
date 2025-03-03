@@ -98,13 +98,13 @@ export const sectorColors: Record<string, Colors> = {
     },
   },
   "Health Care": {
-    text: "text-red-600",
-    border: "border-bg-red-600",
+    text: "text-red-500",
+    border: "border-bg-red-500",
     // text: "text-white",
     hover: {
       // text: "hover:text-red-500",
-      background: "hover:bg-red-500",
-      border: "border-hover:bg-red-500",
+      background: "hover:bg-red-400",
+      border: "border-hover:bg-red-400",
       text: "hover:text-white",
     },
   },
