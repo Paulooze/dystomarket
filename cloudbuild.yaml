@@ -41,9 +41,9 @@ steps:
       - "dystomarket-cloud-run@$PROJECT_ID.iam.gserviceaccount.com"
       - "--add-cloudsql-instances"
       - "$PROJECT_ID:europe-west1:dystomarket"
-      - "--set-secrets=DB_USER=db_user:latest,DB_PASSWORD=db_password:latest,DB_NAME=db_name:latest,DB_HOST=db_host:latest"
+      - "--set-secrets=DB_USER=db_user:latest,DB_PASSWORD=db_password:latest,DB_NAME=db_name:latest,DB_HOST=db_host:latest,OPENAI_API_KEY=openai_api_key:latest"
       - "--set-env-vars"
-      - "NEXT_PUBLIC_API_URL=https://dystomarket.paulooze.com"
+      - "NEXT_PUBLIC_API_URL=https://dystomarket.paulooze.com",
 images:
   - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA"
 options:
