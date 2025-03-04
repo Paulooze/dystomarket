@@ -100,7 +100,7 @@ export default function CompaniesList({
           company.subIndustry.id === selectedSubIndustry?.id
         );
       }),
-    [selectedSector, companies, selectedSubIndustry]
+    [selectedSector, companiesList, selectedSubIndustry]
   );
 
   return (
