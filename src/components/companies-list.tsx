@@ -88,7 +88,7 @@ export default function CompaniesList({
 
   const filteredCompanies = useMemo(
     () =>
-      companies.filter((company) => {
+      companiesList.filter((company) => {
         if (!selectedSector) {
           return true;
         }
