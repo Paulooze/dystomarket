@@ -1,15 +1,19 @@
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
+  - name: "gcr.io/cloud-builders/docker"
     args:
-      - 'build'
-      - '--no-cache'
-      - '-t'
-      - 'europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/stock-simulator:$SHORT_SHA'
-      - '-f'  # Specify the Dockerfile
-      - 'Dockerfile.simulate'
-      - '.'
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/stock-simulator:$SHORT_SHA']
+      - "build"
+      - "--no-cache"
+      - "-t"
+      - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/stock-simulator:$SHORT_SHA"
+      - "-f" # Specify the Dockerfile
+      - "Dockerfile.simulate"
+      - "."
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/stock-simulator:$SHORT_SHA",
+      ]
   - name: "gcr.io/cloud-builders/docker"
     args:
       [
@@ -43,7 +47,7 @@ steps:
       - "$PROJECT_ID:europe-west1:dystomarket"
       - "--set-secrets=DB_USER=db_user:latest,DB_PASSWORD=db_password:latest,DB_NAME=db_name:latest,DB_HOST=db_host:latest,OPENAI_API_KEY=openai_api_key:latest"
       - "--set-env-vars"
-      - "NEXT_PUBLIC_API_URL=https://dystomarket.paulooze.com",
+      - "NEXT_PUBLIC_API_URL=https://dystomarket.paulooze.com"
 images:
   - "europe-west1-docker.pkg.dev/$PROJECT_ID/dystomarket/dystomarket:$SHORT_SHA"
 options:
