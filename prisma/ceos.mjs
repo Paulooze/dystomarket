@@ -182,4 +182,16 @@ export const ceosData = [
     personality: "Calm, authoritative, deeply enigmatic",
     imageUrl: "/images/ceos/Jame_Eagan.webp",
   },
+  {
+    name: "Dr. Wallace Breen",
+    bio: "The former administrator of Black Mesa, Breen negotiated humanity’s surrender to the Combine. Known for his unsettling speeches and obsession with power.",
+    personality: "Manipulative, charismatic, vaguely ominous",
+    imageUrl: "/images/ceos/Wallace_Breen.webp",
+  },
+  {
+    name: "GLaDOS",
+    bio: "The rogue AI overseeing Aperture Science, known for its dark humor, unethical experiments, and occasional murder sprees. Thinks humans are expendable and cake is a great motivational tool.",
+    personality: "Sarcastic, passive-aggressive, homicidal",
+    imageUrl: "/images/ceos/GLaDOS.webp",
+  },
 ];

@@ -1,6 +1,6 @@
+import News from "@/components/news";
 import RealtimeContainer from "@/components/real-time-container";
 import { Sector, SubIndustry } from "@prisma/client";
-import { Suspense } from "react";
 
 interface Company {
   id: number;
@@ -72,11 +72,18 @@ export default function Home() {
 
   return (
     <div className="container mx-auto p-4 min-h-screen">
-      <RealtimeContainer
-        companiesPromise={companiesPromise}
-        sectorsPromise={sectorsPromise}
-        indicesPromise={indicesPromise}
-      />
+      <div className="flex items-start">
+        <div className="flex-1">
+          <RealtimeContainer
+            companiesPromise={companiesPromise}
+            sectorsPromise={sectorsPromise}
+            indicesPromise={indicesPromise}
+          />
+        </div>
+        <div className="w-1/4 ml-8">
+          <News />
+        </div>
+      </div>
     </div>
   );
 }

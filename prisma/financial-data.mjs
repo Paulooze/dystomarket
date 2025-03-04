@@ -1,0 +1,111 @@
+export const makeFinancialData = (companyMap) => [
+  // Wayne Enterprises
+  {
+    companyId: companyMap["Wayne Enterprises"],
+    year: 2020,
+    revenue: 120_000_000_000,
+    grossProfit: 40_000_000_000,
+    costOfSales: 80_000_000_000,
+    operatingExpenses: 20_000_000_000,
+    operatingProfit: 20_000_000_000,
+    netIncome: 12_000_000_000,
+  },
+  {
+    companyId: companyMap["Wayne Enterprises"],
+    year: 2021,
+    revenue: 125_000_000_000,
+    grossProfit: 42_000_000_000,
+    costOfSales: 83_000_000_000,
+    operatingExpenses: 21_000_000_000,
+    operatingProfit: 21_000_000_000,
+    netIncome: 13_000_000_000,
+  },
+
+  // LexCorp
+  {
+    companyId: companyMap["LexCorp"],
+    year: 2020,
+    revenue: 110_000_000_000,
+    grossProfit: 35_000_000_000,
+    costOfSales: 75_000_000_000,
+    operatingExpenses: 18_000_000_000,
+    operatingProfit: 17_000_000_000,
+    netIncome: 10_000_000_000,
+  },
+  {
+    companyId: companyMap["LexCorp"],
+    year: 2021,
+    revenue: 115_000_000_000,
+    grossProfit: 37_000_000_000,
+    costOfSales: 78_000_000_000,
+    operatingExpenses: 19_000_000_000,
+    operatingProfit: 18_000_000_000,
+    netIncome: 11_000_000_000,
+  },
+
+  // Arasaka
+  {
+    companyId: companyMap["Arasaka"],
+    year: 2020,
+    revenue: 150_000_000_000,
+    grossProfit: 50_000_000_000,
+    costOfSales: 100_000_000_000,
+    operatingExpenses: 30_000_000_000,
+    operatingProfit: 20_000_000_000,
+    netIncome: 12_000_000_000,
+  },
+  {
+    companyId: companyMap["Arasaka"],
+    year: 2021,
+    revenue: 155_000_000_000,
+    grossProfit: 52_000_000_000,
+    costOfSales: 103_000_000_000,
+    operatingExpenses: 31_000_000_000,
+    operatingProfit: 21_000_000_000,
+    netIncome: 13_000_000_000,
+  },
+
+  // Militech
+  {
+    companyId: companyMap["Militech"],
+    year: 2020,
+    revenue: 130_000_000_000,
+    grossProfit: 45_000_000_000,
+    costOfSales: 85_000_000_000,
+    operatingExpenses: 25_000_000_000,
+    operatingProfit: 20_000_000_000,
+    netIncome: 12_000_000_000,
+  },
+  {
+    companyId: companyMap["Militech"],
+    year: 2021,
+    revenue: 135_000_000_000,
+    grossProfit: 47_000_000_000,
+    costOfSales: 88_000_000_000,
+    operatingExpenses: 26_000_000_000,
+    operatingProfit: 21_000_000_000,
+    netIncome: 13_000_000_000,
+  },
+
+  // Kiroshi
+  {
+    companyId: companyMap["Kiroshi"],
+    year: 2020,
+    revenue: 30_000_000_000,
+    grossProfit: 10_000_000_000,
+    costOfSales: 20_000_000_000,
+    operatingExpenses: 5_000_000_000,
+    operatingProfit: 5_000_000_000,
+    netIncome: 3_000_000_000,
+  },
+  {
+    companyId: companyMap["Kiroshi"],
+    year: 2021,
+    revenue: 32_000_000_000,
+    grossProfit: 11_000_000_000,
+    costOfSales: 21_000_000_000,
+    operatingExpenses: 5_500_000_000,
+    operatingProfit: 5_500_000_000,
+    netIncome: 3_500_000_000,
+  },
+];

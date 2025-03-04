@@ -219,6 +219,9 @@ export const subIndustryMapping = {
   "Water Utilities": "Water",
   "Media & Entertainment": "Media",
   "Real Estate Management & Development": "Real Est. Dev.",
+  "Experimental Technology": "Exper. Tech",
+  "Scientific Research": "Sci Research",
+  "Multi-Utilities": "Multi-Utils",
 };
 
 function ensureSectorKey(value: string): keyof typeof sectorMapping {

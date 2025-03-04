@@ -894,4 +894,30 @@ export const makeCompaniesData = (ceoMap, sectorMap, subIndustryMap) => [
       subIndustryMap.get("Biotechnology").id,
     ceo: ceoMap.get("Jame Eagan"),
   },
+  {
+    name: "Black Mesa",
+    tickerSymbol: "BMRF",
+    logoUrl: "/images/logos/BMRF.webp",
+    description:
+      "A government-funded research facility specializing in experimental physics, teleportation, and classified military projects. Known for the disastrous resonance cascade event, causing an interdimensional invasion.",
+    valuation: 50000000,
+    sharesOutstanding: 2100000000,
+    initialPrice: 42.0,
+    sectorId: sectorMap.get("Industrials").id,
+    subIndustryId: subIndustryMap.get("Scientific Research").id,
+    ceo: ceoMap.get("Dr. Wallace Breen"),
+  },
+  {
+    name: "Aperture Science",
+    tickerSymbol: "APSC",
+    logoUrl: "/images/logos/APSC.webp",
+    description:
+      "A technology company specializing in AI research, portal technology, and unethical human experimentation. Infamously controlled by the rogue AI GLaDOS, known for its dark humor and disdain for test subjects.",
+    valuation: 5400000000,
+    sharesOutstanding: 60000000,
+    initialPrice: 88.5,
+    sectorId: sectorMap.get("Information Technology").id,
+    subIndustryId: subIndustryMap.get("Experimental Technology").id,
+    ceo: ceoMap.get("GLaDOS"),
+  },
 ];

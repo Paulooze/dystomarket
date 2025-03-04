@@ -113,7 +113,7 @@ export default function CompaniesList({
         selectedSubIndustry={selectedSubIndustry}
       />
       {filteredCompanies.length === 0 && <EmptyState />}
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
         <LayoutGroup>
           {filteredCompanies.map((company, index) => (
             <motion.div
