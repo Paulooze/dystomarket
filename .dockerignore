@@ -1,0 +1,9 @@
+.git
+.results
+scripts
+*Dockerfile*
+node_modules/
+docker-compose.yaml
+cloudbuild.yaml
+apps/web/.next/
+.env

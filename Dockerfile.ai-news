@@ -1,0 +1,43 @@
+# Step 1: Use an official Node.js base image
+FROM node:22-alpine AS builder
+
+RUN corepack enable
+
+# Step 2: Set working directory inside the container
+WORKDIR /app
+
+# Step 3: Copy only necessary files for dependency installation
+COPY package.json yarn.lock ./
+COPY .yarnrc.yml ./
+COPY .yarn/ ./.yarn/
+COPY nx.json ./
+
+# Step 4: Install dependencies using NX caching (only what's needed for ai-news)
+
+# Step 5: Copy only the AI News Generator app and shared libs
+COPY apps/ai-news/ ./apps/ai-news/
+COPY packages/ ./packages/
+
+RUN yarn install
+# Step 6: Set working directory to AI News Generator
+
+# Step 7: Build the app (if needed)
+RUN yarn nx build ai-news
+
+# Step 8: Use a smaller runtime image
+FROM node:22-alpine
+
+# Step 9: Set working directory in the runtime container
+WORKDIR /app
+
+# Step 10: Copy dependencies from builder stage
+
+# Step 11: Copy AI News Generator's app code
+COPY --from=builder /app/apps/ai-news ./apps/ai-news
+COPY --from=builder /app/packages ./packages
+
+# Step 12: Expose the required port (3001)
+EXPOSE 3001
+
+# Step 13: Set the default command
+CMD ["node", "apps/ai-news/dist/index.js"]

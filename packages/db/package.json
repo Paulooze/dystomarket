@@ -1,0 +1,28 @@
+{
+  "name": "@dystomarket/db",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "src/index.ts",
+  "prisma": {
+    "seed": "node prisma/seed.mjs"
+  },
+  "scripts": {
+    "seed": "ts-node prisma/seed.ts",
+    "migrate:dev": "prisma migrate dev",
+    "migrate:deploy": "prisma migrate deploy",
+    "client:generate": "prisma generate",
+    "studio": "prisma studio",
+    "postinstall": "prisma generate",
+    "build": "mkdir -p dist && tsc && cp -r src/generated/ dist/"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.4.1",
+    "prisma": "^6.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.0"
+  }
+}

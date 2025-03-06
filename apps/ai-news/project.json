@@ -1,0 +1,7 @@
+{
+  "name": "@dystomarket/ai-news",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/ai-news/src",
+  "projectType": "application",
+  "tags": []
+}

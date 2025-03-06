@@ -1,0 +1,13 @@
+{
+  "include": ["./jobs/*.ts"],
+  "compilerOptions": {
+    "rootDir": "jobs",
+    "types": ["node"],
+    "lib": ["ESNext"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "dist"
+  }
+}
