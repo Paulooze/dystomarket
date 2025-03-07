@@ -1,9 +1,9 @@
-"use client";
-import CompaniesList from "@/components/companies-list";
-import IndexTrackersList from "@/components/index-tracker-list";
-import { Suspense, useEffect, useState } from "react";
-import IndicesLoadingState from "./indices-loading-state";
-import { Sector, SubIndustry } from "@dystomarket/db";
+'use client';
+import CompaniesList from '@/components/companies-list';
+import IndexTrackersList from '@/components/index-tracker-list';
+import { Suspense, useEffect, useState } from 'react';
+import IndicesLoadingState from './indices-loading-state';
+import { Sector, SubIndustry } from '@dystomarket/db';
 
 interface Company {
   id: number;
@@ -53,7 +53,7 @@ export default function RealtimeContainer({
   const [updatedIndexData, setUpdatedIndexData] = useState<UpdatedData[]>([]);
 
   useEffect(() => {
-    const eventSource = new EventSource("/api/stream");
+    const eventSource = new EventSource('/api/stream');
 
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data) as StreamData;
@@ -69,7 +69,7 @@ export default function RealtimeContainer({
   return (
     <>
       <div className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-dysto-white">
+        <h2 className="text-2xl font-semibold mb-4  text-dysto-white">
           Market Indices
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-2">

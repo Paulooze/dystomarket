@@ -21,5 +21,13 @@
     "typescript": "^5.8.0"
   },
   "nx": {},
-  "packageManager": "yarn@4.7.0"
+  "packageManager": "yarn@4.7.0",
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.12",
+    "bullmq": "^5.41.7",
+    "fastify": "^5.2.1",
+    "fastify-cors": "^6.1.0",
+    "ioredis": "^5.6.0",
+    "tailwindcss": "^4.0.12"
+  }
 }

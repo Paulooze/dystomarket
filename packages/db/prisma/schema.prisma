@@ -79,6 +79,7 @@ model StockPrice {
   companyId Int
   timestamp DateTime @default(now())
   price     Float
+  momentum  Float    @default(0)
 
   company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
 

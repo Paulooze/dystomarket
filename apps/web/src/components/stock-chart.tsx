@@ -1,18 +1,18 @@
-"use client";
-import { formatCurrency } from "@/lib/formatters";
-import { parseISO, subDays, subWeeks } from "date-fns";
-import { useMemo, useState } from "react";
+'use client';
+import { formatCurrency } from '@/lib/formatters';
+import { parseISO, subDays, subWeeks } from 'date-fns';
+import { useMemo, useState } from 'react';
 import {
   Area,
   AreaChart,
   CartesianGrid,
   ResponsiveContainer,
   YAxis,
-} from "recharts";
-import PriceDisplay from "./price-display";
-import StockPrice from "./stock-price";
-import { ChartContainer, ChartTooltip } from "./ui/chart";
-import { Sector, SubIndustry } from "@dystomarket/db";
+} from 'recharts';
+import PriceDisplay from './price-display';
+import StockPrice from './stock-price';
+import { ChartContainer, ChartTooltip } from './ui/chart';
+import { Sector, SubIndustry } from '@dystomarket/db';
 
 interface StockPrice {
   timestamp: string;
@@ -43,8 +43,8 @@ const CustomTooltip = ({ active, payload }: any) => {
         <p className="text-sm">{formattedDate}</p>
         <p className="text-sm font-bold">
           {formatCurrency(dataPoint.price, {
-            notation: "standard",
-            compactDisplay: "long",
+            notation: 'standard',
+            compactDisplay: 'long',
           })}
         </p>
       </div>
@@ -60,7 +60,7 @@ const calculatePriceChanges = (
 ) => {
   let priceChange = 0;
   let percentageChange = 0;
-  let direction: "up" | "down" | "neutral" = "neutral";
+  let direction: 'up' | 'down' | 'neutral' = 'neutral';
   let previousPrice = null;
   const currentPrice =
     hoveredPriceObject !== null ? hoveredPriceObject.price : latestPrice;
@@ -81,8 +81,8 @@ const calculatePriceChanges = (
 
   if (currentPrice !== null && previousPrice !== null) {
     priceChange = currentPrice - (previousPrice ?? 0);
-    percentageChange = (priceChange / (previousPrice ?? 0)) * 100;
-    direction = priceChange > 0 ? "up" : priceChange < 0 ? "down" : "neutral";
+    percentageChange = priceChange / (previousPrice ?? 0);
+    direction = priceChange > 0 ? 'up' : priceChange < 0 ? 'down' : 'neutral';
   }
 
   return { priceChange, percentageChange, direction };
@@ -93,7 +93,7 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
     useState<StockPrice | null>(
       prices.length > 0 ? prices[prices.length - 1] : null
     );
-  const [filter, setFilter] = useState<"1d" | "1w">("1d"); // '1d' or '1w'
+  const [filter, setFilter] = useState<'1d' | '1w'>('1w'); // '1d' or '1w'
 
   const filteredPrices = useMemo(() => {
     if (!prices) {
@@ -103,9 +103,9 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
     const now = new Date();
     let startDate: Date;
 
-    if (filter === "1d") {
+    if (filter === '1d') {
       startDate = subDays(now, 1);
-    } else if (filter === "1w") {
+    } else if (filter === '1w') {
       startDate = subWeeks(now, 1);
     } else {
       startDate = subDays(now, 1); //default
@@ -164,21 +164,21 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
         <div className="flex space-x-2 lg:ml-auto mt-4">
           <button
             className={`cursor-pointer px-4 py-2 rounded ${
-              filter === "1d"
-                ? "bg-dysto-green text-dysto-dark"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+              filter === '1d'
+                ? 'bg-dysto-green text-dysto-dark'
+                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
             }`}
-            onClick={() => setFilter("1d")}
+            onClick={() => setFilter('1d')}
           >
             1 Day
           </button>
           <button
             className={`cursor-pointer px-4 py-2 rounded ${
-              filter === "1w"
-                ? "bg-dysto-green text-dysto-dark"
-                : "bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
+              filter === '1w'
+                ? 'bg-dysto-green text-dysto-dark'
+                : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
             }`}
-            onClick={() => setFilter("1w")}
+            onClick={() => setFilter('1w')}
           >
             1 Week
           </button>
@@ -188,8 +188,8 @@ const StockChart: React.FC<StockChartProps> = ({ prices, company }) => {
         <ChartContainer
           config={{
             stock: {
-              label: "Price",
-              color: "var(--color-blue-500)",
+              label: 'Price',
+              color: 'var(--color-blue-500)',
             },
           }}
           className="aspect-auto h-[350px] w-full"

@@ -6644,12 +6644,14 @@ export namespace Prisma {
     id: number | null
     companyId: number | null
     price: number | null
+    momentum: number | null
   }
 
   export type StockPriceSumAggregateOutputType = {
     id: number | null
     companyId: number | null
     price: number | null
+    momentum: number | null
   }
 
   export type StockPriceMinAggregateOutputType = {
@@ -6657,6 +6659,7 @@ export namespace Prisma {
     companyId: number | null
     timestamp: Date | null
     price: number | null
+    momentum: number | null
   }
 
   export type StockPriceMaxAggregateOutputType = {
@@ -6664,6 +6667,7 @@ export namespace Prisma {
     companyId: number | null
     timestamp: Date | null
     price: number | null
+    momentum: number | null
   }
 
   export type StockPriceCountAggregateOutputType = {
@@ -6671,6 +6675,7 @@ export namespace Prisma {
     companyId: number
     timestamp: number
     price: number
+    momentum: number
     _all: number
   }
 
@@ -6679,12 +6684,14 @@ export namespace Prisma {
     id?: true
     companyId?: true
     price?: true
+    momentum?: true
   }
 
   export type StockPriceSumAggregateInputType = {
     id?: true
     companyId?: true
     price?: true
+    momentum?: true
   }
 
   export type StockPriceMinAggregateInputType = {
@@ -6692,6 +6699,7 @@ export namespace Prisma {
     companyId?: true
     timestamp?: true
     price?: true
+    momentum?: true
   }
 
   export type StockPriceMaxAggregateInputType = {
@@ -6699,6 +6707,7 @@ export namespace Prisma {
     companyId?: true
     timestamp?: true
     price?: true
+    momentum?: true
   }
 
   export type StockPriceCountAggregateInputType = {
@@ -6706,6 +6715,7 @@ export namespace Prisma {
     companyId?: true
     timestamp?: true
     price?: true
+    momentum?: true
     _all?: true
   }
 
@@ -6800,6 +6810,7 @@ export namespace Prisma {
     companyId: number
     timestamp: Date
     price: number
+    momentum: number
     _count: StockPriceCountAggregateOutputType | null
     _avg: StockPriceAvgAggregateOutputType | null
     _sum: StockPriceSumAggregateOutputType | null
@@ -6826,6 +6837,7 @@ export namespace Prisma {
     companyId?: boolean
     timestamp?: boolean
     price?: boolean
+    momentum?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stockPrice"]>
 
@@ -6834,6 +6846,7 @@ export namespace Prisma {
     companyId?: boolean
     timestamp?: boolean
     price?: boolean
+    momentum?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stockPrice"]>
 
@@ -6842,6 +6855,7 @@ export namespace Prisma {
     companyId?: boolean
     timestamp?: boolean
     price?: boolean
+    momentum?: boolean
     company?: boolean | CompanyDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stockPrice"]>
 
@@ -6850,9 +6864,10 @@ export namespace Prisma {
     companyId?: boolean
     timestamp?: boolean
     price?: boolean
+    momentum?: boolean
   }
 
-  export type StockPriceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "timestamp" | "price", ExtArgs["result"]["stockPrice"]>
+  export type StockPriceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "companyId" | "timestamp" | "price" | "momentum", ExtArgs["result"]["stockPrice"]>
   export type StockPriceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     company?: boolean | CompanyDefaultArgs<ExtArgs>
   }
@@ -6873,6 +6888,7 @@ export namespace Prisma {
       companyId: number
       timestamp: Date
       price: number
+      momentum: number
     }, ExtArgs["result"]["stockPrice"]>
     composites: {}
   }
@@ -7301,6 +7317,7 @@ export namespace Prisma {
     readonly companyId: FieldRef<"StockPrice", 'Int'>
     readonly timestamp: FieldRef<"StockPrice", 'DateTime'>
     readonly price: FieldRef<"StockPrice", 'Float'>
+    readonly momentum: FieldRef<"StockPrice", 'Float'>
   }
     
 
@@ -13355,7 +13372,8 @@ export namespace Prisma {
     id: 'id',
     companyId: 'companyId',
     timestamp: 'timestamp',
-    price: 'price'
+    price: 'price',
+    momentum: 'momentum'
   };
 
   export type StockPriceScalarFieldEnum = (typeof StockPriceScalarFieldEnum)[keyof typeof StockPriceScalarFieldEnum]
@@ -13801,6 +13819,7 @@ export namespace Prisma {
     companyId?: IntFilter<"StockPrice"> | number
     timestamp?: DateTimeFilter<"StockPrice"> | Date | string
     price?: FloatFilter<"StockPrice"> | number
+    momentum?: FloatFilter<"StockPrice"> | number
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
   }
 
@@ -13809,6 +13828,7 @@ export namespace Prisma {
     companyId?: SortOrder
     timestamp?: SortOrder
     price?: SortOrder
+    momentum?: SortOrder
     company?: CompanyOrderByWithRelationInput
   }
 
@@ -13820,6 +13840,7 @@ export namespace Prisma {
     companyId?: IntFilter<"StockPrice"> | number
     timestamp?: DateTimeFilter<"StockPrice"> | Date | string
     price?: FloatFilter<"StockPrice"> | number
+    momentum?: FloatFilter<"StockPrice"> | number
     company?: XOR<CompanyScalarRelationFilter, CompanyWhereInput>
   }, "id">
 
@@ -13828,6 +13849,7 @@ export namespace Prisma {
     companyId?: SortOrder
     timestamp?: SortOrder
     price?: SortOrder
+    momentum?: SortOrder
     _count?: StockPriceCountOrderByAggregateInput
     _avg?: StockPriceAvgOrderByAggregateInput
     _max?: StockPriceMaxOrderByAggregateInput
@@ -13843,6 +13865,7 @@ export namespace Prisma {
     companyId?: IntWithAggregatesFilter<"StockPrice"> | number
     timestamp?: DateTimeWithAggregatesFilter<"StockPrice"> | Date | string
     price?: FloatWithAggregatesFilter<"StockPrice"> | number
+    momentum?: FloatWithAggregatesFilter<"StockPrice"> | number
   }
 
   export type NewsArticleWhereInput = {
@@ -14430,6 +14453,7 @@ export namespace Prisma {
   export type StockPriceCreateInput = {
     timestamp?: Date | string
     price: number
+    momentum?: number
     company: CompanyCreateNestedOneWithoutStockPricesInput
   }
 
@@ -14438,11 +14462,13 @@ export namespace Prisma {
     companyId: number
     timestamp?: Date | string
     price: number
+    momentum?: number
   }
 
   export type StockPriceUpdateInput = {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     price?: FloatFieldUpdateOperationsInput | number
+    momentum?: FloatFieldUpdateOperationsInput | number
     company?: CompanyUpdateOneRequiredWithoutStockPricesNestedInput
   }
 
@@ -14451,6 +14477,7 @@ export namespace Prisma {
     companyId?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     price?: FloatFieldUpdateOperationsInput | number
+    momentum?: FloatFieldUpdateOperationsInput | number
   }
 
   export type StockPriceCreateManyInput = {
@@ -14458,11 +14485,13 @@ export namespace Prisma {
     companyId: number
     timestamp?: Date | string
     price: number
+    momentum?: number
   }
 
   export type StockPriceUpdateManyMutationInput = {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     price?: FloatFieldUpdateOperationsInput | number
+    momentum?: FloatFieldUpdateOperationsInput | number
   }
 
   export type StockPriceUncheckedUpdateManyInput = {
@@ -14470,6 +14499,7 @@ export namespace Prisma {
     companyId?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     price?: FloatFieldUpdateOperationsInput | number
+    momentum?: FloatFieldUpdateOperationsInput | number
   }
 
   export type NewsArticleCreateInput = {
@@ -15189,12 +15219,14 @@ export namespace Prisma {
     companyId?: SortOrder
     timestamp?: SortOrder
     price?: SortOrder
+    momentum?: SortOrder
   }
 
   export type StockPriceAvgOrderByAggregateInput = {
     id?: SortOrder
     companyId?: SortOrder
     price?: SortOrder
+    momentum?: SortOrder
   }
 
   export type StockPriceMaxOrderByAggregateInput = {
@@ -15202,6 +15234,7 @@ export namespace Prisma {
     companyId?: SortOrder
     timestamp?: SortOrder
     price?: SortOrder
+    momentum?: SortOrder
   }
 
   export type StockPriceMinOrderByAggregateInput = {
@@ -15209,12 +15242,14 @@ export namespace Prisma {
     companyId?: SortOrder
     timestamp?: SortOrder
     price?: SortOrder
+    momentum?: SortOrder
   }
 
   export type StockPriceSumOrderByAggregateInput = {
     id?: SortOrder
     companyId?: SortOrder
     price?: SortOrder
+    momentum?: SortOrder
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -16666,12 +16701,14 @@ export namespace Prisma {
   export type StockPriceCreateWithoutCompanyInput = {
     timestamp?: Date | string
     price: number
+    momentum?: number
   }
 
   export type StockPriceUncheckedCreateWithoutCompanyInput = {
     id?: number
     timestamp?: Date | string
     price: number
+    momentum?: number
   }
 
   export type StockPriceCreateOrConnectWithoutCompanyInput = {
@@ -16947,6 +16984,7 @@ export namespace Prisma {
     companyId?: IntFilter<"StockPrice"> | number
     timestamp?: DateTimeFilter<"StockPrice"> | Date | string
     price?: FloatFilter<"StockPrice"> | number
+    momentum?: FloatFilter<"StockPrice"> | number
   }
 
   export type NewsArticleUpsertWithWhereUniqueWithoutCompanyInput = {
@@ -17847,6 +17885,7 @@ export namespace Prisma {
     id?: number
     timestamp?: Date | string
     price: number
+    momentum?: number
   }
 
   export type NewsArticleCreateManyCompanyInput = {
@@ -17879,18 +17918,21 @@ export namespace Prisma {
   export type StockPriceUpdateWithoutCompanyInput = {
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     price?: FloatFieldUpdateOperationsInput | number
+    momentum?: FloatFieldUpdateOperationsInput | number
   }
 
   export type StockPriceUncheckedUpdateWithoutCompanyInput = {
     id?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     price?: FloatFieldUpdateOperationsInput | number
+    momentum?: FloatFieldUpdateOperationsInput | number
   }
 
   export type StockPriceUncheckedUpdateManyWithoutCompanyInput = {
     id?: IntFieldUpdateOperationsInput | number
     timestamp?: DateTimeFieldUpdateOperationsInput | Date | string
     price?: FloatFieldUpdateOperationsInput | number
+    momentum?: FloatFieldUpdateOperationsInput | number
   }
 
   export type NewsArticleUpdateWithoutCompanyInput = {

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @plugin "tailwindcss-animate";
 
@@ -255,7 +255,6 @@
   --destructive-foreground: 0 85.7% 97.3%;
   --input: 217.2 32.6% 17.5%;
   --ring: 212.7 26.8% 83.9%;
-  --card-border: white;
 }
 
 @layer base {

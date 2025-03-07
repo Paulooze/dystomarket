@@ -1,5 +1,5 @@
-import { motion } from "motion/react";
-import Image from "next/image";
+import { motion } from 'motion/react';
+import Image from 'next/image';
 
 export default function EmptyState() {
   return (
@@ -15,7 +15,7 @@ export default function EmptyState() {
         transition={{
           duration: 0.5,
           repeat: Infinity,
-          repeatType: "loop",
+          repeatType: 'loop',
         }}
       >
         <Image
@@ -38,7 +38,7 @@ export default function EmptyState() {
       </motion.h2>
 
       <motion.p
-        className="mt-2 max-w-sm text-gray-500 dark:text-gray-50 text-lg"
+        className="mt-2 max-w-sm text-gray-50 text-lg"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.5 }}

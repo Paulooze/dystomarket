@@ -1,15 +1,15 @@
-import ChangeChart from "@/components/change-chart";
-import StockChart from "@/components/stock-chart";
+import ChangeChart from '@/components/change-chart';
+import StockChart from '@/components/stock-chart';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { FinancialData, prisma, Sector, SubIndustry } from "@dystomarket/db";
-import Image from "next/image";
-import { notFound } from "next/navigation";
+} from '@/components/ui/card';
+import { FinancialData, prisma, Sector, SubIndustry } from '@dystomarket/db';
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
 
 type Company = {
   id: number;
@@ -41,7 +41,7 @@ async function getCompany(tickerSymbol: string): Promise<Company | null> {
       include: {
         ceo: true,
         stockPrices: {
-          orderBy: { timestamp: "desc" },
+          orderBy: { timestamp: 'desc' },
           take: 2,
         },
         sector: true,
@@ -61,7 +61,7 @@ async function getCompany(tickerSymbol: string): Promise<Company | null> {
       name: company.name,
       tickerSymbol: company.tickerSymbol,
       description: company.description,
-      logoUrl: company.logoUrl ?? "",
+      logoUrl: company.logoUrl ?? '',
       sector: company.sector,
       subIndustry: company.subIndustry,
       latestPrice: company.latestPrice,
@@ -77,7 +77,7 @@ async function getCompany(tickerSymbol: string): Promise<Company | null> {
       financialData: company.financialData ? company.financialData : null,
     };
   } catch (error) {
-    console.error("Error fetching company:", error);
+    console.error('Error fetching company:', error);
     return null;
   } finally {
     await prisma.$disconnect();
@@ -94,7 +94,7 @@ async function getCompanyPrices(tickerSymbol: string): Promise<StockPrice[]> {
     }
     const stockPrices = await prisma.stockPrice.findMany({
       where: { companyId: company.id },
-      orderBy: { timestamp: "asc" }, // Important: order by timestamp ASCENDING
+      orderBy: { timestamp: 'asc' }, // Important: order by timestamp ASCENDING
     });
 
     const formattedPrices = stockPrices.map((price) => ({
@@ -104,7 +104,7 @@ async function getCompanyPrices(tickerSymbol: string): Promise<StockPrice[]> {
 
     return formattedPrices;
   } catch (error) {
-    console.error("Error fetching company prices:", error);
+    console.error('Error fetching company prices:', error);
     return []; // Return empty on error
   } finally {
     await prisma.$disconnect();
@@ -139,7 +139,7 @@ export default async function CompanyPage({
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                   className="rounded-full mr-6"
                 />
-                <h1 className="text-3xl font-semibold text-gray-800 dark:text-dysto-white flex flex-col">
+                <h1 className="text-3xl font-semibold  text-dysto-white flex flex-col">
                   <span className="mb-2">{company.name}</span>
                   <span className="text-lg text-gray-500 dark:text-gray-400">
                     {company.tickerSymbol}
@@ -153,7 +153,7 @@ export default async function CompanyPage({
                   src={
                     company.ceo.imageUrl
                       ? company.ceo.imageUrl
-                      : "/images/logos/default_ceo.webp"
+                      : '/images/logos/default_ceo.webp'
                   }
                   alt={`CEO of ${company.name}`}
                   width={50}
@@ -163,18 +163,16 @@ export default async function CompanyPage({
                   className="rounded-full mr-4"
                 />
                 <div>
-                  <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">
+                  <h2 className="text-xl font-semibold  text-gray-100">
                     {company.ceo.name}
                   </h2>
-                  <p className="text-gray-700 dark:text-gray-300 mb-4">CEO</p>
+                  <p className="text-gray-300 mb-4">CEO</p>
                 </div>
               </div>
             )}
           </div>
           <CardDescription>
-            <p className="text-lg text-gray-700 dark:text-dysto-white">
-              {company.description}
-            </p>
+            <p className="text-lg text-dysto-white">{company.description}</p>
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -183,7 +181,7 @@ export default async function CompanyPage({
           </div>
           {company.financialData && (
             <>
-              <h2 className="text-xl font-semibold text-gray-800 dark:text-dysto-white mb-6">
+              <h2 className="text-xl font-semibold  text-dysto-white mb-6">
                 Financials
               </h2>
               <ChangeChart data={company.financialData} />

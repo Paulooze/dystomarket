@@ -1,9 +1,9 @@
-import { getSectorColor, shortenLabel } from "@/lib/formatters";
-import Image from "next/image";
-import Link from "next/link";
-import StockPrice from "./stock-price";
-import { Card } from "./ui/card";
-import { Sector, SubIndustry } from "@dystomarket/db";
+import { getSectorColor, shortenLabel } from '@/lib/formatters';
+import Image from 'next/image';
+import Link from 'next/link';
+import StockPrice from './stock-price';
+import { Card } from './ui/card';
+import { Sector, SubIndustry } from '@dystomarket/db';
 
 interface CompanyCardProps {
   company: {
@@ -24,7 +24,7 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
 
   return (
     <Link href={`/company/${company.tickerSymbol}`} className="h-full">
-      {" "}
+      {' '}
       {/* h-full on the Link */}
       <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 p-4 flex flex-col h-full hover:bg-gray-700">
         <div className="flex items-start">
@@ -42,10 +42,10 @@ const CompanyCard: React.FC<CompanyCardProps> = ({ company }) => {
           <div className="flex-1 flex-col ">
             <div className="flex">
               <div className="flex flex-col mb-2">
-                <h3 className="text-lg font-bold text-gray-800 dark:text-dysto-white line-clamp-1">
+                <h3 className="text-lg font-bold  text-dysto-white line-clamp-1">
                   {company.name}
                 </h3>
-                <p className="text-sm font-semibold text-gray-500 dark:text-gray-50">
+                <p className="text-sm font-semibold text-gray-50">
                   {company.tickerSymbol}
                 </p>
               </div>

@@ -50,7 +50,7 @@ export default function News() {
 
   return (
     <>
-      <h2 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-dysto-white">
+      <h2 className="text-2xl font-semibold mb-4  text-dysto-white">
         Recent News
       </h2>
       <div className="rounded-xl overflow-hidden">

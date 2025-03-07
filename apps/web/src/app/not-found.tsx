@@ -1,7 +1,7 @@
-"use client";
-import Image from "next/image";
-import { motion } from "motion/react";
-import Link from "next/link";
+'use client';
+import Image from 'next/image';
+import { motion } from 'motion/react';
+import Link from 'next/link';
 
 export default function NotFound() {
   return (
@@ -18,7 +18,7 @@ export default function NotFound() {
             transition={{
               duration: 0.5,
               repeat: Infinity,
-              repeatType: "loop",
+              repeatType: 'loop',
             }}
           >
             <Image
@@ -30,10 +30,10 @@ export default function NotFound() {
           </motion.div>
         </div>
         <div className="flex-1 pl-8">
-          <h2 className="text-4xl font-semibold mb-4 font-display text-gray-800 dark:text-dysto-white">
+          <h2 className="text-4xl font-semibold mb-4 font-display  text-dysto-white">
             MARKET ERROR 404: ASSET NOT FOUND
           </h2>
-          <h3 className="text-3xl font-semibold mb-4 font-display text-gray-800 dark:text-dysto-purple">
+          <h3 className="text-3xl font-semibold mb-4 font-display  dark:text-dysto-purple">
             This corporation has been delisted.
           </h3>
           <h4>Possible Causes:</h4>
@@ -49,11 +49,11 @@ export default function NotFound() {
               overlords.
             </li>
             <li>
-              The AI running this market just had a{" "}
+              The AI running this market just had a{' '}
               <strong>glitchy episode</strong>.
             </li>
           </ul>
-          <h3 className="text-3xl font-semibold mb-4 font-display text-gray-800 dark:text-dysto-purple">
+          <h3 className="text-3xl font-semibold mb-4 font-display  dark:text-dysto-purple">
             What now?
           </h3>
           <div className="flex space-x-1">

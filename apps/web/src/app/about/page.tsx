@@ -1,7 +1,7 @@
 export default function About() {
   return (
     <div className="container mx-auto p-4 min-h-screen">
-      <h2 className="text-4xl font-semibold mb-4 font-display text-gray-800 dark:text-dysto-white">
+      <h2 className="text-4xl font-semibold mb-4 font-display  text-dysto-white">
         About Dystomarket
       </h2>
       <p className="my-4">

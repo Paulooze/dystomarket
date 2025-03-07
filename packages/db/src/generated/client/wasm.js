@@ -159,7 +159,8 @@ exports.Prisma.StockPriceScalarFieldEnum = {
   id: 'id',
   companyId: 'companyId',
   timestamp: 'timestamp',
-  price: 'price'
+  price: 'price',
+  momentum: 'momentum'
 };
 
 exports.Prisma.NewsArticleScalarFieldEnum = {

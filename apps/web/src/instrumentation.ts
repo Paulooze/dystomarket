@@ -5,59 +5,79 @@ const redisConnection = {
   url: process.env.REDIS_DB_URL,
 };
 
+const getNewStockData = (
+  stock: { momentum: number; price: number },
+  news: NewsArticle
+) => {
+  const sentiment = news.sentiment ?? 0;
+  let changeFactor = sentiment * 0.05;
+  let momentum = stock.momentum || 0;
+
+  if (momentum > 0 && sentiment > 0) changeFactor *= 1.5;
+  if (momentum < 0 && sentiment < 0) changeFactor *= 1.5;
+
+  momentum *= 0.9;
+
+  const randomness = (Math.random() - 0.5) * 0.02;
+  changeFactor += randomness;
+
+  return {
+    newPrice: (stock.price += stock.price * changeFactor),
+    newMomentum: momentum + changeFactor,
+    changeFactor,
+  };
+};
+
+type ExtendedNewsArticle = NewsArticle & {
+  targetCompany: string;
+};
+
 export async function register() {
   if (process.env.NEXT_RUNTIME === 'nodejs') {
     const { Worker } = await import('bullmq');
     const { prisma } = await import('@dystomarket/db');
-    const worker = new Worker<NewsArticle>(
+
+    const worker = new Worker<ExtendedNewsArticle>(
       'news-result',
       async (job) => {
         const { data: body } = job;
         const company = await prisma.company.findUnique({
-          where: { id: body.companyId },
+          where: { tickerSymbol: body.targetCompany },
           include: {
             stockPrices: {
-              orderBy: { timestamp: 'asc' },
+              orderBy: { timestamp: 'desc' },
               take: 1,
+              select: {
+                momentum: true,
+                price: true,
+              },
             },
           },
         });
-        console.log(`📩 Received AI news result for ${company!.name}`);
-
-        const sentiment = body.sentiment ?? 0;
-        const baseImpact = Math.abs(sentiment) * (Math.random() * 0.15 + 0.05); // 5% to 20% range
-        const priceChangeMultiplier =
-          sentiment > 0 ? 1 + baseImpact : 1 - baseImpact;
-
-        const newPrice =
-          (company!.latestPrice ?? company?.stockPrices[0]?.price ?? 100) *
-          priceChangeMultiplier;
-
-        // Fetch the rival company
-        const rivalCompany = company!.rivalCompanyId
-          ? await prisma.company.findUnique({
-              where: { id: company!.rivalCompanyId },
-              include: {
-                stockPrices: {
-                  orderBy: { timestamp: 'asc' },
-                  take: 1,
-                },
+        const rivalCompanies = await prisma.company.findMany({
+          where: {
+            sector: { id: company?.sectorId },
+            id: { not: company?.id },
+            subIndustryId: company?.subIndustryId,
+          },
+          include: {
+            stockPrices: {
+              orderBy: { timestamp: 'desc' },
+              take: 1,
+              select: {
+                momentum: true,
+                price: true,
               },
-            })
-          : null;
+            },
+          },
+        });
+        const { changeFactor, newMomentum, newPrice } = getNewStockData(
+          company!.stockPrices[0],
+          body
+        );
 
-        let rivalNewPrice: number | null = null;
-        if (rivalCompany) {
-          const rivalImpact = baseImpact * 0.5; // Rival effect is 50% of main impact
-          const rivalMultiplier =
-            sentiment > 0 ? 1 - rivalImpact : 1 + rivalImpact;
-          rivalNewPrice = Math.max(
-            1,
-            (rivalCompany.latestPrice ??
-              rivalCompany.stockPrices[0]?.price ??
-              100) * rivalMultiplier
-          ); // Prevents negative prices
-        }
+        console.log(`📩 Received AI news result for ${company!.name}`);
+        console.log(`Updating price: ${company?.latestPrice} -> ${newPrice}`);
 
         const transactions = [
           prisma.newsArticle.create({
@@ -75,6 +95,7 @@ export async function register() {
             data: {
               companyId: company!.id,
               price: newPrice,
+              momentum: newMomentum,
             },
           }),
           prisma.company.update({
@@ -82,27 +103,21 @@ export async function register() {
             data: { latestPrice: newPrice },
           }),
         ];
-        if (rivalCompany) {
+
+        for (const rCompany of rivalCompanies) {
           transactions.push(
             prisma.company.update({
-              where: { id: rivalCompany.id },
-              data: { latestPrice: rivalNewPrice },
-            })
-          );
-          transactions.push(
+              where: { id: rCompany.id },
+              data: {
+                latestPrice: rCompany.latestPrice! + changeFactor * 0.5,
+              },
+            }),
             prisma.stockPrice.create({
               data: {
-                companyId: rivalCompany.id,
-                price: rivalNewPrice!,
+                companyId: rCompany.id,
+                price: rCompany.latestPrice! + changeFactor * 0.5,
               },
             })
-          );
-          console.log(
-            `🔄 Rival Reaction: ${
-              rivalCompany.name
-            } Stock Updated: $${rivalCompany.latestPrice?.toFixed(
-              2
-            )} → $${rivalNewPrice!.toFixed(2)}`
           );
         }
 

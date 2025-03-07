@@ -15,7 +15,7 @@ COPY nx.json ./
 # Step 4: Install dependencies using NX caching (only what's needed for ai-news)
 
 # Step 5: Copy only the AI News Generator app and shared libs
-COPY apps/ai-news/ ./apps/ai-news/
+COPY apps/dystomarket-ai-news/ ./apps/dystomarket-ai-news/
 COPY packages/ ./packages/
 
 RUN yarn install
@@ -33,11 +33,11 @@ WORKDIR /app
 # Step 10: Copy dependencies from builder stage
 
 # Step 11: Copy AI News Generator's app code
-COPY --from=builder /app/apps/ai-news ./apps/ai-news
+COPY --from=builder /app/apps/dystomarket-ai-news ./apps/dystomarket-ai-news
 COPY --from=builder /app/packages ./packages
 
-# Step 12: Expose the required port (3001)
-EXPOSE 3001
+ENV PORT 8080
+EXPOSE 8080
 
 # Step 13: Set the default command
-CMD ["node", "apps/ai-news/dist/index.js"]
+CMD ["node", "apps/dystomarket-ai-news/dist/index.js"]

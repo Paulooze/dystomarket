@@ -4,6 +4,10 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "src/index.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
   "prisma": {
     "seed": "node prisma/seed.mjs"
   },

@@ -1,5 +1,5 @@
-import StockPrice from "./stock-price";
-import { Card, CardContent, CardTitle } from "./ui/card";
+import StockPrice from './stock-price';
+import { Card, CardContent, CardTitle } from './ui/card';
 
 type Props = {
   index: {
@@ -17,10 +17,10 @@ export default function IndexTrackerCard({ index }: Props) {
     <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 p-4 flex flex-col h-full">
       <CardTitle className="flex items-start">
         <div className="mr-auto">
-          <h3 className="text-lg font-bold text-gray-800 dark:text-dysto-white line-clamp-1">
-            {index.name}{" "}
+          <h3 className="text-lg font-bold  text-dysto-white line-clamp-1">
+            {index.name}{' '}
           </h3>
-          <p className="text-sm font-semibold text-gray-500 dark:text-gray-50">
+          <p className="text-sm font-semibold text-gray-500 text-gray-50">
             {index.tickerSymbol}
           </p>
         </div>
