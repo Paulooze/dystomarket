@@ -28,7 +28,7 @@ const newsRouter: FastifyPluginCallback = (fastify, opts, done) => {
           },
         },
         orderBy: { timestamp: 'desc' },
-        take: 25,
+        take: 15,
       });
 
       const formattedNews = news.map((article) => ({
