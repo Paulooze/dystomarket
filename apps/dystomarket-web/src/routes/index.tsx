@@ -1,6 +1,7 @@
 import { Companies } from '@/components/companies';
 import CompaniesLoadingState from '@/components/companies/companies-loading-state';
-import News from '@/components/news';
+import { News } from '@/components/news';
+import NewsLoadingState from '@/components/news/news-loading-state';
 import { createFileRoute } from '@tanstack/react-router';
 import { Suspense } from 'react';
 import { Helmet } from 'react-helmet-async';
@@ -31,22 +32,30 @@ function RouteComponent() {
           />
           <meta
             property="og:image"
-            content="https://dystomarket.com/og-image.png"
+            content={`${import.meta.url}/og-image.png`}
           />
-          <meta property="og:url" content="https://dystomarket.com" />
+          <meta property="og:url" content={import.meta.url} />
           <meta property="og:type" content="website" />
+          <meta property="twitter:url" content={import.meta.url} />
+          <meta
+            name="twitter:title"
+            content="Dystomarket - The Ultimate Dystopian Stock Market Simulation"
+          />
         </Helmet>
         <div className="flex-1">
-          <Suspense fallback={<CompaniesLoadingState />}>
-            <Companies />
+          <h2 className="text-2xl font-semibold mb-4  text-dysto-white">
+            News
+          </h2>
+          <Suspense fallback={<NewsLoadingState />}>
+            <News />
           </Suspense>
         </div>
-        <div className="lg:w-1/4 lg:ml-8 mb-8 lg:mb-0">
+        <div className="lg:w-1/3 lg:ml-8 mb-8 lg:mb-0">
           <h2 className="text-2xl font-semibold mb-4  text-dysto-white">
-            Recent News
+            Stocks
           </h2>
-          <Suspense fallback={<div>Loading...</div>}>
-            <News />
+          <Suspense fallback={<CompaniesLoadingState />}>
+            <Companies />
           </Suspense>
         </div>
       </div>

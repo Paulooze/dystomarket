@@ -1,5 +1,4 @@
 import { Link } from '@tanstack/react-router';
-import { Card } from '../ui/card';
 import StockPrice from '../ui/stock-price';
 import {
   Company,
@@ -17,7 +16,7 @@ export default function CompanyCard({ company }: { company: Company }) {
       params={{ tickerSymbol: company.tickerSymbol }}
       className="h-full"
     >
-      <Card className="overflow-hidden hover:shadow-lg transition-all duration-200 p-4 flex flex-col h-full hover:bg-gray-700">
+      <div className="overflow-hidden hover:shadow-lg transition-all duration-200 p-4 flex flex-col h-full hover:bg-gray-700 border-b-2 border-dysto-dark-2 hover:border-dysto-green">
         <div className="flex items-start">
           <div className="w-12 h-12 rounded-full mr-4 flex items-center justify-center overflow-hidden">
             <img
@@ -47,7 +46,7 @@ export default function CompanyCard({ company }: { company: Company }) {
             </span>
           </div>
         </div>
-      </Card>
+      </div>
     </Link>
   );
 }

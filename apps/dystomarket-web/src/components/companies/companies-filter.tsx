@@ -36,7 +36,9 @@ export default function CompaniesFilter({
       <div className="flex items-center flex-wrap mb-2">
         <LayoutGroup>
           {sectors.map((sector, index) => {
-            const { background, text, hover } = getSectorColor(sector.name);
+            const { background, text, hover, active } = getSectorColor(
+              sector.name,
+            );
             return (
               <motion.div
                 key={sector.id}
@@ -56,6 +58,10 @@ export default function CompaniesFilter({
                     selectedSector && selectedSector.id !== sector.id
                       ? 'opacity-20'
                       : ''
+                  } ${
+                    selectedSector?.id === sector.id
+                      ? `${active.background} ${active.text}`
+                      : ''
                   }`}
                   onClick={() => onSelectSector(sector)}
                 >
@@ -71,7 +77,7 @@ export default function CompaniesFilter({
           <div className="flex items-center flex-wrap flex-1">
             <LayoutGroup>
               {selectedSector.subIndustries.map((subIndustry, index) => {
-                const { background, text, hover } = getSectorColor(
+                const { background, text, hover, active } = getSectorColor(
                   selectedSector?.name ?? 'UnknownSector',
                 );
 
@@ -97,6 +103,10 @@ export default function CompaniesFilter({
                         selectedSubIndustry.id !== subIndustry.id
                           ? 'opacity-20'
                           : ''
+                      } ${
+                        selectedSubIndustry?.id === subIndustry.id
+                          ? `${active.background} ${active.text}`
+                          : ''
                       }`}
                       onClick={() => {
                         onSelectSubIndustry(subIndustry);
@@ -114,7 +124,7 @@ export default function CompaniesFilter({
               onSelectSector(null);
               onSelectSubIndustry(null);
             }}
-            className="inline-flex items-center px-2 rounded-md border-2 cursor-pointer text-sm py-1 ml-auto"
+            className="inline-flex items-center px-2 rounded-md cursor-pointer text-sm py-0.5 ml-auto"
           >
             <X />
             <span className="ml-1">Clear filter</span>

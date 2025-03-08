@@ -1,4 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { LayoutGroup, motion } from 'motion/react';
 
@@ -22,18 +23,17 @@ async function fetchNews(): Promise<NewsArticle[]> {
 }
 
 export default function News() {
-  const { data } = useSuspenseQuery({
+  const { data: news } = useSuspenseQuery({
     queryKey: ['news'],
     queryFn: fetchNews,
     refetchOnWindowFocus: true,
     refetchInterval: 5000,
   });
 
-  const newsList = data.slice(0, 10);
   return (
-    <div className="rounded-xl overflow-hidden">
+    <div className="n">
       <LayoutGroup>
-        {newsList.map((article, index) => {
+        {news.map((article, index) => {
           return (
             <motion.div
               key={article.id}
@@ -46,23 +46,21 @@ export default function News() {
               animate={{ translateX: 0, opacity: 1, scale: 1 }}
               exit={{ translateX: -10, opacity: 0, scale: 0.95 }}
             >
-              <div
-                key={article.id}
-                className="block border-b-2 border-dysto-green p-4 bg-gray-700"
-              >
-                <h3 className="text-lg font-semibold mb-2">
+              <div key={article.id} className="block p-4 bg-gray-700 mb-4">
+                <h3 className="text-xl font-semibold mb-2">
                   {article.headline}&nbsp;
-                  <span
-                    // to={`/company/${article.tickerSymbol}`}
+                  <Link
+                    to={`/company/$tickerSymbol`}
+                    params={{ tickerSymbol: article.tickerSymbol ?? '' }}
                     className="text-green-500 font-semibold hover:underline"
                   >
                     #{article.tickerSymbol}
-                  </span>
+                  </Link>
                 </h3>
                 <p className="text-sm text-gray-50 mb-2">
                   {format(article.timestamp, 'MMMM d, yyyy')}
                 </p>
-                <p className="text-sm">{article.content}</p>
+                <p className="">{article.content}</p>
                 <p className="mt-2 text-sm text-green-500 font-semibold"></p>
               </div>
             </motion.div>

@@ -1,13 +1,8 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { LayoutGroup, motion } from 'motion/react';
-import {
-  ExtendedSector,
-  fetchCompanies,
-  SubIndustry,
-} from './companies.helpers';
-import CompanyCard from './company-card';
-import CompaniesFilter from './companies-filter';
 import { useEffect, useMemo, useState } from 'react';
+import { fetchCompanies } from './companies.helpers';
+import CompanyCard from './company-card';
 
 type UpdatedData = {
   ticker: string;
@@ -24,11 +19,6 @@ export default function Companies() {
     queryKey: ['companies'],
     queryFn: fetchCompanies,
   });
-  const [selectedSector, setSelectedSector] = useState<ExtendedSector | null>(
-    null,
-  );
-  const [selectedSubIndustry, setSelectedSubIndustry] =
-    useState<SubIndustry | null>(null);
   const [updatedCompanyData, setUpdatedCompanyData] = useState<UpdatedData[]>(
     [],
   );
@@ -48,42 +38,6 @@ export default function Companies() {
     };
   }, []);
 
-  const handleSelectSector = (sector: ExtendedSector | null) => {
-    setSelectedSubIndustry(null);
-    setSelectedSector((prevSelectedSector) => {
-      if (prevSelectedSector?.id === sector?.id) {
-        return null;
-      }
-      return sector;
-    });
-  };
-
-  const handleSelectSubIndustry = (subIndustry: SubIndustry | null) => {
-    setSelectedSubIndustry((prevSelectedSubIndustry) => {
-      if (prevSelectedSubIndustry?.id === subIndustry?.id) {
-        return null;
-      }
-      return subIndustry;
-    });
-  };
-
-  const filteredCompanies = useMemo(
-    () =>
-      companies.filter((company) => {
-        if (!selectedSector) {
-          return true;
-        }
-        if (!selectedSubIndustry) {
-          return company.sector.id === selectedSector.id;
-        }
-        return (
-          company.sector.id === selectedSector.id &&
-          company.subIndustry.id === selectedSubIndustry?.id
-        );
-      }),
-    [selectedSector, companies, selectedSubIndustry],
-  );
-
   const updatedCompaniesMap = useMemo(
     () =>
       updatedCompanyData.reduce((acc, curr) => {
@@ -94,7 +48,7 @@ export default function Companies() {
 
   const companiesList = useMemo(
     () =>
-      filteredCompanies.map((company) => {
+      companies.map((company) => {
         const updatedPrice = updatedCompaniesMap[company.tickerSymbol];
         const { previousPrice, latestPrice, ...rest } = company;
         return {
@@ -105,18 +59,12 @@ export default function Companies() {
             updatedPrice != null ? updatedPrice.latestPrice : latestPrice,
         };
       }),
-    [filteredCompanies, updatedCompaniesMap],
+    [companies, updatedCompaniesMap],
   );
 
   return (
     <>
-      <CompaniesFilter
-        onSelectSector={handleSelectSector}
-        onSelectSubIndustry={handleSelectSubIndustry}
-        selectedSector={selectedSector}
-        selectedSubIndustry={selectedSubIndustry}
-      />
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
+      <div>
         <LayoutGroup>
           {companiesList.map((company, index) => (
             <motion.div
