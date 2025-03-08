@@ -20,4 +20,8 @@ jobs:
           docker buildx build \
             --tag registry.digitalocean.com/dystohub/dystomarket-ai-news:latest \
             --tag registry.digitalocean.com/dystohub/dystomarket-ai-news:sha-$(git rev-parse --short HEAD) \
-            -f Dockerfile.ai-news . --push
+            -f Dockerfile.ai-news . --load
+      - name: Push AI News Image
+        run: |
+          docker push registry.digitalocean.com/dystomarket-ai-news:latest
+          docker push registry.digitalocean.com/dystomarket-ai-news:sha-$(git rev-parse --short HEAD)

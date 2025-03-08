@@ -20,4 +20,8 @@ jobs:
           docker buildx build \
             --tag registry.digitalocean.com/dystohub/dystomarket-api:latest \
             --tag registry.digitalocean.com/dystohub/dystomarket-api:sha-$(git rev-parse --short HEAD) \
-            -f Dockerfile.api . --push
+            -f Dockerfile.api . --load
+      - name: Push API Image
+        run: |
+          docker push registry.digitalocean.com/dystomarket-api:latest
+          docker push registry.digitalocean.com/dystomarket-api:sha-$(git rev-parse --short HEAD)
