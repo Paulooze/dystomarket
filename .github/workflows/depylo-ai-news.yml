@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
       - name: Login to DO Registry
         run: echo "${{ secrets.DO_ACCESS_TOKEN }}" | docker login -u "oauth2" --password-stdin registry.digitalocean.com
       - name: Build and Push API Image
