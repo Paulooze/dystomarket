@@ -25,5 +25,5 @@ jobs:
             -f Dockerfile.api . --load
       - name: Push API Image
         run: |
-          docker push registry.digitalocean.com/dystomarket-api:latest
-          docker push registry.digitalocean.com/dystomarket-api:sha-${SHORT_SHA}
+          docker push registry.digitalocean.com/dystohub/dystomarket-api:latest
+          docker push registry.digitalocean.com/dystohub/dystomarket-api:sha-${SHORT_SHA}

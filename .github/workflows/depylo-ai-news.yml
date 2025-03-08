@@ -25,5 +25,5 @@ jobs:
             -f Dockerfile.ai-news . --load
       - name: Push AI News Image
         run: |
-          docker push registry.digitalocean.com/dystomarket-ai-news:latest
-          docker push registry.digitalocean.com/dystomarket-ai-news:sha-${SHORT_SHA}
+          docker push registry.digitalocean.com/dystohub/dystomarket-ai-news:latest
+          docker push registry.digitalocean.com/dystohub/dystomarket-ai-news:sha-${SHORT_SHA}
