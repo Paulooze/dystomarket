@@ -1,6 +1,7 @@
 import { Company, getImageUrl } from '@/components/companies/companies.helpers';
 import StockChart from '@/components/ui/stock-chart';
 import { createFileRoute } from '@tanstack/react-router';
+import { Helmet } from 'react-helmet-async';
 
 type ExtendedCompany = Company & {
   ceo: {
@@ -48,6 +49,15 @@ function RouteComponent() {
 
   return (
     <div className="container mx-auto p-4">
+      <Helmet prioritizeSeoTags>
+        <title>
+          Dystomarket - ${company.name} (${company.tickerSymbol})
+        </title>
+        <meta
+          property="og:url"
+          content={`https://dystomarket.com/company/${company.tickerSymbol}`}
+        />
+      </Helmet>
       <div className="flex items-center mb-4">
         <div className="flex items-center mb-4">
           <div className="w-32 h-32 rounded-full mr-4 flex items-center justify-center overflow-hidden">
