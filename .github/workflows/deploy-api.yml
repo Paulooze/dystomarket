@@ -13,15 +13,17 @@ jobs:
         uses: actions/checkout@v4
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+      - name: Get Short GitHub SHA and Save in Environment Variable
+        run: echo "SHORT_SHA=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
       - name: Login to DO Registry
         run: echo "${{ secrets.DO_ACCESS_TOKEN }}" | docker login -u "oauth2" --password-stdin registry.digitalocean.com
       - name: Build and Push API Image
         run: |
           docker buildx build \
             --tag registry.digitalocean.com/dystohub/dystomarket-api:latest \
-            --tag registry.digitalocean.com/dystohub/dystomarket-api:sha-$(git rev-parse --short HEAD) \
+            --tag registry.digitalocean.com/dystohub/dystomarket-api:sha-${SHORT_SHA} \
             -f Dockerfile.api . --load
       - name: Push API Image
         run: |
           docker push registry.digitalocean.com/dystomarket-api:latest
-          docker push registry.digitalocean.com/dystomarket-api:sha-$(git rev-parse --short HEAD)
+          docker push registry.digitalocean.com/dystomarket-api:sha-${SHORT_SHA}
