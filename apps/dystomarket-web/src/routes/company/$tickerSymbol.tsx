@@ -15,7 +15,7 @@ type StockPrice = {
 
 async function fetchCompany(tickerSymbol: string): Promise<ExtendedCompany> {
   const response = await fetch(
-    `http://localhost:3001/api/companies/${tickerSymbol}`,
+    `${import.meta.env.VITE_API_URL}/api/companies/${tickerSymbol}`,
   );
   if (!response.ok) {
     throw new Error('Failed to fetch company');
@@ -24,7 +24,7 @@ async function fetchCompany(tickerSymbol: string): Promise<ExtendedCompany> {
 }
 async function fetchCompanyPrices(tickerSymbol: string): Promise<StockPrice[]> {
   const response = await fetch(
-    `http://localhost:3001/api/companies/${tickerSymbol}/prices`,
+    `${import.meta.env.VITE_API_URL}/api/companies/${tickerSymbol}/prices`,
   );
   if (!response.ok) {
     throw new Error('Failed to fetch company prices');

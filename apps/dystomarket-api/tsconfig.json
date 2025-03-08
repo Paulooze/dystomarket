@@ -3,7 +3,7 @@
     "rootDir": "src",
     "types": ["node"],
     "lib": ["ESNext"],
-    "target": "ESNext",
+    "target": "ES2015",
     "module": "CommonJS",
     "esModuleInterop": true,
     "skipLibCheck": true,

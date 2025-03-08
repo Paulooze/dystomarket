@@ -34,11 +34,12 @@ export default function Companies() {
   );
 
   useEffect(() => {
-    const eventSource = new EventSource('http://localhost:3001/api/stream');
+    const eventSource = new EventSource(
+      `${import.meta.env.VITE_API_URL}/api/stream`,
+    );
 
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data) as StreamData;
-      console.log(data);
       setUpdatedCompanyData(data.companies);
     };
 

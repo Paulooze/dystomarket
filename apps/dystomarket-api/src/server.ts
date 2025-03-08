@@ -14,6 +14,11 @@ server.register(cors, {
 });
 server.register(FastifySSEPlugin);
 
+server.get('/', () => {
+  return {
+    status: 'ok',
+  };
+});
 server.get('/api/health', () => {
   return {
     status: 'ok',
