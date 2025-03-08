@@ -1,8 +1,8 @@
 name: Deploy API & AI News
 on:
-  - push:
-      tags:
-        - 'api-v*'
+  push:
+    tags:
+      - 'api-v*'
 
 jobs:
   build-and-push:
