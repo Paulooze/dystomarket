@@ -47,21 +47,25 @@ export default function News() {
               exit={{ translateX: -10, opacity: 0, scale: 0.95 }}
             >
               <div key={article.id} className="block p-4 bg-gray-700 mb-4">
-                <h3 className="text-xl font-semibold mb-2">
-                  {article.headline}&nbsp;
+                <header className="mb-4">
+                  <h3 className="text-2xl font-semibold mb-2">
+                    {article.headline}&nbsp;
+                  </h3>
+                </header>
+                <p className="">{article.content}</p>
+                <footer className="flex items-center pt-4 text-sm text-gray-50">
+                  <span className="inline-block mr-2">{article.source} • </span>
+                  <span className="text-sm text-gray-50inline-block mr-2">
+                    {format(article.timestamp, 'MMMM d, yyyy')}
+                  </span>
                   <Link
                     to={`/company/$tickerSymbol`}
                     params={{ tickerSymbol: article.tickerSymbol ?? '' }}
-                    className="text-green-500 font-semibold hover:underline"
+                    className="text-green-500 font-semibold hover:underline inline-block ml-auto"
                   >
                     #{article.tickerSymbol}
                   </Link>
-                </h3>
-                <p className="text-sm text-gray-50 mb-2">
-                  {format(article.timestamp, 'MMMM d, yyyy')}
-                </p>
-                <p className="">{article.content}</p>
-                <p className="mt-2 text-sm text-green-500 font-semibold"></p>
+                </footer>
               </div>
             </motion.div>
           );

@@ -51,7 +51,7 @@ function RouteComponent() {
     <div className="container mx-auto p-4">
       <Helmet prioritizeSeoTags>
         <title>
-          Dystomarket - ${company.name} (${company.tickerSymbol})
+          Dystomarket - {company.name} ({company.tickerSymbol})
         </title>
         <meta
           property="og:url"
