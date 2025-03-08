@@ -11,9 +11,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Login to DO Registry
         run: echo "${{ secrets.DO_ACCESS_TOKEN }}" | docker login -u "oauth2" --password-stdin registry.digitalocean.com
       - name: Build and Push API Image
         run: |
-          docker buildx build -t registry.digitalocean.com/dystohub/dystomarket-api:{{ github.ref }} -f Dockerfile.ai-news .
-          docker push registry.digitalocean.com/dystohub/dystomarket-ai-news:{{ github.ref }}
+          docker buildx build -t registry.digitalocean.com/dystohub/dystomarket-api:latest -f Dockerfile.ai-news .
+          docker push registry.digitalocean.com/dystohub/dystomarket-ai-news:latest
