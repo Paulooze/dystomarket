@@ -1,4 +1,4 @@
-name: Deploy API & AI News
+name: Deploy API
 on:
   push:
     tags:
@@ -17,4 +17,4 @@ jobs:
         run: echo "${{ secrets.DO_ACCESS_TOKEN }}" | docker login -u "oauth2" --password-stdin registry.digitalocean.com
       - name: Build and Push API Image
         run: |
-          docker buildx build -t registry.digitalocean.com/dystohub/dystomarket-api:${{ github.sha }} -f Dockerfile.api . --push
+          docker buildx build -t registry.digitalocean.com/dystohub/dystomarket-api:${{ github.short_sha }} -f Dockerfile.api . --push
