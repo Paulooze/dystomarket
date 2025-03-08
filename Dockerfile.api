@@ -28,7 +28,7 @@ COPY packages/ ./packages/
 
 RUN yarn install
 # Step 6: Set working directory to AI News Generator
-
+ENV NX_DAEMON=false
 # Step 7: Build the app (if needed)
 RUN yarn nx build db
 RUN yarn nx build api
@@ -46,8 +46,8 @@ COPY --from=builder /app/apps/dystomarket-api ./apps/dystomarket-api
 COPY --from=builder /app/packages ./packages
 
 # Set environment variables.  These can be overridden by Cloud Run.
-ENV NODE_ENV production
-ENV PORT 8080
+ENV NODE_ENV=production
+ENV PORT=8080
 
 # Expose the port the app will listen on.
 EXPOSE 8080
