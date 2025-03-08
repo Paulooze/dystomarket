@@ -17,4 +17,7 @@ jobs:
         run: echo "${{ secrets.DO_ACCESS_TOKEN }}" | docker login -u "oauth2" --password-stdin registry.digitalocean.com
       - name: Build and Push API Image
         run: |
-          docker buildx build -t registry.digitalocean.com/dystohub/dystomarket-ai-news:latest -f Dockerfile.ai-news . --push
+          docker buildx build \
+            --tag registry.digitalocean.com/dystohub/dystomarket-ai-news:latest \
+            --tag registry.digitalocean.com/dystohub/dystomarket-ai-news:sha-$(git rev-parse --short HEAD) \
+            -f Dockerfile.ai-news . --push
