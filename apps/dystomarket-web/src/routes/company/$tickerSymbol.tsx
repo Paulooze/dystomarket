@@ -58,7 +58,7 @@ function RouteComponent() {
           content={`https://dystomarket.com/company/${company.tickerSymbol}`}
         />
       </Helmet>
-      <div className="flex items-center mb-4">
+      <div className="flex items-center mb-4 flex-wrap">
         <div className="flex items-center mb-4">
           <div className="w-32 h-32 rounded-full mr-4 flex items-center justify-center overflow-hidden">
             <img
@@ -75,8 +75,8 @@ function RouteComponent() {
           </h1>
         </div>
         {company.ceo && (
-          <div className="mb-4 flex items-start ml-auto">
-            <div className="w-24 h-24 rounded-full mr-4 flex items-center justify-center overflow-hidden">
+          <div className="mb-4 flex items-start ml-auto flex-row-reverse md:flex-row">
+            <div className="w-16 h-16 md:w-24 md:h-24 rounded-full ml-4 md:mr-4 flex items-center justify-center overflow-hidden">
               <img
                 src={
                   company.ceo.imageUrl
@@ -84,7 +84,7 @@ function RouteComponent() {
                     : '/images/logos/default_ceo.webp'
                 }
                 alt={`CEO of ${company.name}`}
-                className="rounded-full mr-4"
+                className="rounded-full"
               />
             </div>
             <div>
