@@ -7,3 +7,4 @@ docker-compose.yaml
 cloudbuild.yaml
 apps/web/.next/
 .env
+.nx

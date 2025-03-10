@@ -16,7 +16,6 @@
     "migrate:deploy": "prisma migrate deploy",
     "client:generate": "prisma generate",
     "studio": "prisma studio",
-    "postinstall": "prisma generate",
     "build": "mkdir -p dist && tsc && cp -r src/generated/ dist/"
   },
   "dependencies": {
