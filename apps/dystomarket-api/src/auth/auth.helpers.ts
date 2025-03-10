@@ -17,7 +17,7 @@ export function makeAccessTokenCookie() {
     domain: process.env.COOKIE_DOMAIN,
     maxAge: 900,
     path: '/',
-    sameSite: true,
+    sameSite: 'lax' as const,
     signed: true,
   };
 }
@@ -29,7 +29,7 @@ export function makeRefreshTokenCookie() {
     domain: process.env.COOKIE_DOMAIN,
     maxAge: 7 * 24 * 60 * 60,
     path: '/refresh-token',
-    sameSite: true,
+    sameSite: 'lax' as const,
     signed: true,
   };
 }
