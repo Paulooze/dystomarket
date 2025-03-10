@@ -204,6 +204,22 @@ exports.Prisma.CEOScalarFieldEnum = {
   companyId: 'companyId'
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  password: 'password',
+  provider: 'provider',
+  providerId: 'providerId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WatchlistScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  companyId: 'companyId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -230,7 +246,9 @@ exports.Prisma.ModelName = {
   Index: 'Index',
   IndexPrice: 'IndexPrice',
   IndexCompany: 'IndexCompany',
-  CEO: 'CEO'
+  CEO: 'CEO',
+  User: 'User',
+  Watchlist: 'Watchlist'
 };
 
 /**

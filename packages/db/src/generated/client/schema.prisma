@@ -69,6 +69,7 @@ model Company {
   rivalCompanyId Int?            @unique
   rivalCompany   Company?        @relation("CompanyRival", fields: [rivalCompanyId], references: [id])
   rivalOf        Company?        @relation("CompanyRival")
+  Watchlist      Watchlist[]
 
   @@index([tickerSymbol])
   @@map("companies")
@@ -153,28 +154,31 @@ model CEO {
   @@map("ceos")
 }
 
+model User {
+  id         Int         @id @default(autoincrement())
+  email      String      @unique
+  password   String
+  provider   String      @default("email") // 'email', 'google', 'github', etc.
+  providerId String? // External provider ID (for OAuth users)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  watchlists Watchlist[]
+
+  @@map("users")
+}
+
+model Watchlist {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  companyId Int
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, companyId]) // Prevent duplicate watchlist entries
+  @@map("watchlists")
+}
+
 // --- Optional Models (for future expansion) ---
-
-// Example: User model for watchlists, portfolios, etc.
-// model User {
-//   id        Int      @id @default(autoincrement())
-//   email     String   @unique
-//   password  String
-//   // ... other user fields ...
-//   watchlists Watchlist[]
-//   @@map("users")
-// }
-
-// Example: Watchlist model
-// model Watchlist {
-//   id        Int      @id @default(autoincrement())
-//   userId    Int
-//   companyId Int
-//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
-//   @@unique([userId, companyId]) // Prevent duplicate watchlist entries
-//   @@map("watchlists")
-// }
 
 // Example: Portfolio model (more complex - requires transactions)
 // model Portfolio {

@@ -2,6 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 import { format } from 'date-fns';
 import { LayoutGroup, motion } from 'motion/react';
+import urlJoin from 'url-join';
 
 type NewsArticle = {
   id: number;
@@ -15,7 +16,7 @@ type NewsArticle = {
 };
 
 async function fetchNews(): Promise<NewsArticle[]> {
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/news`);
+  const res = await fetch(urlJoin(import.meta.env.VITE_API_URL, '/api/news'));
   if (!res.ok) {
     throw new Error('Failed to fetch news');
   }

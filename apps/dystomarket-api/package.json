@@ -2,7 +2,11 @@
   "name": "@dystomarket/api",
   "dependencies": {
     "@dystomarket/db": "workspace:^",
+    "@fastify/cookie": "^11.0.2",
     "@fastify/cors": "^11.0.0",
+    "@fastify/jwt": "^9.0.4",
+    "@fastify/websocket": "^11.0.2",
+    "bcrypt": "^5.1.1",
     "bullmq": "^5.41.7",
     "fastify": "^5.2.1",
     "fastify-sse-v2": "^4.2.1",
@@ -14,6 +18,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@types/bcrypt": "^5",
+    "@types/ws": "^8.18.0",
     "eslint": "^9.21.0",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.2",

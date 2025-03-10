@@ -7,7 +7,15 @@ import {
   shortenLabel,
 } from './companies.helpers';
 
-export default function CompanyCard({ company }: { company: Company }) {
+type Props = {
+  company: Company;
+  prices: {
+    latestPrice: number;
+    previousPrice: number;
+  };
+};
+
+export default function CompanyCard({ company, prices }: Props) {
   const { text } = getSectorColor(company.sector.name);
 
   return (
@@ -36,8 +44,8 @@ export default function CompanyCard({ company }: { company: Company }) {
               </div>
               <div className="self-start ml-auto">
                 <StockPrice
-                  latestPrice={company.latestPrice}
-                  previousPrice={company.previousPrice}
+                  latestPrice={prices.latestPrice}
+                  previousPrice={prices.previousPrice}
                 />
               </div>
             </div>

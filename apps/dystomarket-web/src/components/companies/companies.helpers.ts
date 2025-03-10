@@ -1,3 +1,5 @@
+import urlJoin from 'url-join';
+
 export type Sector = {
   id: number;
   name: string;
@@ -15,8 +17,8 @@ export type Company = {
   tickerSymbol: string;
   description: string;
   logoUrl: string;
-  latestPrice: number | null;
-  previousPrice: number | null;
+  latestPrice: number;
+  previousPrice: number;
   sector: Sector;
   subIndustry: SubIndustry;
 };
@@ -24,7 +26,9 @@ export type Company = {
 export type ExtendedSector = Sector & { subIndustries: SubIndustry[] };
 
 export async function fetchCompanies(): Promise<Company[]> {
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/companies`);
+  const res = await fetch(
+    urlJoin(import.meta.env.VITE_API_URL, '/api/companies'),
+  );
 
   if (!res.ok) {
     throw new Error('Failed to fetch companies');
@@ -34,7 +38,9 @@ export async function fetchCompanies(): Promise<Company[]> {
 }
 
 export async function fetchSectors(): Promise<ExtendedSector[]> {
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/sectors`);
+  const res = await fetch(
+    urlJoin(import.meta.env.VITE_API_URL, '/api/sectors'),
+  );
 
   if (!res.ok) {
     throw new Error('Failed to fetch sectors');

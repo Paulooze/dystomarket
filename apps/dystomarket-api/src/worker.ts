@@ -1,5 +1,6 @@
 import { NewsArticle, prisma } from '@dystomarket/db';
-import { Worker } from 'bullmq';
+import { Queue, Worker } from 'bullmq';
+import { pubRedis } from './redis';
 
 // ✅ Configure Redis
 const redisConnection = {
@@ -29,12 +30,23 @@ const getNewStockData = (
   };
 };
 
+const stockPriceBuffer = new Map<
+  number,
+  { newPrice: number; timestamp: number }
+>();
+
+function queueStockPriceUpdate(companyId: number, newPrice: number) {
+  stockPriceBuffer.set(companyId, { newPrice, timestamp: Date.now() });
+}
+
 type ExtendedNewsArticle = NewsArticle & {
   targetCompany: string;
 };
 
-export async function registerWorker() {
-  const worker = new Worker<ExtendedNewsArticle>(
+const priceQueue = new Queue('price-update', { connection: redisConnection });
+
+export async function registerWorkers() {
+  const newsWorker = new Worker<ExtendedNewsArticle>(
     'news-result',
     async (job) => {
       console.log(`📩 Received AI news result for ${job.data.targetCompany}`);
@@ -64,9 +76,9 @@ export async function registerWorker() {
 
       const rivalCompanies = await prisma.company.findMany({
         where: {
-          sector: { id: company?.sectorId },
-          id: { not: company?.id },
-          subIndustryId: company?.subIndustryId,
+          sector: { id: company.sectorId },
+          id: { not: company.id },
+          subIndustryId: company.subIndustryId,
         },
         include: {
           stockPrices: {
@@ -84,7 +96,7 @@ export async function registerWorker() {
         body,
       );
 
-      console.log(`Updating price: ${company?.latestPrice} -> ${newPrice}`);
+      console.log(`Updating price: ${company.latestPrice} -> ${newPrice}`);
 
       const transactions = [
         prisma.newsArticle.create({
@@ -131,6 +143,27 @@ export async function registerWorker() {
 
       await prisma.$transaction(transactions);
 
+      const decayFactor = 0.1; // Faster decay (effect weakens quickly)
+      const maxIntervals = 12; // Effect fully fades in 12 intervals (~1 hour)
+      const intervalDuration = 5 * 1000; // 5 seconds per update (TEST ONLY)
+      let currentPrice = newPrice;
+
+      for (let i = 0; i < maxIntervals; i++) {
+        const priceChange = (changeFactor / maxIntervals) * (1 - decayFactor);
+        currentPrice = Math.max(0, currentPrice + currentPrice * priceChange); // Ensure no negatives
+        await priceQueue.add(
+          'delayed-price-update',
+          {
+            ticker: company.tickerSymbol,
+            companyId: company.id,
+            price: currentPrice,
+          },
+          {
+            delay: i * intervalDuration,
+          },
+        );
+      }
+
       console.log(
         `📰 AI News Published: ${body.headline} (Sentiment: ${body.sentiment})`,
       );
@@ -140,7 +173,54 @@ export async function registerWorker() {
     { connection: redisConnection },
   );
 
+  const delayedPriceWorker = new Worker<{
+    ticker: string;
+    price: number;
+    companyId: number;
+  }>(
+    'price-update',
+    async (job) => {
+      const { data } = job;
+      console.log(`📈 Updating price for ${data.ticker} to ${data.price}`);
+      queueStockPriceUpdate(data.companyId, data.price);
+
+      pubRedis.publish(
+        'stock-price-update',
+        JSON.stringify({ companyId: data.companyId, price: data.price }),
+      );
+
+      setInterval(async () => {
+        if (stockPriceBuffer.size === 0) return; // Nothing to update
+
+        const updates = Array.from(stockPriceBuffer.entries()).map(
+          ([companyId, data]) => ({
+            companyId,
+            price: data.newPrice,
+            timestamp: new Date(data.timestamp),
+          }),
+        );
+
+        // Bulk update in PostgreSQL
+        await prisma.$transaction(
+          updates.map(({ companyId, price, timestamp }) =>
+            prisma.stockPrice.create({
+              data: { price, timestamp, companyId },
+            }),
+          ),
+        );
+
+        console.log(`✅ Processed ${updates.length} stock price updates.`);
+
+        stockPriceBuffer.clear(); // Clear the buffer after writing
+      }, 5000);
+    },
+    { connection: redisConnection, concurrency: 3 },
+  );
+
   console.log(
-    `Dystomarket-api: Worker with an id ${worker.id} has been registered.`,
+    `Dystomarket-api: News Worker with an id ${newsWorker.id} has been registered.`,
+  );
+  console.log(
+    `Dystomarket-api: Delayed Price Worker with an id ${delayedPriceWorker.id} has been registered.`,
   );
 }

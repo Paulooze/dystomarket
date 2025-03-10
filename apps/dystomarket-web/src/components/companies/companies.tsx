@@ -1,72 +1,80 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { LayoutGroup, motion } from 'motion/react';
-import { useEffect, useMemo, useState } from 'react';
+import urljoin from 'url-join';
+import { useEffect, useRef, useState } from 'react';
 import { fetchCompanies } from './companies.helpers';
 import CompanyCard from './company-card';
 
-type UpdatedData = {
-  ticker: string;
-  latestPrice: number;
-  previousPrice: number | null;
+type PriceData = {
+  companyId: number;
+  price: number;
 };
-type StreamData = {
-  companies: UpdatedData[];
-  indices: UpdatedData[];
-};
+
+const API_WS_URL = import.meta.env.VITE_API_WS_URL;
 
 export default function Companies() {
   const { data: companies } = useSuspenseQuery({
     queryKey: ['companies'],
     queryFn: fetchCompanies,
   });
-  const [updatedCompanyData, setUpdatedCompanyData] = useState<UpdatedData[]>(
-    [],
+  const [companiesPriceMap, setCompaniesPriceMap] = useState<{
+    [key: number]: { previousPrice: number; latestPrice: number };
+  }>(
+    companies.reduce((acc, company) => {
+      return {
+        ...acc,
+        [company.id]: {
+          previousPrice: company.previousPrice,
+          latestPrice: company.latestPrice,
+        },
+      };
+    }, {} as { [key: number]: { previousPrice: number; latestPrice: number } }),
   );
+  const socketRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    const eventSource = new EventSource(
-      `${import.meta.env.VITE_API_URL}/api/stream`,
-    );
+    if (socketRef.current == null) {
+      socketRef.current = new WebSocket(`${urljoin(API_WS_URL, 'prices')}`);
+      socketRef.current.addEventListener('open', () => {
+        console.log('✅ WebSocket Connected');
+      });
+      socketRef.current.addEventListener('message', (event) => {
+        setCompaniesPriceMap((prev) => {
+          const { companyId, price } = JSON.parse(event.data) as PriceData;
+          return {
+            ...prev,
+            [companyId]: {
+              previousPrice:
+                prev[companyId].latestPrice === price
+                  ? prev[companyId].previousPrice
+                  : prev[companyId].latestPrice,
+              latestPrice: price,
+            },
+          };
+        });
+      });
 
-    eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data) as StreamData;
-      setUpdatedCompanyData(data.companies);
-    };
+      socketRef.current.addEventListener('error', (err) => {
+        console.error('❌ WebSocket Error:', err);
+      });
 
+      socketRef.current.addEventListener('close', () => {
+        console.warn('⚠️ WebSocket Closed');
+      });
+    }
     return () => {
-      eventSource.close();
+      if (socketRef.current != null) {
+        socketRef.current.close();
+        socketRef.current = null;
+      }
     };
-  }, []);
-
-  const updatedCompaniesMap = useMemo(
-    () =>
-      updatedCompanyData.reduce((acc, curr) => {
-        return { ...acc, [curr.ticker]: curr };
-      }, {} as Record<string, { latestPrice: number; previousPrice: number | null }>),
-    [updatedCompanyData],
-  );
-
-  const companiesList = useMemo(
-    () =>
-      companies.map((company) => {
-        const updatedPrice = updatedCompaniesMap[company.tickerSymbol];
-        const { previousPrice, latestPrice, ...rest } = company;
-        return {
-          ...rest,
-          previousPrice:
-            updatedPrice != null ? updatedPrice.previousPrice : previousPrice,
-          latestPrice:
-            updatedPrice != null ? updatedPrice.latestPrice : latestPrice,
-        };
-      }),
-    [companies, updatedCompaniesMap],
-  );
+  }, [companies]);
 
   return (
     <>
       <div>
         <LayoutGroup>
-          {companiesList.map((company, index) => (
+          {companies.map((company, index) => (
             <motion.div
               key={company.id}
               transition={{
@@ -78,7 +86,11 @@ export default function Companies() {
               animate={{ translateX: 0, opacity: 1, scale: 1 }}
               exit={{ translateX: -10, opacity: 0, scale: 0.95 }}
             >
-              <CompanyCard key={company.id} company={company} />
+              <CompanyCard
+                key={company.id}
+                company={company}
+                prices={companiesPriceMap[company.id]}
+              />
             </motion.div>
           ))}
         </LayoutGroup>
