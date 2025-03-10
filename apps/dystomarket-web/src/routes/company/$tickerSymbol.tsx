@@ -2,6 +2,7 @@ import { Company, getImageUrl } from '@/components/companies/companies.helpers';
 import StockChart from '@/components/ui/stock-chart';
 import { createFileRoute } from '@tanstack/react-router';
 import { Helmet } from 'react-helmet-async';
+import urlJoin from 'url-join';
 
 type ExtendedCompany = Company & {
   ceo: {
@@ -16,7 +17,7 @@ type StockPrice = {
 
 async function fetchCompany(tickerSymbol: string): Promise<ExtendedCompany> {
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/companies/${tickerSymbol}`,
+    urlJoin(import.meta.env.VITE_API_URL, '/companies/', tickerSymbol),
   );
   if (!response.ok) {
     throw new Error('Failed to fetch company');
@@ -25,7 +26,12 @@ async function fetchCompany(tickerSymbol: string): Promise<ExtendedCompany> {
 }
 async function fetchCompanyPrices(tickerSymbol: string): Promise<StockPrice[]> {
   const response = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/companies/${tickerSymbol}/prices`,
+    urlJoin(
+      import.meta.env.VITE_API_URL,
+      '/companies/',
+      tickerSymbol,
+      'prices',
+    ),
   );
   if (!response.ok) {
     throw new Error('Failed to fetch company prices');
