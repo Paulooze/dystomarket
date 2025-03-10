@@ -13,7 +13,7 @@ export const Route = createFileRoute('/')({
 function RouteComponent() {
   return (
     <>
-      <div className="flex items-start">
+      <div className="flex items-start flex-col lg:flex-row">
         <Helmet prioritizeSeoTags>
           <title>
             Dystomarket - The Ultimate Dystopian Stock Market Simulation

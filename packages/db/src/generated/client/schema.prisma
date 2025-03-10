@@ -157,6 +157,7 @@ model CEO {
 model User {
   id         Int         @id @default(autoincrement())
   email      String      @unique
+  username   String
   password   String
   provider   String      @default("email") // 'email', 'google', 'github', etc.
   providerId String? // External provider ID (for OAuth users)

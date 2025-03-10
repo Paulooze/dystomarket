@@ -207,6 +207,7 @@ exports.Prisma.CEOScalarFieldEnum = {
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
+  username: 'username',
   password: 'password',
   provider: 'provider',
   providerId: 'providerId',

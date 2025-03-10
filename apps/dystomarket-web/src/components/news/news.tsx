@@ -16,7 +16,9 @@ type NewsArticle = {
 };
 
 async function fetchNews(): Promise<NewsArticle[]> {
-  const res = await fetch(urlJoin(import.meta.env.VITE_API_URL, '/api/news'));
+  const res = await fetch(urlJoin(import.meta.env.VITE_API_URL, '/news'), {
+    credentials: 'same-origin',
+  });
   if (!res.ok) {
     throw new Error('Failed to fetch news');
   }

@@ -11,11 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as RegisterImport } from './routes/register'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as CompanyTickerSymbolImport } from './routes/company/$tickerSymbol'
 
 // Create/Update Routes
+
+const RegisterRoute = RegisterImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AboutRoute = AboutImport.update({
   id: '/about',
@@ -53,6 +60,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterImport
+      parentRoute: typeof rootRoute
+    }
     '/company/$tickerSymbol': {
       id: '/company/$tickerSymbol'
       path: '/company/$tickerSymbol'
@@ -68,12 +82,14 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/register': typeof RegisterRoute
   '/company/$tickerSymbol': typeof CompanyTickerSymbolRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/register': typeof RegisterRoute
   '/company/$tickerSymbol': typeof CompanyTickerSymbolRoute
 }
 
@@ -81,27 +97,30 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/register': typeof RegisterRoute
   '/company/$tickerSymbol': typeof CompanyTickerSymbolRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/company/$tickerSymbol'
+  fullPaths: '/' | '/about' | '/register' | '/company/$tickerSymbol'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/company/$tickerSymbol'
-  id: '__root__' | '/' | '/about' | '/company/$tickerSymbol'
+  to: '/' | '/about' | '/register' | '/company/$tickerSymbol'
+  id: '__root__' | '/' | '/about' | '/register' | '/company/$tickerSymbol'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  RegisterRoute: typeof RegisterRoute
   CompanyTickerSymbolRoute: typeof CompanyTickerSymbolRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  RegisterRoute: RegisterRoute,
   CompanyTickerSymbolRoute: CompanyTickerSymbolRoute,
 }
 
@@ -117,6 +136,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/register",
         "/company/$tickerSymbol"
       ]
     },
@@ -125,6 +145,9 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/register": {
+      "filePath": "register.tsx"
     },
     "/company/$tickerSymbol": {
       "filePath": "company/$tickerSymbol.tsx"

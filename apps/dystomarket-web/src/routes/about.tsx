@@ -7,9 +7,9 @@ export const Route = createFileRoute('/about')({
 function RouteComponent() {
   return (
     <div className="container mx-auto p-4 min-h-screen">
-      <h2 className="text-4xl font-semibold mb-4 font-display  text-dysto-white">
+      <h1 className="text-4xl font-semibold mb-4  text-dysto-white">
         About Dystomarket
-      </h2>
+      </h1>
       <p className="my-4">
         In a world where megacorporations rule the economy and market
         manipulation is just another Tuesday, Dystomarket is your ultimate

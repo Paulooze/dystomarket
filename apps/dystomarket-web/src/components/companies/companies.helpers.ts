@@ -26,9 +26,9 @@ export type Company = {
 export type ExtendedSector = Sector & { subIndustries: SubIndustry[] };
 
 export async function fetchCompanies(): Promise<Company[]> {
-  const res = await fetch(
-    urlJoin(import.meta.env.VITE_API_URL, '/api/companies'),
-  );
+  const res = await fetch(urlJoin(import.meta.env.VITE_API_URL, '/companies'), {
+    credentials: 'same-origin',
+  });
 
   if (!res.ok) {
     throw new Error('Failed to fetch companies');
@@ -38,9 +38,9 @@ export async function fetchCompanies(): Promise<Company[]> {
 }
 
 export async function fetchSectors(): Promise<ExtendedSector[]> {
-  const res = await fetch(
-    urlJoin(import.meta.env.VITE_API_URL, '/api/sectors'),
-  );
+  const res = await fetch(urlJoin(import.meta.env.VITE_API_URL, '/sectors'), {
+    credentials: 'same-origin',
+  });
 
   if (!res.ok) {
     throw new Error('Failed to fetch sectors');

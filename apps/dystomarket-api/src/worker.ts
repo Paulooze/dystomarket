@@ -2,7 +2,6 @@ import { NewsArticle, prisma } from '@dystomarket/db';
 import { Queue, Worker } from 'bullmq';
 import { pubRedis } from './redis';
 
-// ✅ Configure Redis
 const redisConnection = {
   url: process.env.REDIS_DB_URL,
 };
