@@ -9,23 +9,23 @@
 
 
 :root  {
-  --background: 162 0% 95%;
-  --foreground: 162 0% 0%;
-  --card: 162 0% 90%;
-  --card-foreground: 162 0% 10%;
-  --popover: 162 0% 95%;
-  --popover-foreground: 162 95% 0%;
+  --background: 162 10% 5%;
+  --foreground: 162 0% 90%;
+  --card: 162 0% 0%;
+  --card-foreground: 162 0% 90%;
+  --popover: 162 10% 5%;
+  --popover-foreground: 162 0% 90%;
   --primary: 162 100% 50%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 162 10% 70%;
-  --secondary-foreground: 0 0% 0%;
-  --muted: 124 10% 85%;
-  --muted-foreground: 162 0% 35%;
-  --accent: 124 10% 80%;
-  --accent-foreground: 162 0% 10%;
+  --secondary: 162 10% 10%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 124 10% 15%;
+  --muted-foreground: 162 0% 60%;
+  --accent: 124 10% 15%;
+  --accent-foreground: 162 0% 90%;
   --destructive: 0 50% 30%;
   --destructive-foreground: 162 0% 90%;
-  --border: 162 20% 50%;
+  --border: 162 20% 18%;
   --input: 162 20% 18%;
   --ring: 162 100% 50%;
   --radius: 0rem;
